@@ -1,2 +1,19 @@
-<my-lib></my-lib>
-<h3>Meaning is: {{meaning}}</h3>
+<h2>
+  Demo page for Keyboard shortcut service.
+</h2>
+
+
+<pre>pressed shortcut key: {{pressed}}</pre>
+<ul>
+  <li *ngFor="let shortcut of shortcuts" [class.selected]="shortcut.key === pressed">
+    <code>
+      &#123;
+        key: "{{shortcut.key}}",
+        preventDefault: {{!!shortcut.preventDefault}},
+        target: {{shortcut.target || false}}
+      &#125;
+    </code>
+  </li>
+</ul>
+
+<input type="text" #input>

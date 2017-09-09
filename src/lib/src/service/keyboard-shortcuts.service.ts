@@ -9,25 +9,35 @@ import { Subscription }     from 'rxjs/Subscription';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
-export type Shortcut = {
+
+export interface Shortcut {
   key: string;
-  command: Function,
+  command(event: KeyboardEventOutput) : void,
   target?: HTMLElement,
   preventDefault?: boolean
-};
+}
 
-type ParsedShortcut = {
-  key: Function[],
-  command: Function,
+interface ParsedShortcut {
+  key: string,
+  predicates: Function[],
+  command<T>(event: KeyboardEventOutput) : T,
   preventDefault?: boolean,
+  priority?: number,
+  event?: KeyboardEvent,
   target?: HTMLElement
-};
+}
+
+export interface KeyboardEventOutput {
+  event: KeyboardEvent,
+  key: string
+}
 
 @Injectable()
 export class KeyboardShortcutsService implements OnDestroy {
@@ -53,12 +63,19 @@ export class KeyboardShortcutsService implements OnDestroy {
   private throttleTime: number = 100;
 
 
-  private mapEvent = (shortcuts) => ( event ) =>
+  private mapEvent = (shortcuts: ParsedShortcut[]) => ( event ) =>
     shortcuts.map(shortcut => Object.assign({}, shortcut, {
-      key: shortcut.key.map((predicate: any) => predicate(event)).every((item) => item),
+      priority: shortcut.predicates.length,
+      predicates: shortcut.predicates.map((predicate: any) => predicate(event)).every((item) => item),
       event: event
     }))
-      .filter(shortcuts => shortcuts.key);
+      .filter(shortcut => shortcut.predicates)
+      .reduce((acc, shortcut) => {
+        if (acc.priority > shortcut.priority ) {
+          return acc;
+        }
+        return shortcut;
+      }, { priority: 0} as ParsedShortcut);
 
   /**
    * Subscription for on destroy.
@@ -71,13 +88,11 @@ export class KeyboardShortcutsService implements OnDestroy {
    */
   private keydown = (throttleTime: number) => Observable.fromEvent(document, 'keydown')
     .map(this.mapEvent(this.shortcuts))
-    .filter((shortcuts: any) => shortcuts.length)
-    .map(shortcuts => shortcuts.pop())
     .filter(shortcut => !shortcut.target || shortcut.event.target === shortcut.target)
     .do(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault())
     .filter((shortcut: any) => isFunction(shortcut.command))
     .throttleTime(throttleTime)
-    .do(shortcut => shortcut.command(shortcut.event))
+    .do(shortcut => shortcut.command({event: shortcut.event, key: shortcut.key}))
     .catch(error => Observable.throw("error in shortcut service"));
 
 
@@ -144,7 +159,7 @@ export class KeyboardShortcutsService implements OnDestroy {
    */
   private parseCommand(command: Shortcut): ParsedShortcut {
     return Object.assign({}, command, {
-      'key': this.getKeys(command),
+      'predicates': this.getKeys(command),
     });
   }
 
