@@ -91,7 +91,7 @@ KeyboardShortcutsService class:
     * @param {Shortcut[] | Shortcut} shortcuts
     * @returns {KeyboardShortcutsService}
     */
-    addShortcuts(shortcuts: Shortcuts[]): KeyboardShortcutsService;
+    add(shortcuts: Shortcuts[]): KeyboardShortcutsService;
     
     /**
     * Set throttleTime for the key down event

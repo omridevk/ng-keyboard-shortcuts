@@ -95,7 +95,7 @@ export class KeyboardShortcutsService implements OnDestroy {
    * @param {Shortcut[] | Shortcut} shortcuts
    * @returns {KeyboardShortcutsService}
    */
-  public addShortcuts(shortcuts: Shortcut[] | Shortcut) {
+  public add(shortcuts: Shortcut[] | Shortcut) {
     if (Array.isArray(shortcuts)) {
       shortcuts.forEach((shortcut) => this.shortcuts.push(this.parseCommand(shortcut)));
       return this;

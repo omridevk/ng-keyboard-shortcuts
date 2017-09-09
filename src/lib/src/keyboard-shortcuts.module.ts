@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule }                 from '@angular/core';
 import { KeyboardShortcutsService } from './service/keyboard-shortcuts.service';
 
 @NgModule({
