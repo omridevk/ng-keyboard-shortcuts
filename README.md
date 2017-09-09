@@ -41,7 +41,8 @@ Example:
 })
 export class DemoComponent implements OnInit {
 
-      constructor(private keyboard: KeyboardShortcutsService) {
+      constructor(private keyboard: KeyboardShortcutsService, private element: ElementRef) {
+           const target = this.element.nativeElement.querySelector(".demo-input");
            this.keyboard.addShortcuts([
                 {
                     key: 'ctrl f',
@@ -49,14 +50,23 @@ export class DemoComponent implements OnInit {
                 },
                 {
                     key: 'ctrl shift f',
-                    command: () => console.log('ctrl + shift + f')
+                    command: () => console.log('ctrl + shift + f'),
+                    target: target
                 },
                 {
                     key: 'cmd f',
-                    command: () => console.log('cmd + f')
+                    command: () => console.log('cmd + f'),
+                    preventDefault: true
                 }
             ]);
+            
+            
+            this.keyboard.addShortcuts({
+                  key: 'cmd + shift + g',
+                  command: () => console.log('cmd + shift + g')
+            })
       }
+      
 }
 ```
 
@@ -65,14 +75,29 @@ export class DemoComponent implements OnInit {
 #### Types:
 ```typescript
 type Shortcut = {
-  key: any;
-  command: Function,
-  target?: HTMLElement
+  key: string, // key combination to trigger the command, example: "ctrl + shift + g" 
+  command: Function, // the command to be triggered, example: () => console.log('hi world') 
+  target?: HTMLElement // if provided the command will trigger only when key event is invoked by the target,
+  preventDefault: boolean // whether to preventDefault for key down browser event
 }
 ```
 #### Classes:
 ```typescript
 KeyboardShortcutsService class: 
 
-  addShortcuts(shortcuts: Shortcuts[]): void 
+    /**
+    * Add new shortcut/s
+    * Accept either array of Shortcuts or single Shortcut object.
+    * @param {Shortcut[] | Shortcut} shortcuts
+    * @returns {KeyboardShortcutsService}
+    */
+    addShortcuts(shortcuts: Shortcuts[]): KeyboardShortcutsService;
+    
+    /**
+    * Set throttleTime for the key down event
+    * Default: 100
+    * @param {number} time
+    * @returns {KeyboardShortcutsService}
+    */
+    setThrottleTime(time: number): KeyboardShortcutsService
 ```

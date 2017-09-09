@@ -16,7 +16,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
 export type Shortcut = {
-  key: any;
+  key: string;
   command: Function,
   target?: HTMLElement,
   preventDefault?: boolean
