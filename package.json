@@ -1,7 +1,7 @@
 {
   "name": "ng-keyboard-shortcuts",
-  "version": "1.0.22",
-  "description": "N/A",
+  "version": "1.1.0",
+  "description": "An angular module that exposes a service for creating keyboard shortcuts using a simple configuration object like Visual Studio Code key bindings",
   "main": "./bundles/ng-keyboard-shortcuts.umd.js",
   "module": "./ng-keyboard-shortcuts.es5.js",
   "es2015": "./ng-keyboard-shortcuts.js",
