@@ -7,6 +7,8 @@ An angular module that exposes a service for creating keyboard shortcuts using a
 npm install --save ng-keyboard-shortcuts
 
 
+## Getting Started: 
+
 ### Import:
 ```typescript
 import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
@@ -26,6 +28,7 @@ import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
 export class AppModule {
 }
 ```
+
 
 
 ### Using the service:
@@ -104,3 +107,9 @@ KeyboardShortcutsService class:
     */
     setThrottleTime(time: number): KeyboardShortcutsService
 ```
+
+
+## Building/Publishing
+
+1. ```npm run build```
+2. ```npm publish dist```

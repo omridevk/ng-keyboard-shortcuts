@@ -15,6 +15,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import { Subject } from 'rxjs/Subject';
 
 
 export interface Shortcut {
@@ -62,6 +63,9 @@ export class KeyboardShortcutsService implements OnDestroy {
    */
   private throttleTime: number = 100;
 
+  private _pressed = new Subject<KeyboardEventOutput>();
+  public pressed$ = this._pressed.asObservable();
+
 
   private mapEvent = (shortcuts: ParsedShortcut[]) => ( event ) =>
     shortcuts.map(shortcut => Object.assign({}, shortcut, {
@@ -93,6 +97,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     .filter((shortcut: any) => isFunction(shortcut.command))
     .throttleTime(throttleTime)
     .do(shortcut => shortcut.command({event: shortcut.event, key: shortcut.key}))
+    .do(this._pressed)
     .catch(error => Observable.throw("error in shortcut service"));
 
 

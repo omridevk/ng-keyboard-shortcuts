@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { KeyboardShortcutsService } from 'ng-keyboard-shortcuts';
 import { KeyboardEventOutput } from 'ng-keyboard-shortcuts';
 
@@ -8,6 +8,15 @@ import { KeyboardEventOutput } from 'ng-keyboard-shortcuts';
   templateUrl: './app.component.html',
   styles: [
       `
+      .wrapper {
+        display: flex;
+        align-items: center;
+        min-height: 24em;
+        justify-content: center;
+      }
+      .example-card {
+        max-width: 1170px;
+      }
       .selected {
         font-weight: bold;
       }
@@ -15,6 +24,9 @@ import { KeyboardEventOutput } from 'ng-keyboard-shortcuts';
   ]
 })
 export class AppComponent implements AfterViewInit{
+
+  private html;
+
   ngAfterViewInit(): void {
     this.shortcuts.push(
       {
@@ -27,7 +39,7 @@ export class AppComponent implements AfterViewInit{
       },
       {
         key: "cmd + shift + f",
-        command: (output: KeyboardEventOutput) => this.pressed = output.key,
+        command: (output: KeyboardEventOutput) => this.input.nativeElement.value = this.pressed = output.key ,
         preventDefault: true,
         target: this.input.nativeElement
       },
@@ -41,8 +53,10 @@ export class AppComponent implements AfterViewInit{
         command: (output: KeyboardEventOutput) => this.pressed = output.key,
         preventDefault: true
       }
-    )
+    );
     this.keyboard.add(this.shortcuts)
+    this.html = this.keyboard.pressed$
+      .scan((acc, event) => `<div>${event.key}</div>${acc}`, '')
   }
 
   pressed: string;
@@ -51,6 +65,6 @@ export class AppComponent implements AfterViewInit{
 
   shortcuts = [];
 
-  constructor(private keyboard: KeyboardShortcutsService) {
+  constructor(private keyboard: KeyboardShortcutsService, private renderer: Renderer2) {
   }
 }
