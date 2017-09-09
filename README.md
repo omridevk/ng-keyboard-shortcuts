@@ -63,15 +63,16 @@ export class DemoComponent implements OnInit {
 ### API:
 
 #### Types:
-
+```typescript
 type Shortcut = {
   key: any;
   command: Function,
   target?: HTMLElement
 }
-
+```
 #### Classes:
-
+```typescript
 KeyboardShortcutsService class: 
 
   addShortcuts(shortcuts: Shortcuts[]): void 
+```
