@@ -4,7 +4,6 @@ import {
   OnDestroy
 }                           from '@angular/core';
 import { codes, modifiers } from './keys';
-import { DOCUMENT }         from '@angular/common';
 import { Observable }       from 'rxjs/Observable';
 import { isFunction }       from 'rxjs/util/isFunction';
 import { Subscription }     from 'rxjs/Subscription';
@@ -18,12 +17,13 @@ import 'rxjs/add/operator/do';
 
 export type Shortcut = {
   key: any;
-  command: Function
+  command: Function,
+  target?: HTMLElement
 }
 
 @Injectable()
 export class KeyboardShortcutsService implements OnDestroy {
-  constructor(@Inject(DOCUMENT) private doc) {
+  constructor() {
     this.subscription = this.keydown$
       .filter((shortcut: any) => isFunction(shortcut.command))
       .throttleTime(100)
@@ -43,11 +43,12 @@ export class KeyboardShortcutsService implements OnDestroy {
    * Key down observable
    * @type {Observable<any>}
    */
-  private keydown$ = Observable.fromEvent(this.doc, 'keydown')
+  private keydown$ = Observable.fromEvent(document, 'keydown')
     .map(event => this.shortcuts.map(shortcut => {
       return {
         keys: shortcut.key.map((predicate: any) => predicate(event)).every((item) => item),
         command: shortcut.command,
+        target: shortcut.target || document,
         event: event
       }
     }))
@@ -63,19 +64,19 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
   }
 
-  addShortcuts(shortcuts: Shortcut[] | Shortcut) {
+  public addShortcuts(shortcuts: Shortcut[] | Shortcut) {
     if (Array.isArray(shortcuts)) {
       shortcuts.forEach((shortcut) => this.shortcuts.push(this.parseCommand(shortcut)));
       return;
     }
-    this.shortcuts.push(this.parseCommand(shortcuts));
+    this.shortcuts.push(this.parseCommand(shortcuts as Shortcut));
   }
 
   /**
    * transforms a shortcut to:
    * a predicate function, example:
    */
-  getKeys = (command) => command.key.split(' ')
+  private getKeys = (command) => command.key.split(' ')
     .map(key => key.trim())
     .map(key => {
       // for modifiers like control key
@@ -95,7 +96,7 @@ export class KeyboardShortcutsService implements OnDestroy {
    * @param command
    * @returns Shortcut
    */
-  parseCommand = (command: Shortcut) => {
+  private parseCommand = (command: Shortcut) => {
     return Object.assign({}, command, {
       'key': this.getKeys(command)
     });

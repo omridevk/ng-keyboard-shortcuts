@@ -3,7 +3,12 @@ import { KeyboardShortcutsService } from './service/keyboard-shortcuts.service';
 
 @NgModule({
   declarations: [],
-  providers: [KeyboardShortcutsService],
+  imports: [],
+  providers: [
+    KeyboardShortcutsService
+  ],
   exports: []
 })
-export class KeyboardShortcutsModule { }
+export class KeyboardShortcutsModule {
+
+}
