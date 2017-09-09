@@ -77,7 +77,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     .do(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault())
     .filter((shortcut: any) => isFunction(shortcut.command))
     .throttleTime(throttleTime)
-    .do(shortcut => shortcut.command())
+    .do(shortcut => shortcut.command(shortcut.event))
     .catch(error => Observable.throw("error in shortcut service"));
 
 

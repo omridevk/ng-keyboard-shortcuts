@@ -30,7 +30,10 @@ export class AppModule {
 
 ### Using the service:
 
-Add the service to the providers array [read Angular DI](https://angular.io/guide/hierarchical-dependency-injection)
+Add the service to the providers array [Angular DI](https://angular.io/guide/hierarchical-dependency-injection)
+
+Add shortcuts by calling the service ```add``` method and providing it with a Shortcut type (or array of shortcuts):
+``` { key: "ctrl + shift + g", command: (event) => console.log(event) } ```
 
 Example:
 ```typescript
@@ -43,7 +46,7 @@ export class DemoComponent implements OnInit {
 
       constructor(private keyboard: KeyboardShortcutsService, private element: ElementRef) {
            const target = this.element.nativeElement.querySelector(".demo-input");
-           this.keyboard.addShortcuts([
+           this.keyboard.add([
                 {
                     key: 'ctrl f',
                     command: () => console.log('ctrl + f')
@@ -61,7 +64,7 @@ export class DemoComponent implements OnInit {
             ]);
             
             
-            this.keyboard.addShortcuts({
+            this.keyboard.add({
                   key: 'cmd + shift + g',
                   command: () => console.log('cmd + shift + g')
             })
