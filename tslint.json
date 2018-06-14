@@ -96,7 +96,7 @@
     "templates-use-public": true,
     "invoke-injectable": true,
     "callable-types": true,
-    "import-blacklist": [ true, "rxjs" ],
+    "import-blacklist": [ true ],
     "import-spacing": false,
     "interface-over-type-literal": true,
     "no-empty-interface": true,
