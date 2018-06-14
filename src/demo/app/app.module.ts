@@ -3,19 +3,18 @@ import { BrowserModule }                                     from '@angular/plat
 import { BrowserAnimationsModule }                           from '@angular/platform-browser/animations';
 import { AppComponent }                                      from './app.component';
 import { KeyboardShortcutsModule, KeyboardShortcutsService } from 'ng-keyboard-shortcuts';
-import { MdButtonModule, MdCardModule, MdFormFieldModule, MdInputModule, MdListModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
 
 @NgModule({
   imports: [
     BrowserModule,
     KeyboardShortcutsModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdCardModule,
-    MdButtonModule,
-    MdListModule,
-    MdInputModule,
-    MdFormFieldModule
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatListModule,
+    MatFormFieldModule
   ],
   providers: [KeyboardShortcutsService],
   declarations: [ AppComponent ],

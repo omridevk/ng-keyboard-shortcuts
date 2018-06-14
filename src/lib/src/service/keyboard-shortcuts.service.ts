@@ -1,52 +1,34 @@
-import {
-  Injectable,
-  OnDestroy
-}                           from '@angular/core';
-import { codes, modifiers } from './keys';
-import { Observable }       from 'rxjs/Observable';
-import { isFunction }       from 'rxjs/util/isFunction';
-import { Subscription }     from 'rxjs/Subscription';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {catchError, filter, map, tap, throttleTime} from 'rxjs/internal/operators';
+import {fromEvent, Subject, Subscription, throwError} from 'rxjs/index';
+import {isFunction} from 'rxjs/internal/util/isFunction';
+import {codes, modifiers} from './keys';
 
 
 export interface Shortcut {
   key: string;
-  command(event: KeyboardEventOutput) : void,
-  target?: HTMLElement,
-  preventDefault?: boolean
+  target?: HTMLElement;
+  preventDefault?: boolean;
+  command(event: KeyboardEventOutput): void;
 }
 
 interface ParsedShortcut {
-  key: string,
-  predicates: Function[],
-  command<T>(event: KeyboardEventOutput) : T,
-  preventDefault?: boolean,
-  priority?: number,
-  event?: KeyboardEvent,
-  target?: HTMLElement
+  key: string;
+  predicates: Function[];
+  preventDefault?: boolean;
+  priority?: number;
+  event?: KeyboardEvent;
+  target?: HTMLElement;
+  command(event: KeyboardEventOutput): void;
 }
 
 export interface KeyboardEventOutput {
-  event: KeyboardEvent,
-  key: string
+  event: KeyboardEvent;
+  key: string;
 }
 
 @Injectable()
-export class KeyboardShortcutsService implements OnDestroy {
-
-
-  constructor() {
-    this.subscription = this.keydown(this.throttleTime).subscribe();
-  }
+export class KeyboardShortcutsService {
 
   /**
    * Parsed shortcuts
@@ -61,11 +43,20 @@ export class KeyboardShortcutsService implements OnDestroy {
    * Throttle the keypress event.
    * @type {number}
    */
-  private throttleTime: number = 100;
+  private throttleTime = 100;
 
   private _pressed = new Subject<KeyboardEventOutput>();
   public pressed$ = this._pressed.asObservable();
 
+
+  /**
+   * Subscription for on destroy.
+   */
+  private subscription: Subscription;
+
+  constructor() {
+    this.keydown(this.throttleTime).subscribe();
+  }
 
   private mapEvent = (shortcuts: ParsedShortcut[]) => ( event ) =>
     shortcuts.map(shortcut => Object.assign({}, shortcut, {
@@ -82,33 +73,20 @@ export class KeyboardShortcutsService implements OnDestroy {
       }, { priority: 0} as ParsedShortcut);
 
   /**
-   * Subscription for on destroy.
-   */
-  private subscription: Subscription;
-
-  /**
    * @returns Observable<any>
-   * @param throttleTime
+   * @param timeToThrottle
    */
-  private keydown = (throttleTime: number) => Observable.fromEvent(document, 'keydown')
-    .map(this.mapEvent(this.shortcuts))
-    .filter(shortcut => !shortcut.target || shortcut.event.target === shortcut.target)
-    .do(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault())
-    .filter((shortcut: any) => isFunction(shortcut.command))
-    .throttleTime(throttleTime)
-    .do(shortcut => shortcut.command({event: shortcut.event, key: shortcut.key}))
-    .do(this._pressed)
-    .catch(error => Observable.throw("error in shortcut service"));
-
-
-  /**
-   * Remove subscription.
-   */
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  private keydown = (timeToThrottle: number) => fromEvent(document, 'keydown')
+    .pipe(
+      map(this.mapEvent(this.shortcuts)),
+      filter((shortcut: ParsedShortcut) => !shortcut.target || shortcut.event.target === shortcut.target),
+      tap((shortcut: ParsedShortcut) => !shortcut.preventDefault || shortcut.event.preventDefault()),
+      filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
+      throttleTime(timeToThrottle),
+      tap((shortcut: ParsedShortcut) => shortcut.command({event: shortcut.event, key: shortcut.key})),
+      tap(this._pressed),
+      catchError(() => throwError('error in shortcut service'))
+    );
 
   /**
    * Add new shortcut/s

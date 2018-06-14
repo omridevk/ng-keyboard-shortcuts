@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { KeyboardShortcutsService } from 'ng-keyboard-shortcuts';
 import { KeyboardEventOutput } from 'ng-keyboard-shortcuts';
+import {scan} from 'rxjs/internal/operators';
 
 
 @Component({
@@ -23,42 +24,9 @@ import { KeyboardEventOutput } from 'ng-keyboard-shortcuts';
     `
   ]
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit {
 
   private html;
-
-  ngAfterViewInit(): void {
-    this.shortcuts.push(
-      {
-        key: "ctrl + shift + g",
-        command: (output: KeyboardEventOutput) => this.pressed = output.key
-      },
-      {
-        key: "ctrl + shift + f",
-        command: (output: KeyboardEventOutput) => this.pressed = output.key
-      },
-      {
-        key: "cmd + shift + f",
-        command: (output: KeyboardEventOutput) => this.input.nativeElement.value = this.pressed = output.key ,
-        preventDefault: true,
-        target: this.input.nativeElement
-      },
-      {
-        key: "cmd + =",
-        command: (output: KeyboardEventOutput) => this.pressed = output.key,
-        preventDefault: true
-      },
-      {
-        key: "cmd + f",
-        command: (output: KeyboardEventOutput) => this.pressed = output.key,
-        preventDefault: true
-      }
-    );
-    this.keyboard.add(this.shortcuts)
-    this.html = this.keyboard.pressed$
-      .scan((acc, event) => `<div>${event.key}</div>${acc}`, '')
-  }
-
   pressed: string;
 
   @ViewChild('input') private input: ElementRef;
@@ -66,5 +34,37 @@ export class AppComponent implements AfterViewInit{
   shortcuts = [];
 
   constructor(private keyboard: KeyboardShortcutsService, private renderer: Renderer2) {
+  }
+
+  ngAfterViewInit(): void {
+    this.shortcuts.push(
+      {
+        key: 'ctrl + shift + g',
+        command: (output: KeyboardEventOutput) => this.pressed = output.key
+      },
+      {
+        key: 'ctrl + shift + f',
+        command: (output: KeyboardEventOutput) => this.pressed = output.key
+      },
+      {
+        key: 'cmd + shift + f',
+        command: (output: KeyboardEventOutput) => this.input.nativeElement.value = this.pressed = output.key ,
+        preventDefault: true,
+        target: this.input.nativeElement
+      },
+      {
+        key: 'cmd + =',
+        command: (output: KeyboardEventOutput) => this.pressed = output.key,
+        preventDefault: true
+      },
+      {
+        key: 'cmd + f',
+        command: (output: KeyboardEventOutput) => this.pressed = output.key,
+        preventDefault: true
+      }
+    );
+    this.keyboard.add(this.shortcuts);
+    this.html = this.keyboard.pressed$
+      .pipe(scan((acc, event: KeyboardEvent) => `<div>${event.key}</div>${acc}`, ''));
   }
 }

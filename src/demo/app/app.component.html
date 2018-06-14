@@ -1,29 +1,29 @@
 <div class="wrapper">
-  <md-card class="example-card">
-    <md-card-header>
-      <md-card-title>Demo page for Keyboard shortcut service.</md-card-title>
-      <md-card-subtitle>pressed shortcut key: {{pressed}}</md-card-subtitle>
-    </md-card-header>
-    <md-card-content>
-      <md-list>
-        <md-list-item *ngFor="let shortcut of shortcuts" [class.selected]="shortcut.key === pressed">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Demo page for Keyboard shortcut service.</mat-card-title>
+      <mat-card-subtitle>pressed shortcut key: {{pressed}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let shortcut of shortcuts" [class.selected]="shortcut.key === pressed">
           <code>
             key: "{{shortcut.key}}",
             preventDefault: {{!!shortcut.preventDefault}},
             target: {{shortcut.target || false}}
           </code>
-        </md-list-item>
-      </md-list>
-      <md-form-field class="example-full-width">
-        <input mdInput placeholder="Only on focus" #input>
-      </md-form-field>
+        </mat-list-item>
+      </mat-list>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Only on focus" #input>
+      </mat-form-field>
       <div [innerHTML]="html | async"> </div>
-    </md-card-content>
-    <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
-    </md-card-actions>
-  </md-card>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 
 
