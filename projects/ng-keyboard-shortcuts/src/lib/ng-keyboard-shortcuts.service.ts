@@ -10,7 +10,7 @@ import { map, filter, tap, debounce, catchError } from "rxjs/operators";
 import { allPass, any, identity, isFunction, isNill } from "./utils";
 
 @Injectable({
-  providedIn: "root"
+    providedIn: "root"
 })
 export class KeyboardShortcutsService implements OnDestroy {
     /**
@@ -37,7 +37,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
         if (target === shortcut.target) {
-          return true;
+            return true;
         }
         if (shortcut.allowIn.length) {
             return shortcut.allowIn.includes(target.nodeName);
@@ -47,15 +47,15 @@ export class KeyboardShortcutsService implements OnDestroy {
 
     private mapEvent = event =>
         this._shortcuts
-            .map(shortcut => {
-                return Object.assign({}, shortcut, {
+            .map(shortcut =>
+                Object.assign({}, shortcut, {
                     predicates: any(
                         identity,
                         shortcut.predicates.map((predicates: any) => allPass(predicates)(event))
                     ),
                     event: event
-                });
-            })
+                })
+            )
             .filter(shortcut => shortcut.predicates)
             .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), {
                 priority: 0
@@ -120,11 +120,10 @@ export class KeyboardShortcutsService implements OnDestroy {
                 if (modifiers.hasOwnProperty(key)) {
                     return event => !!event[modifiers[key]];
                 }
-                return event => {
-                    return codes[key]
+                return event =>
+                    codes[key]
                         ? event.keyCode === codes[key] || event.key === key
                         : event.keyCode === key.toUpperCase().charCodeAt(0);
-                };
             });
 
     /**
