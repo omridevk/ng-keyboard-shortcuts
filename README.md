@@ -7,7 +7,7 @@ An angular module that exposes a service for creating keyboard shortcuts using a
 npm install --save ng-keyboard-shortcuts
 
 
-## Getting Started: 
+## Getting Started:
 
 ### Import:
 ```typescript
@@ -16,13 +16,12 @@ import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
 
 @NgModule({
     declarations: [
-        
     ],
     imports: [
         BrowserModule,
         FormsModule,
         KeyboardShortcutsModule
-    ],     
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -65,14 +64,14 @@ export class DemoComponent implements OnInit {
                     preventDefault: true
                 }
             ]);
-            
-            
+
+
             this.keyboard.add({
-                  key: 'cmd + shift + g',
-                  command: () => console.log('cmd + shift + g')
+                  key: ['cmd + shift + g', 'cmd + g'],
+                  command: ({event, key}) => console.log(key, event)
             })
       }
-      
+
 }
 ```
 
@@ -80,16 +79,64 @@ export class DemoComponent implements OnInit {
 
 #### Types:
 ```typescript
-type Shortcut = {
-  key: string, // key combination to trigger the command, example: "ctrl + shift + g" 
-  command: Function, // the command to be triggered, example: () => console.log('hi world') 
-  target?: HTMLElement // if provided the command will trigger only when key event is invoked by the target,
-  preventDefault: boolean // whether to preventDefault for key down browser event
+type ShortcutInput = {
+
+  /**
+   * key combination to trigger the command, example: "ctrl + shift + g" or ["ctrl + g", "cmd + g"]
+   */
+  key: string | string[],
+
+  /**
+   *  the command to be triggered, example: () => console.log('hi world')
+   */
+  command(event: ShortcutEventOutput): any;
+
+  /**
+   * Optional - provide a description to the command - can be used to render an help menu.
+   */
+  description: string - optional
+
+  /**
+   * Optional (default: 0) - provide a throttle time to each command.
+   */
+  throttleTime?: number;
+
+  /**
+   * By default shortcuts are disabled when INPUT, TEXTAREA or SELECT elements are in focus
+   * you can override this behavior by provided an array of nodeNames to allow in. example:
+   * allowIn: ["TEXTAREA", "SELECT"]
+   */
+  allowIn?: string[] ("TEXTAREA" | "SELECT" | "INPUT");
+
+  /**
+   * Optional - provide a label to allow grouping to later on create an help menu if needed.
+   */
+  label?: string;
+
+  /**
+   * Optional - trigger the command only when the provided target is in focus.
+   */
+  target?: HTMLElement;
+
+  /**
+   * Optional - Whether to prevent browser default behavior.
+   */
+  preventDefault?: boolean;
 }
+
+
+type = ShortcutEventOutput {
+    event: KeyboardEvent;
+    key: string | string[];
+}
+
 ```
+
+
+
 #### Classes:
 ```typescript
-KeyboardShortcutsService class: 
+KeyboardShortcutsService class:
 
     /**
     * Add new shortcut/s
@@ -97,19 +144,12 @@ KeyboardShortcutsService class:
     * @param {Shortcut[] | Shortcut} shortcuts
     * @returns {KeyboardShortcutsService}
     */
-    add(shortcuts: Shortcuts[]): KeyboardShortcutsService;
-    
-    /**
-    * Set throttleTime for the key down event
-    * Default: 100
-    * @param {number} time
-    * @returns {KeyboardShortcutsService}
-    */
-    setThrottleTime(time: number): KeyboardShortcutsService
+    add(shortcuts: ShortcutInput[]): KeyboardShortcutsService;
+
 ```
 
 
 ## Building/Publishing
 
-1. ```npm run build```
+1. ```npm run build-lib```
 2. ```npm publish dist```
