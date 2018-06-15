@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Demo page for Keyboard shortcut service.</mat-card-title>
+      <mat-card-subtitle>pressed shortcut key: {{pressed}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let shortcut of shortcuts" [class.selected]="shortcut.key === pressed">
+          <code>
+            key: "{{shortcut.key}}",
+            preventDefault: {{!!shortcut.preventDefault}},
+            target: {{shortcut.target || false}}
+          </code>
+        </mat-list-item>
+      </mat-list>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Only on focus" #input>
+      </mat-form-field>
+      <div [innerHTML]="html | async"> </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
