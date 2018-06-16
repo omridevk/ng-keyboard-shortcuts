@@ -149,9 +149,20 @@ KeyboardShortcutsService class:
     add(shortcuts: ShortcutInput[], instance: any): KeyboardShortcutsService;
 
     /**
-    * remove a keyboard shortcut can be used for manual cleanup.
-    */
+     * remove a keyboard shortcut can be used for manual cleanup.
+     */
     remove(keys: string | string[]): KeyboardShortcutsService
+
+    /**
+     * disable all keyboard shortcuts
+     */
+    disable(): KeyboardShortcutsService
+
+    /**
+     * enable all keyboard shortcuts
+     */
+    enable(): KeyboardShortcutsService
+
 
 ```
 
@@ -159,4 +170,4 @@ KeyboardShortcutsService class:
 ## Building/Publishing
 
 1. ```npm run build-lib```
-2. ```npm publish dist```
+2. ```npm publish dist/ng-keyboard-shortcuts```
