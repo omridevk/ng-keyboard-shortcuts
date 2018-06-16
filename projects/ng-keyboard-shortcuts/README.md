@@ -143,10 +143,10 @@ KeyboardShortcutsService class:
     * Accept either array of Shortcuts or single Shortcut object.
     * when instance of a component is provided the shortcuts will be removed when the component is destroyed(make sure to define ngOnDestroy otherwise angular won't call it)
     * @param {Shortcut[] | Shortcut} shortcuts
-    * @param {any} instance - the instance of component, can be used for cleanup - make sure to add ngOnDestroy.
+    * @param {any} instance(Optional) - the instance of component, will be used for cleanup by the service **make sure to add ngOnDestroy**.
     * @returns {KeyboardShortcutsService}
     */
-    add(shortcuts: ShortcutInput[], instance: any): KeyboardShortcutsService;
+    add(shortcuts: ShortcutInput[], instance?: any): KeyboardShortcutsService;
 
     /**
      * remove a keyboard shortcut can be used for manual cleanup.
