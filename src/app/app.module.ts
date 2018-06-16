@@ -5,7 +5,6 @@ import { AppComponent }                                      from './app.compone
 import { KeyboardShortcutsModule, KeyboardShortcutsService } from 'ng-keyboard-shortcuts';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatListModule } from "@angular/material";
 
-
 @NgModule({
   imports: [
     BrowserModule,

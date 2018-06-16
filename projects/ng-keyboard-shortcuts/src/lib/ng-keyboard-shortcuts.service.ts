@@ -9,6 +9,8 @@ import {
 import { map, filter, tap, debounce, catchError } from "rxjs/operators";
 import { allPass, any, identity, isFunction, isNill } from "./utils";
 
+const $$ngOnDestroy = Symbol("OnDestroy");
+
 @Injectable({
     providedIn: "root"
 })
@@ -25,14 +27,23 @@ export class KeyboardShortcutsService implements OnDestroy {
     private throttleTime = 0;
 
     private _pressed = new Subject<ShortcutEventOutput>();
+
+    /**
+     * Streams of pressed events, can be used instead or with a command.
+     */
     public pressed$ = this._pressed.asObservable();
+
+    /**
+     * Disable all keyboard shortcuts
+     */
+    private disabled = false;
 
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
     /**
      * Subscription for on destroy.
      */
-    private subscription: Subscription;
+    private readonly subscription: Subscription;
 
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
@@ -62,6 +73,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
 
     private keydown$ = fromEvent(document, "keydown").pipe(
+        filter(_ => !this.disabled),
         map(this.mapEvent),
         filter(
             (shortcut: ParsedShortcut) =>
@@ -76,7 +88,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         catchError(error => throwError(error))
     );
 
-    public get shortcuts() {
+    private get shortcuts() {
         return this._shortcuts;
     }
 
@@ -94,14 +106,67 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
+     * Enable all keyboard shortcuts
+     */
+    enable() {
+        this.disabled = false;
+        return this;
+    }
+
+    /**
+     * Disable all keyboard shortcuts
+     */
+    disable() {
+        this.disabled = true;
+        return this;
+    }
+
+    /**
+     * Check if all keyboard shortcuts are disabled.
+     */
+    isDisabled() {
+        return this.disabled;
+    }
+
+    /**
      * Add new shortcut/s
      */
-    public add(shortcuts: ShortcutInput[] | ShortcutInput) {
-        if (Array.isArray(shortcuts)) {
-            shortcuts.forEach(shortcut => this._shortcuts.push(this.parseCommand(shortcut)));
-            return this;
+    public add(shortcuts: ShortcutInput[] | ShortcutInput, instance?: any) {
+        shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
+        if (instance) {
+            const [key] = [...shortcuts.map(shortcut => shortcut.key)];
+            this.bindOnDestroy(instance, key);
         }
-        this._shortcuts.push(this.parseCommand(shortcuts));
+
+        this._shortcuts.push(...this.parseCommand(shortcuts));
+        return this;
+    }
+
+    /**
+     *
+     * @param instance - component to remove keys when ngOnDestroy is called.
+     * @param keys
+     */
+    private bindOnDestroy(instance, keys) {
+        if (instance.ngOnDestroy) {
+            instance[$$ngOnDestroy] = instance.ngOnDestroy;
+        }
+        instance.ngOnDestroy = () => {
+            const onDestroy = instance[$$ngOnDestroy];
+            if (onDestroy) {
+                onDestroy.apply(instance);
+            }
+            this.remove(keys);
+        }
+    }
+
+    public remove(key) {
+        key = Array.isArray(key) ? key : [key];
+        this._shortcuts = this._shortcuts.filter(shortcut => {
+            return !shortcut.key.find(sKey => {
+                return key.filter(k => k === sKey).length > 0;
+            })
+        });
         return this;
     }
 
@@ -129,16 +194,20 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Parse each command using getKeys function
      */
-    private parseCommand(command: ShortcutInput): ParsedShortcut {
-        const keys = Array.isArray(command.key) ? command.key : [command.key];
-        const priority = Math.max(...keys.map(key => key.split(" ").length));
-        const predicates = keys.map(key => this.getKeys(key.split(" ")));
-        return Object.assign({}, command, {
-            allowIn: command.allowIn || [],
-            key: keys,
-            throttle: isNill(command.throttleTime) ? this.throttleTime : command.throttleTime,
-            priority: priority,
-            predicates: predicates
+    private parseCommand(command: ShortcutInput | ShortcutInput[]): ParsedShortcut[] {
+        const commands = Array.isArray(command) ? command : [command];
+        return commands.map(command => {
+            const keys = Array.isArray(command.key) ? command.key : [command.key];
+            const priority = Math.max(...keys.map(key => key.split(" ").length));
+            const predicates = keys.map(key => this.getKeys(key.split(" ")));
+            return {
+                ...command,
+                allowIn: command.allowIn || [],
+                key: keys,
+                throttle: isNill(command.throttleTime) ? this.throttleTime : command.throttleTime,
+                priority: priority,
+                predicates: predicates
+            } as ParsedShortcut;
         });
     }
 }
