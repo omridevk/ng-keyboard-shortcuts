@@ -8,7 +8,7 @@
     "test": "ng test",
     "npm-pack": "cd dist/ng-keyboard-shortcuts && npm pack",
     "build-lib": "ng build --prod ng-keyboard-shortcuts",
-    "publish": "npm publish dist/ng-keyboard-shortcuts",
+    "publish": "npm run build-lib && npm publish dist/ng-keyboard-shortcuts",
     "package": "npm run build-lib && npm run npm-pack",
     "lint": "ng lint",
     "e2e": "ng e2e"
