@@ -49,7 +49,7 @@ export class AppComponent implements AfterViewInit {
             {
                 key: "cmd + t",
                 preventDefault: true,
-                command: (e) => console.log("clicked stuff cmd + t")
+                command: e => console.log("clicked " , e.key)
             },
             {
                 key: "cmd + shift + f",
@@ -76,21 +76,16 @@ export class AppComponent implements AfterViewInit {
         this.keyboard.add(this.shortcuts);
         this.keyboard.add({
             key: "cmd + c",
-            command: (e) => console.log(this.pressed = e.key),
+            command: e => console.log((this.pressed = e.key)),
             preventDefault: true
         });
-        const clicks$ = fromEvent(this.clearButton._getHostElement(), 'click');
-
-        this.html$ = merge(
-            clicks$,
-            this.clear$,
-            this.keyboard.pressed$
-        ).pipe(
+        const clicks$ = fromEvent(this.clearButton._getHostElement(), "click");
+        this.html$ = merge(clicks$, this.clear$, this.keyboard.pressed$).pipe(
             scan((acc, event: ShortcutEventOutput) => {
                 if (!event || !event.key) {
-                    return '';
+                    return "";
                 }
-                return `<div>${event.key}</div>${acc}`
+                return `<div>${event.key}</div>${acc}`;
             }, "")
         );
     }

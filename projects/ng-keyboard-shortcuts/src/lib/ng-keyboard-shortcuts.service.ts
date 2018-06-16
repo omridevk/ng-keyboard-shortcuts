@@ -151,13 +151,14 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (instance.ngOnDestroy) {
             instance[$$ngOnDestroy] = instance.ngOnDestroy;
         }
-        instance.ngOnDestroy = () => {
+        const that = this;
+        instance.ngOnDestroy = function() {
             const onDestroy = instance[$$ngOnDestroy];
             if (onDestroy) {
-                onDestroy.apply(instance);
+                onDestroy.apply(this);
             }
-            this.remove(keys);
-        }
+            that.remove(keys);
+        };
     }
 
     public remove(key) {
@@ -165,7 +166,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         this._shortcuts = this._shortcuts.filter(shortcut => {
             return !shortcut.key.find(sKey => {
                 return key.filter(k => k === sKey).length > 0;
-            })
+            });
         });
         return this;
     }
