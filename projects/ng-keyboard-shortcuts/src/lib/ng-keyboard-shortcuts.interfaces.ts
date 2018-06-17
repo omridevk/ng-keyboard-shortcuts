@@ -57,5 +57,5 @@ export interface ShortcutEventOutput {
      * The browser keyboard event
      */
     event: KeyboardEvent;
-    key: string | string[];
+    key: string[];
 }

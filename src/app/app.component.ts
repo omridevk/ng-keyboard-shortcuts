@@ -79,8 +79,9 @@ export class AppComponent implements AfterViewInit {
             command: e => console.log((this.pressed = e.key)),
             preventDefault: true
         });
+        const commandC$ = this.keyboard.select('cmd + c');
         const clicks$ = fromEvent(this.clearButton._getHostElement(), "click");
-        this.html$ = merge(clicks$, this.clear$, this.keyboard.pressed$).pipe(
+        this.html$ = merge(clicks$, this.clear$, this.keyboard.pressed$, commandC$).pipe(
             scan((acc, event: ShortcutEventOutput) => {
                 if (!event || !event.key) {
                     return "";

@@ -11,9 +11,7 @@ import { allPass, any, identity, isFunction, isNill } from "./utils";
 
 const $$ngOnDestroy = Symbol("OnDestroy");
 
-@Injectable({
-    providedIn: "root"
-})
+@Injectable()
 export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Parsed shortcuts
@@ -108,7 +106,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Enable all keyboard shortcuts
      */
-    enable() {
+    enable(): KeyboardShortcutsService {
         this.disabled = false;
         return this;
     }
@@ -116,7 +114,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Disable all keyboard shortcuts
      */
-    disable() {
+    disable(): KeyboardShortcutsService {
         this.disabled = true;
         return this;
     }
@@ -131,7 +129,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Add new shortcut/s
      */
-    public add(shortcuts: ShortcutInput[] | ShortcutInput, instance?: any) {
+    public add(shortcuts: ShortcutInput[] | ShortcutInput, instance?: any): KeyboardShortcutsService {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
         if (instance) {
             const [key] = [...shortcuts.map(shortcut => shortcut.key)];
@@ -143,11 +141,12 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
-     *
+     * bind to the component ngOnDestroy to remove related keys
+     * when component is destroyed.
      * @param instance - component to remove keys when ngOnDestroy is called.
      * @param keys
      */
-    private bindOnDestroy(instance, keys) {
+    private bindOnDestroy(instance: any, keys: string | string[]): KeyboardShortcutsService {
         if (instance.ngOnDestroy) {
             instance[$$ngOnDestroy] = instance.ngOnDestroy;
         }
@@ -159,16 +158,35 @@ export class KeyboardShortcutsService implements OnDestroy {
             }
             that.remove(keys);
         };
+        return this;
     }
 
-    public remove(key) {
-        key = Array.isArray(key) ? key : [key];
+    /**
+     * Remove a command based on key or array of keys.
+     * can be used for cleanup.
+     * @param key
+     * @returns
+     */
+    public remove(key: string | string[]): KeyboardShortcutsService {
+        const keys: string[] = Array.isArray(key) ? key : [key];
         this._shortcuts = this._shortcuts.filter(shortcut => {
             return !shortcut.key.find(sKey => {
-                return key.filter(k => k === sKey).length > 0;
+                return keys.filter(k => k === sKey).length > 0;
             });
         });
         return this;
+    }
+
+    /**
+     * Returns an observable of keyboard shortcut filtered by a specific key.
+     * @param key - the key to filter the observable by.
+     */
+    public select(key: string): Observable<ShortcutEventOutput> {
+        return this.pressed$.pipe(
+            filter(({event, key: eventKeys}) => {
+                return !!eventKeys.find(eventKey => eventKey === key)
+            })
+        )
     }
 
     /**
