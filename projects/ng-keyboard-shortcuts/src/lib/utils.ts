@@ -16,6 +16,10 @@ export const identity = x => x;
 
 export const isNill = x => x == null;
 
+export const difference = (first: any[], second: any[]) => {
+    return first.filter(item => !second.includes(item));
+};
+
 export const allPass = preds => (...args) => {
   let idx = 0;
   const len = preds.length;

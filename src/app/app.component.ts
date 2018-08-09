@@ -47,8 +47,9 @@ export class AppComponent implements AfterViewInit {
                 command: (output: ShortcutEventOutput) => (this.pressed = output.key)
             },
             {
-                key: "cmd + t",
+                key: "ctrl + t",
                 preventDefault: true,
+                allowIn: ['TEXTAREA'],
                 command: e => console.log("clicked " , e.key)
             },
             {

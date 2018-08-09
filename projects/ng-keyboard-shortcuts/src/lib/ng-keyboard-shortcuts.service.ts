@@ -7,7 +7,7 @@ import {
     ShortcutInput
 } from "./ng-keyboard-shortcuts.interfaces";
 import { map, filter, tap, debounce, catchError } from "rxjs/operators";
-import { allPass, any, identity, isFunction, isNill } from "./utils";
+import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
 
 const $$ngOnDestroy = Symbol("OnDestroy");
 
@@ -49,7 +49,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             return true;
         }
         if (shortcut.allowIn.length) {
-            return shortcut.allowIn.includes(target.nodeName);
+            return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
         }
         return !this._ignored.includes(target.nodeName);
     };
