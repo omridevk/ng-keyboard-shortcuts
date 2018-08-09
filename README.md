@@ -2,6 +2,8 @@
 
 An angular module that exposes a service for creating keyboard shortcuts using a simple configuration object like Visual Studio Code key bindings.
 
+Compatible with Angular 6+
+
 ### Download:
 
 npm install --save ng-keyboard-shortcuts
