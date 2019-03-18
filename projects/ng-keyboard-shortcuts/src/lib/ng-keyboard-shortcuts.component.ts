@@ -8,11 +8,25 @@ import { ShortcutInput } from "./ng-keyboard-shortcuts.interfaces";
 })
 export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
+    /**
+     * A list of shortcuts.
+     * @type ShortcutInput[] | ShortcutInput
+     */
     @Input() shortcuts: ShortcutInput[] | ShortcutInput = [];
 
+    /**
+     * list of registered keyboard shortcuts
+     * used for clean up on NgDestroy.
+     * @type string[]
+     */
     private clearIds : string[] = [];
 
+
     private _disabled: boolean = false;
+    /**
+     * Disable all shortcuts for this component.
+     * @type {boolean}
+     */
     @Input() set disabled(value) {
         this._disabled = value;
         if (this.clearIds) {
@@ -31,6 +45,11 @@ export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnCh
 
     ngOnInit() {}
 
+    /**
+     * Select a key to listen to, will emit when the selected key is pressed.
+     * @param {string} key
+     * @returns {Observable<ShortcutEventOutput>}
+     */
     public select(key: string) {
         return this.keyboard.select(key);
     }
