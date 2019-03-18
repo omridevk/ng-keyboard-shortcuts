@@ -30,3 +30,8 @@ export const allPass = preds => (...args) => {
     }
     return true;
 };
+
+export const guid = () =>
+    Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);

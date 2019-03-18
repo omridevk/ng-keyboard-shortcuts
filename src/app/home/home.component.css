@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 24em;
+    justify-content: center;
+}
+.example-card {
+    max-width: 1170px;
+}
+.selected {
+    font-weight: bold;
+}

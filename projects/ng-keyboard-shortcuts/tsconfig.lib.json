@@ -20,6 +20,7 @@
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    "enableResourceInlining": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,

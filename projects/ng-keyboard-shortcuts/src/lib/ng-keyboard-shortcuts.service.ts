@@ -1,17 +1,28 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Inject, Injectable, InjectionToken, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
 import { fromEvent, Subscription, timer, Subject, throwError, Observable } from "rxjs";
 import {
     ShortcutEventOutput,
     ParsedShortcut,
-    ShortcutInput
+    ShortcutInput, KeyboardShortcutConfig
 } from "./ng-keyboard-shortcuts.interfaces";
 import { map, filter, tap, debounce, catchError } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
+import { BodyPortal } from "./body-portal.service";
 
-const $$ngOnDestroy = Symbol("OnDestroy");
+/**
+ * This is not a real service, but it looks like it from the outside.
+ * It's just an InjectionTToken used to import the config object, provided from the outside
+ */
+export const KeyboardShortcutConfigToken = new InjectionToken<KeyboardShortcutConfig>(
+    "KeyboardShortcutConfig"
+);
 
-@Injectable()
+let guid = 0;
+
+@Injectable({
+    providedIn: 'root',
+})
 export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Parsed shortcuts
@@ -54,8 +65,8 @@ export class KeyboardShortcutsService implements OnDestroy {
         return !this._ignored.includes(target.nodeName);
     };
 
-    private mapEvent = event =>
-        this._shortcuts
+    private mapEvent = event => {
+        return this._shortcuts
             .map(shortcut =>
                 Object.assign({}, shortcut, {
                     predicates: any(
@@ -69,6 +80,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), {
                 priority: 0
             } as ParsedShortcut);
+    }
 
     private keydown$ = fromEvent(document, "keydown").pipe(
         filter(_ => !this.disabled),
@@ -90,7 +102,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         return this._shortcuts;
     }
 
-    constructor() {
+    constructor(@Inject(KeyboardShortcutConfigToken) private config, private bodyPortal: BodyPortal) {
         this.subscription = this.keydown$.subscribe();
     }
 
@@ -104,75 +116,25 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
-     * Enable all keyboard shortcuts
-     */
-    enable(): KeyboardShortcutsService {
-        this.disabled = false;
-        return this;
-    }
-
-    /**
-     * Disable all keyboard shortcuts
-     */
-    disable(): KeyboardShortcutsService {
-        this.disabled = true;
-        return this;
-    }
-
-    /**
-     * Check if all keyboard shortcuts are disabled.
-     */
-    isDisabled() {
-        return this.disabled;
-    }
-
-    /**
      * Add new shortcut/s
      */
-    public add(shortcuts: ShortcutInput[] | ShortcutInput, instance?: any): KeyboardShortcutsService {
+    public add(shortcuts: ShortcutInput[] | ShortcutInput): string[] {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
-        if (instance) {
-            const [key] = [...shortcuts.map(shortcut => shortcut.key)];
-            this.bindOnDestroy(instance, key);
-        }
-
-        this._shortcuts.push(...this.parseCommand(shortcuts));
-        return this;
-    }
-
-    /**
-     * bind to the component ngOnDestroy to remove related keys
-     * when component is destroyed.
-     * @param instance - component to remove keys when ngOnDestroy is called.
-     * @param keys
-     */
-    private bindOnDestroy(instance: any, keys: string | string[]): KeyboardShortcutsService {
-        if (instance.ngOnDestroy) {
-            instance[$$ngOnDestroy] = instance.ngOnDestroy;
-        }
-        const that = this;
-        instance.ngOnDestroy = function() {
-            const onDestroy = instance[$$ngOnDestroy];
-            if (onDestroy) {
-                onDestroy.apply(this);
-            }
-            that.remove(keys);
-        };
-        return this;
+        const commands = this.parseCommand(shortcuts);
+        this._shortcuts.push(...commands);
+        return commands.map(command => command.id);
     }
 
     /**
      * Remove a command based on key or array of keys.
      * can be used for cleanup.
-     * @param key
      * @returns
+     * @param ids
      */
-    public remove(key: string | string[]): KeyboardShortcutsService {
-        const keys: string[] = Array.isArray(key) ? key : [key];
+    public remove(ids: string | string[]): KeyboardShortcutsService {
+        ids = Array.isArray(ids) ? ids : [ids];
         this._shortcuts = this._shortcuts.filter(shortcut => {
-            return !shortcut.key.find(sKey => {
-                return keys.filter(k => k === sKey).length > 0;
-            });
+            return !ids.includes(shortcut.id);
         });
         return this;
     }
@@ -223,6 +185,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                 ...command,
                 allowIn: command.allowIn || [],
                 key: keys,
+                id: `${guid++}`,
                 throttle: isNill(command.throttleTime) ? this.throttleTime : command.throttleTime,
                 priority: priority,
                 predicates: predicates

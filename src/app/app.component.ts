@@ -1,101 +1,29 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { KeyboardShortcutsService } from "ng-keyboard-shortcuts";
-import { ShortcutEventOutput } from "ng-keyboard-shortcuts";
-import { scan } from "rxjs/operators";
-import { ShortcutInput } from "ng-keyboard-shortcuts/lib/ng-keyboard-shortcuts.interfaces";
-import { fromEvent, merge, Subject } from "rxjs";
-import { MatButton } from "@angular/material";
-
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
+import { MediaMatcher } from "@angular/cdk/layout";
 @Component({
     selector: "demo-app",
     templateUrl: "./app.component.html",
     styles: [
-        `
-      .wrapper {
-        display: flex;
-        align-items: center;
-        min-height: 24em;
-        justify-content: center;
-      }
-      .example-card {
-        max-width: 1170px;
-      }
-      .selected {
-        font-weight: bold;
-      }
-    `
     ]
 })
 export class AppComponent implements AfterViewInit {
-    private html$;
 
-    private _clear = new Subject();
-    private clear$ = this._clear.asObservable();
+    mobileQuery: MediaQueryList;
 
-    ngAfterViewInit(): void {
-        this.shortcuts.push(
-            {
-                key: "ctrl + shift + g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "ctrl + shift + f",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "ctrl + t",
-                preventDefault: true,
-                allowIn: ['TEXTAREA'],
-                command: e => console.log("clicked " , e.key)
-            },
-            {
-                key: "cmd + shift + f",
-                command: (output: ShortcutEventOutput) =>
-                    (this.input.nativeElement.value = this.pressed = output.key),
-                preventDefault: true,
-                throttleTime: 250,
-                target: this.input.nativeElement
-            },
-            {
-                key: "cmd + =",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key),
-                preventDefault: true
-            },
-            {
-                key: "cmd + f",
-                command: (output: ShortcutEventOutput) => {
-                    this.pressed = output.key;
-                    this._clear.next();
-                },
-                preventDefault: true
-            }
-        );
-        this.keyboard.add(this.shortcuts);
-        this.keyboard.add({
-            key: "cmd + c",
-            command: e => console.log((this.pressed = e.key)),
-            preventDefault: true
-        });
-        const commandC$ = this.keyboard.select('cmd + c');
-        const clicks$ = fromEvent(this.clearButton._getHostElement(), "click");
-        this.html$ = merge(clicks$, this.clear$, this.keyboard.pressed$, commandC$).pipe(
-            scan((acc, event: ShortcutEventOutput) => {
-                if (!event || !event.key) {
-                    return "";
-                }
-                return `<div>${event.key}</div>${acc}`;
-            }, "")
-        );
+    private _mobileQueryListener: () => void;
+
+    constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQuery.addListener(this._mobileQueryListener);
     }
-    pressed: string | string[];
 
-    @ViewChild("input") private input: ElementRef;
-    @ViewChild("clear") private clearButton: MatButton;
-    shortcuts: ShortcutInput[] = [];
+    ngOnDestroy(): void {
+        this.mobileQuery.removeListener(this._mobileQueryListener);
+    }
 
-    constructor(public keyboard: KeyboardShortcutsService) {}
+    public showHelp = false;
+    ngAfterViewInit(): void {
+    }
+
 }

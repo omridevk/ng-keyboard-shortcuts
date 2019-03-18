@@ -1,3 +1,5 @@
+import { InjectionToken } from "@angular/core";
+
 export interface ShortcutBase {
     /**
      * callback to be called when shortcut is pressed.
@@ -49,6 +51,7 @@ export interface ShortcutInput extends ShortcutBase {
 
 export interface ParsedShortcut extends Shortcut {
     predicates: Function[][];
+    id: string;
     priority?: number;
     event?: KeyboardEvent;
 }
@@ -59,3 +62,9 @@ export interface ShortcutEventOutput {
     event: KeyboardEvent;
     key: string[];
 }
+
+export interface KeyboardShortcutConfig {
+    showHelp: boolean;
+    key: string;
+}
+
