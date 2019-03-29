@@ -2,10 +2,28 @@
 
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.
 
+This documentation is for version 7.0.0 for version 2.0.0 please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
+
+
+####__important note__
+We recommend to update to version 7.0.0 and use the new component API which has a better memory management than previous version.
 
 Compatible with Angular 5+
 
-### Download:
+
+* [Install](#install)
+* [Setup](#setup)
+* [Usage](#usage)
+    * [Component](#component)
+    * [Directive](#directive)
+* [API](#api)
+    * [Types](#types)
+* [Building](#building)
+* [Publishing](#publishing)
+* [License](#License)
+
+
+# Install:
 
 ```npm install --save ng-keyboard-shortcuts```
 
@@ -13,9 +31,7 @@ Compatible with Angular 5+
 
 ``` yarn add ng-keyboard-shortcuts```
 
-## Getting Started:
-
-### Import:
+# Setup:
 ```typescript
 import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
 
@@ -34,11 +50,10 @@ export class AppModule {
 
 
 
-### Usage:
+# Usage:
 
 
-
-Example:
+## Component
 ```typescript
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
@@ -88,9 +103,34 @@ export class DemoComponent implements AfterViewInit {
 }
 ```
 
-### API:
+## Directive
+```typescript
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
 
-#### Types:
+@Component({
+    selector: 'demo-component',
+    template: "<input ngKeyboardShortcut="shortcuts" />"
+})
+export class DemoComponent implements AfterViewInit {
+
+    shortcuts: ShortcutInput[] = [];
+    @ViewChild('input') input: ElementRef;
+
+    ngAfterViewInit(): void {
+        
+
+        this.keyboard.select("cmd + f").subscribe(e => console.log(e));
+    }
+
+    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
+
+}
+```
+
+# API:
+
+## Types:
 ```typescript
 
 export enum AllowIn {
@@ -153,12 +193,14 @@ type = ShortcutEventOutput {
 ```
 
 
-## Building/Publishing
+# Building
 
+```npm run build-lib```
+
+# Publishing
 1. ```npm run build-lib```
 2. ```npm publish dist/ng-keyboard-shortcuts```
 
-
-## License
+# License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

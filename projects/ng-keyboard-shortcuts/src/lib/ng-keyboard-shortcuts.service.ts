@@ -1,22 +1,14 @@
-import { Inject, Injectable, InjectionToken, OnDestroy } from "@angular/core";
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
 import { fromEvent, Subscription, timer, Subject, throwError, Observable } from "rxjs";
 import {
     ShortcutEventOutput,
     ParsedShortcut,
-    ShortcutInput, KeyboardShortcutConfig
+    ShortcutInput
 } from "./ng-keyboard-shortcuts.interfaces";
 import { map, filter, tap, debounce, catchError } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
-import { BodyPortal } from "./body-portal.service";
 
-/**
- * This is not a real service, but it looks like it from the outside.
- * It's just an InjectionTToken used to import the config object, provided from the outside
- */
-export const KeyboardShortcutConfigToken = new InjectionToken<KeyboardShortcutConfig>(
-    "KeyboardShortcutConfig"
-);
 
 let guid = 0;
 
@@ -102,7 +94,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         return this._shortcuts;
     }
 
-    constructor(@Inject(KeyboardShortcutConfigToken) private config) {
+    constructor() {
         this.subscription = this.keydown$.subscribe();
     }
 

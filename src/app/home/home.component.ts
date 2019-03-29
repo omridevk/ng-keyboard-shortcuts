@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             },
             {
                 key: "cmd + shift + f",
-                command: (output: ShortcutEventOutput) =>
-                    console.log(output),
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
                 throttleTime: 250,
                 target: this.input.nativeElement
@@ -35,9 +34,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             {
                 key: "cmd + f",
                 allowIn: [AllowIn.Input],
-                command: (output: ShortcutEventOutput) => {
-                    console.log('here');
-                },
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
             }
         );
