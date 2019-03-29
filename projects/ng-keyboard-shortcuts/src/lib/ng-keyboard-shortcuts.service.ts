@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
-import { fromEvent, Subscription, timer, Subject, throwError, Observable } from "rxjs";
+import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject } from 'rxjs';
 import {
     ShortcutEventOutput,
     ParsedShortcut,
@@ -38,6 +38,9 @@ export class KeyboardShortcutsService implements OnDestroy {
      * Disable all keyboard shortcuts
      */
     private disabled = false;
+
+    private _shortcutsSub = new ReplaySubject<ParsedShortcut[]>(1);
+    public shortcuts$ = this._shortcutsSub.asObservable();
 
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
@@ -114,6 +117,9 @@ export class KeyboardShortcutsService implements OnDestroy {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
         const commands = this.parseCommand(shortcuts);
         this._shortcuts.push(...commands);
+        setTimeout(() => {
+            this._shortcutsSub.next(this._shortcuts);
+        });
         return commands.map(command => command.id);
     }
 

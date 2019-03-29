@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
+import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, KeyboardShortcutsHelpService} from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this.shortcuts.push(
             {
-                key: "ctrl + t",
+                key: "cmd + e",
+                label: "ctrl/cmd + e",
+                description: "Controlling/Commanding + E",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea],
                 command: e => console.log("clicked " , e.key)
@@ -22,6 +24,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             {
                 key: "F1",
                 preventDefault: true,
+                label: "help",
+                description: "Open Help menu",
                 allowIn: [AllowIn.Textarea],
                 command: e => console.log("clicked " , e.key)
             },
@@ -50,7 +54,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
 
-    constructor() {}
+    constructor() {
+    }
 
     ngOnInit(): void {
     }

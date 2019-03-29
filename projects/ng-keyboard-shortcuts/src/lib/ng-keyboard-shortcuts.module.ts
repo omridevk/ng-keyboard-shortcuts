@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { NgKeyboardShortcutsComponent } from "./ng-keyboard-shortcuts.component";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
+import { NgKeyboardShortcutsHelpService } from './ng-keyboard-shortcuts-help.service';
 
 
 
@@ -14,7 +15,8 @@ export class KeyboardShortcutsModule {
         return {
             ngModule: KeyboardShortcutsModule,
             providers: [
-                KeyboardShortcutsService
+                KeyboardShortcutsService,
+                NgKeyboardShortcutsHelpService
             ]
         };
     }
