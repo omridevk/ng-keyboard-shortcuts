@@ -1,13 +1,17 @@
 # ng-keyboard-shortcuts
 
-An angular module that exposes a service for creating keyboard shortcuts using a simple configuration object like Visual Studio Code key bindings.
+An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.
 
-Compatible with Angular 6+
+
+Compatible with Angular 5+
 
 ### Download:
 
-npm install --save ng-keyboard-shortcuts
+```npm install --save ng-keyboard-shortcuts```
 
+#####or yarn
+
+``` yarn add ng-keyboard-shortcuts```
 
 ## Getting Started:
 
@@ -15,14 +19,12 @@ npm install --save ng-keyboard-shortcuts
 ```typescript
 import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
 
-
 @NgModule({
     declarations: [
     ],
     imports: [
         BrowserModule,
-        FormsModule,
-        KeyboardShortcutsModule
+        KeyboardShortcutsModule.foRoot()
     ],
     bootstrap: [AppComponent]
 })
@@ -32,47 +34,56 @@ export class AppModule {
 
 
 
-### Using the service:
+### Usage:
 
-Add the service to the providers array [Angular DI](https://angular.io/guide/hierarchical-dependency-injection)
 
-Add shortcuts by calling the service ```add``` method and providing it with a Shortcut type (or array of shortcuts):
-``` { key: "ctrl + shift + g", command: (event) => console.log(event) } ```
 
 Example:
 ```typescript
+
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
+
 @Component({
     selector: 'demo-component',
-    template: "<h2> new component </h2>"
-    providers: [ KeyboardShortcutsService ]
+    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcut>"
 })
-export class DemoComponent implements OnInit {
+export class DemoComponent implements AfterViewInit {
 
-      constructor(private keyboard: KeyboardShortcutsService, private element: ElementRef) {
-           const target = this.element.nativeElement.querySelector(".demo-input");
-           this.keyboard.add([
-                {
-                    key: 'ctrl f',
-                    command: () => console.log('ctrl + f')
-                },
-                {
-                    key: 'ctrl shift f',
-                    command: () => console.log('ctrl + shift + f'),
-                    target: target
-                },
-                {
-                    key: 'cmd f',
-                    command: () => console.log('cmd + f'),
-                    preventDefault: true
-                }
-            ]);
+    shortcuts: ShortcutInput[] = [];
+    @ViewChild('input') input: ElementRef;
 
+    ngAfterViewInit(): void {
+        this.shortcuts.push(
+            {
+                key: "ctrl + t",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input],
+                command: e => console.log("clicked " , e.key)
+            },
+            {
+                key: "cmd + shift + f",
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true,
+                throttleTime: 250,
+                target: this.input.nativeElement
+            },
+            {
+                key: ["cmd + =", "cmd + z"],
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true
+            },
+            {
+                key: "cmd + f",
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true
+            }
+        );
 
-            this.keyboard.add({
-                  key: ['cmd + shift + g', 'cmd + g'],
-                  command: ({event, key}) => console.log(key, event)
-            })
-      }
+        this.keyboard.select("cmd + f").subscribe(e => console.log(e));
+    }
+
+    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
 
 }
 ```
@@ -81,6 +92,13 @@ export class DemoComponent implements OnInit {
 
 #### Types:
 ```typescript
+
+export enum AllowIn {
+    Textarea = 'TEXTAREA',
+    Input = 'INPUT',
+    Select = "SELECT"
+}
+
 type ShortcutInput = {
 
   /**
@@ -108,7 +126,7 @@ type ShortcutInput = {
    * you can override this behavior by provided an array of nodeNames to allow in. example:
    * allowIn: ["TEXTAREA", "SELECT"]
    */
-  allowIn?: string[] ("TEXTAREA" | "SELECT" | "INPUT");
+  allowIn?: AllowIn;
 
   /**
    * Optional - provide a label to allow grouping to later on create an help menu if needed.
@@ -135,41 +153,12 @@ type = ShortcutEventOutput {
 ```
 
 
-
-#### Classes:
-```typescript
-KeyboardShortcutsService class:
-
-    /**
-    * Add new shortcut/s
-    * Accept either array of Shortcuts or single Shortcut object.
-    * when instance of a component is provided the shortcuts will be removed when the component is destroyed(make sure to define ngOnDestroy otherwise angular won't call it)
-    * @param {Shortcut[] | Shortcut} shortcuts
-    * @param {any} instance(Optional) - the instance of component, will be used for cleanup by the service **make sure to add ngOnDestroy**.
-    * @returns {KeyboardShortcutsService}
-    */
-    add(shortcuts: ShortcutInput[], instance?: any): KeyboardShortcutsService;
-
-    /**
-     * remove a keyboard shortcut can be used for manual cleanup.
-     */
-    remove(keys: string | string[]): KeyboardShortcutsService
-
-    /**
-     * disable all keyboard shortcuts
-     */
-    disable(): KeyboardShortcutsService
-
-    /**
-     * enable all keyboard shortcuts
-     */
-    enable(): KeyboardShortcutsService
-
-
-```
-
-
 ## Building/Publishing
 
 1. ```npm run build-lib```
 2. ```npm publish dist/ng-keyboard-shortcuts```
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

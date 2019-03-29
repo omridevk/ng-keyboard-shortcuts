@@ -22,7 +22,7 @@ export interface ShortcutBase {
      * this behavior.
      * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
      */
-    allowIn?: string[];
+    allowIn?: AllowIn[];
 
     /**
      * Label, can be used for grouping commands.
@@ -43,6 +43,12 @@ export interface ShortcutBase {
 export interface Shortcut extends ShortcutBase {
     key: string[];
     component?: any;
+}
+
+export enum AllowIn {
+    Textarea = 'TEXTAREA',
+    Input = 'INPUT',
+    Select = "SELECT"
 }
 
 export interface ShortcutInput extends ShortcutBase {

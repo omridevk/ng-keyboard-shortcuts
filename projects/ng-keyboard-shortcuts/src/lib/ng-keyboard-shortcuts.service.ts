@@ -102,7 +102,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         return this._shortcuts;
     }
 
-    constructor(@Inject(KeyboardShortcutConfigToken) private config, private bodyPortal: BodyPortal) {
+    constructor(@Inject(KeyboardShortcutConfigToken) private config) {
         this.subscription = this.keydown$.subscribe();
     }
 

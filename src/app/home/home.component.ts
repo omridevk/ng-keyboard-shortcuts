@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ShortcutInput, ShortcutEventOutput} from "ng-keyboard-shortcuts";
-import { MatButton } from "@angular/material";
-import { Subject } from "rxjs";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -10,59 +8,44 @@ import { Subject } from "rxjs";
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-    private html$;
-
-    private _clear = new Subject();
-    private clear$ = this._clear.asObservable();
+    shortcuts: ShortcutInput[] = [];
+    @ViewChild('input') input: ElementRef;
 
     ngAfterViewInit(): void {
         this.shortcuts.push(
             {
-                key: "ctrl + shift + g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "ctrl + shift + f",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
                 key: "ctrl + t",
                 preventDefault: true,
-                allowIn: ['TEXTAREA'],
+                allowIn: [AllowIn.Textarea],
                 command: e => console.log("clicked " , e.key)
             },
             {
                 key: "cmd + shift + f",
                 command: (output: ShortcutEventOutput) =>
-                    (this.input.nativeElement.value = this.pressed = output.key),
+                    console.log(output),
                 preventDefault: true,
                 throttleTime: 250,
                 target: this.input.nativeElement
             },
             {
                 key: "cmd + =",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key),
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
             },
             {
                 key: "cmd + f",
+                allowIn: [AllowIn.Input],
                 command: (output: ShortcutEventOutput) => {
-                    this.pressed = output.key;
-                    this._clear.next();
+                    console.log('here');
                 },
                 preventDefault: true
             }
         );
-    }
-    pressed: string | string[];
 
-    @ViewChild("input") private input: ElementRef;
-    @ViewChild("clear") private clearButton: MatButton;
-    shortcuts: ShortcutInput[] = [];
+        this.keyboard.select("cmd + f").subscribe(e => console.log(e));
+    }
+
+    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
 

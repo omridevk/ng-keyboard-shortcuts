@@ -1,6 +1,6 @@
 {
   "name": "ng-keyboard-shortcuts-app",
-  "version": "6.1.1",
+  "version": "7.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -27,6 +27,7 @@
     "@angular/platform-browser-dynamic": "^7.2.9",
     "@angular/router": "^7.2.9",
     "core-js": "^2.5.4",
+    "prettier": "^1.16.4",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.29"
   },

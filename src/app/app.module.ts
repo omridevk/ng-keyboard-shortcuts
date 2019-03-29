@@ -19,7 +19,8 @@ const keyboardShortcutConfig: KeyboardShortcutConfig = {
         KeyboardShortcutsModule.forRoot(keyboardShortcutConfig),
         BrowserAnimationsModule,
         MaterialModule,
-        AppRoutingModule
+        AppRoutingModule,
+        KeyboardShortcutsModule
     ],
     declarations: [AppComponent, GettingStartedComponent, HomeComponent],
     bootstrap: [AppComponent]

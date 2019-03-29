@@ -3,8 +3,7 @@ import { MediaMatcher } from "@angular/cdk/layout";
 @Component({
     selector: "demo-app",
     templateUrl: "./app.component.html",
-    styles: [
-    ]
+    styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements AfterViewInit {
 

@@ -3,8 +3,6 @@ import { NgKeyboardShortcutsComponent } from "./ng-keyboard-shortcuts.component"
 import { KeyboardShortcutConfigToken, KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { KeyboardShortcutConfig } from "./ng-keyboard-shortcuts.interfaces";
 import { NgKeyboardShortcutsHelpComponent } from './ng-keyboard-shortcuts-help.component';
-import { BodyPortal } from "./body-portal.service";
-import { Overlay } from "@angular/cdk/overlay";
 
 
 
@@ -18,8 +16,6 @@ export class KeyboardShortcutsModule {
         return {
             ngModule: KeyboardShortcutsModule,
             providers: [
-                BodyPortal,
-                Overlay,
                 KeyboardShortcutsService,
                 {
                     provide: KeyboardShortcutConfigToken,
