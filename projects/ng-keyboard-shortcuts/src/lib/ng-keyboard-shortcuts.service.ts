@@ -149,7 +149,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private getKeys = (command: string[]) =>
         command
-            .map(key => key.trim())
+            .map(key => key.trim().toLowerCase())
             .filter(key => key !== "+")
             .map(key => {
                 // for modifiers like control key

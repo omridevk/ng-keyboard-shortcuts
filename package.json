@@ -9,8 +9,8 @@
     "npm-pack": "cd dist/ng-keyboard-shortcuts && npm pack",
     "build:prod": "ng build --prod ng-keyboard-shortcuts",
     "build:watch": "ng build ng-keyboard-shortcuts --watch",
-    "publish": "npm run build-lib && npm publish dist/ng-keyboard-shortcuts",
-    "package": "npm run build-lib && npm run npm-pack",
+    "publish": "npm run build:prod && npm publish dist/ng-keyboard-shortcuts",
+    "package": "npm run build:prod && npm run npm-pack",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

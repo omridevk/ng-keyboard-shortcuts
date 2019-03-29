@@ -20,6 +20,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked " , e.key)
             },
             {
+                key: "F1",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea],
+                command: e => console.log("clicked " , e.key)
+            },
+            {
                 key: "cmd + shift + f",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
