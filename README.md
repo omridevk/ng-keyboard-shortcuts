@@ -63,14 +63,14 @@ export class AppModule {
 Component that can be used across the app to bind to various shortcuts
 
 #### Inputs:
-| Name   |      Type      |  default         | description |
+| Name   |      Type      |  Default         | Description |
 |----------|:-------------:|-----------------:  |:-------------:|  
 | shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcuts see [types](#types) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
 
 #### Methods:
-| Name  | input |description |
-|----------||:------:||:-------------:|
+| Name  | Input | Description |
+|----------|:------:|:-------------:|
 | select | `string` - key to listen to events (example: 'cmd + e') | Listen to specific key events (**will only work for registered keys**) |
 
 
