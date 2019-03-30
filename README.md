@@ -23,6 +23,10 @@ Compatible with Angular 5+
         * [KeyboardShortcutsHelpService](#KeyboardShortcutsHelpService)
 * [API](#api)
     * [Types](#types)
+        * [AllowIn](#AllowIn)
+        * [Shortcut](#Shortcut)
+        * [ShortcutInput](#ShortcutInput)
+        * [ShortcutEventOutput](#ShortcutEventOutput)
 * [Building](#building)
 * [Publishing](#publishing)
 * [License](#License)
@@ -65,7 +69,7 @@ Component that can be used across the app to bind to various shortcuts
 #### Inputs:
 | Name   |      Type      |  Default         | Description |
 |----------|:-------------:|-----------------:  |:-------------:|  
-| shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcuts see [types](#types) |
+| shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcut inputs types see [types](#ShortcutInput) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the component |
 
 #### Methods:
@@ -158,7 +162,7 @@ Directive that can only be used for focusable elements, such as textarea, select
 
 | Name   |      Type      |  default         | description |
 |----------|:-------------:|-----------------:  |:-------------:|  
-| ngKeyboardShortcut |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcuts see [types](#types) |
+| ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
 
 #### Inputs
@@ -252,7 +256,7 @@ export interface Shortcut {
 
 ### ShortcutInput
 Used for the component as input.
-
+```typescript
 export interface ShortcutInput extends Shortcut {
     /**
      * textarea, select and input are ignored by default, this is used to override
@@ -265,8 +269,11 @@ export interface ShortcutInput extends Shortcut {
      */
     target?: HTMLElement;
 }
+```
 
+### ShortcutEventOutput
 
+```typescript
 type = ShortcutEventOutput {
     event: KeyboardEvent;
     key: string | string[];
