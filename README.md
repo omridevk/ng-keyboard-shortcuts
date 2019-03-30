@@ -155,7 +155,7 @@ export class AppComponent {
 	<h1>
 		Welcome to {{ title }}!
 	</h1>
-	<ng-keyboard-shortcuts-help [key]="f1" [title]="Help"></ng-keyboard-shortcut-help>
+	<ng-keyboard-shortcuts-help [key]="'f1'" [title]="Help"></ng-keyboard-shortcut-help>
 </div>
 
 ```
