@@ -195,12 +195,12 @@ export class DemoComponent implements AfterViewInit {
 # Service
 ## KeyboardShortcutsHelpService
 
-Singleton service that can be used to render a custom help screen. (see[Built in help component](#ng-keyboard-shortcuts-help)
+Singleton service that can be used to render a custom help screen. (see [Built in help component](#ng-keyboard-shortcuts-help)
 Provides access to all registered shortcuts in the app using Observable that updates on shortcuts changes.
 Since shortcuts can be added or removed during the lifecycle of the app, an observable data structure needed to be used.
 
     | properties   |  type   | description |
-    |----------||:---------:||:-------------:|
+    |----------|:---------:|:-------------:|
     | shortcuts$ | ```Observable<{ key: string, label: string, description: string }>```| List of registered shortcuts across the whole app |
 
 # API:
