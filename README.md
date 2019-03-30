@@ -19,6 +19,8 @@ Compatible with Angular 5+
         * [HelpScreen](#ng-keyboard-shortcuts-help)
     * [Directive](#directive)
         * [ngKeyboardShortcut](#ngKeyboardShortcut)
+    * [Service](#service)
+        * [KeyboardShortcutsHelpService](#KeyboardShortcutsHelpService)
 * [API](#api)
     * [Types](#types)
 * [Building](#building)
@@ -115,7 +117,9 @@ export class DemoComponent implements AfterViewInit {
 }
 ```
 ### ng-keyboard-shortcuts-help
+Can be used to show an help screen ( will be attached to body and be shown as a modal)
 Should be placed in the root of your app, preferly in app.component.html
+
 
 `app.component.ts`
 ```typescript
@@ -182,6 +186,16 @@ export class DemoComponent implements AfterViewInit {
 
 }
 ```
+# Service
+## KeyboardShortcutsHelpService
+
+Singleton service that can be used to render a custom help screen. (see[Built in help component](#ng-keyboard-shortcuts-help)
+Provides access to all registered shortcuts in the app using Observable that updates on shortcuts changes.
+Since shortcuts can be added or removed during the lifecycle of the app, an observable data structure needed to be used.
+
+    | properties   |  type   | description |
+    |----------||:---------:||:-------------:|
+    | shortcuts$ | ```Observable<{ key: string, label: string, description: string }>```| List of registered shortcuts across the whole app |
 
 # API:
 
