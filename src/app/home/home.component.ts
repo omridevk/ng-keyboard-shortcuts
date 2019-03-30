@@ -9,7 +9,7 @@ import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput
 export class HomeComponent implements OnInit, AfterViewInit {
 
     shortcuts: ShortcutInput[] = [];
-    directiveShortcuts: ShortcutDirectiveInput[];
+    directiveShortcuts: ShortcutDirectiveInput[] = [];
     public directiveDisabled = false;
     handleClick() {
         this.directiveDisabled = !this.directiveDisabled;
@@ -55,14 +55,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             }
         );
-        setTimeout(() => {
-            this.directiveShortcuts = [{
-                key: "cmd + e",
-                label: "test",
-                description: "hello world",
-                command: () => console.log('directive cmd + e'),
-                preventDefault: true
-            }];
+        this.directiveShortcuts.push({
+            key: "cmd + e",
+            label: "test",
+            description: "hello world",
+            command: () => console.log('directive cmd + e'),
+            preventDefault: true
         });
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }

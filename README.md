@@ -140,7 +140,13 @@ export class DemoComponent implements AfterViewInit {
     @ViewChild('input') input: ElementRef;
 
     ngAfterViewInit(): void {
-        
+        this.shortcuts.push({
+            key: "cmd + e",
+            label: "test",
+            description: "hello world",
+            command: () => console.log('directive cmd + e'),
+            preventDefault: true
+        });
 
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
