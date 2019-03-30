@@ -15,7 +15,7 @@ Compatible with Angular 5+
 * [Setup](#setup)
 * [Usage](#usage)
     * [Components](#components)
-        * [Keyboardshortcuts](#ng-keyboard-shortcuts)
+        * [Keyboardshortcuts](#ng-keyboard-shortcuts-1)
         * [HelpScreen](#ng-keyboard-shortcuts-help)
     * [Directive](#directive)
         * [ngKeyboardShortcut](#ngKeyboardShortcut)
