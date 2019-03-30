@@ -1,12 +1,12 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
-import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject } from 'rxjs';
+import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject, BehaviorSubject } from "rxjs";
 import {
     ShortcutEventOutput,
     ParsedShortcut,
     ShortcutInput
 } from "./ng-keyboard-shortcuts.interfaces";
-import { map, filter, tap, debounce, catchError } from "rxjs/operators";
+import { map, filter, tap, throttle, catchError } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
 
 
@@ -39,8 +39,8 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private disabled = false;
 
-    private _shortcutsSub = new ReplaySubject<ParsedShortcut[]>(1);
-    public shortcuts$ = this._shortcutsSub.asObservable();
+    private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
+    public shortcuts$ = this._shortcutsSub.asObservable().pipe(filter(shortcuts => !!shortcuts.length));
 
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
@@ -87,7 +87,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
         filter(this.isAllowed),
         tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
-        debounce(shortcut => timer(shortcut.throttleTime)),
+        throttle(shortcut => timer(shortcut.throttleTime)),
         tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
         catchError(error => throwError(error))

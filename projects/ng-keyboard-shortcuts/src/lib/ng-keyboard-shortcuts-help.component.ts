@@ -3,8 +3,12 @@ import {
     Component,
     ComponentFactoryResolver,
     Injector,
-    Input, OnChanges, OnDestroy,
-    OnInit, SimpleChange, SimpleChanges,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChange,
+    SimpleChanges,
     TemplateRef,
     ViewChild,
     ViewContainerRef
@@ -13,11 +17,37 @@ import { DomPortalOutlet } from "./dom-portal-outlet";
 import { TemplatePortal } from "./portal";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { NgKeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
-import { animate, style, transition, trigger } from '@angular/animations';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { animate, style, transition, trigger } from "@angular/animations";
+import { distinctUntilChanged } from "rxjs/operators";
 import { groupBy } from "./utils";
 import { map } from "rxjs/internal/operators";
 import { SubscriptionLike } from "rxjs";
+
+const scrollAbleKeys = new Map([[31, 1], [38,1], [39, 1], [40, 1]]);
+const preventDefault = e => {
+    e = e || window.event;
+    if (e.preventDefault) e.preventDefault();
+    e.returnValue = false;
+};
+
+const preventDefaultForScrollKeys = e => {
+    if (!scrollAbleKeys.has(e.keyCode)) {
+        return;
+    }
+    preventDefault(e);
+    return false;
+};
+const scrollEvents = ['wheel', 'touchmove', 'DOMMouseScroll'];
+
+const disableScroll = () => {
+    scrollEvents.forEach(event => window.addEventListener(event, preventDefault, false));
+    window.addEventListener('keydown', preventDefaultForScrollKeys);
+};
+
+const enableScroll = () => {
+    scrollEvents.forEach(event => window.removeEventListener(event, preventDefault));
+    window.removeEventListener('keydown', preventDefaultForScrollKeys);
+};
 
 @Component({
     selector: "ng-keyboard-shortcuts-help",
@@ -50,12 +80,13 @@ import { SubscriptionLike } from "rxjs";
                 animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 0 }))
             ])
         ])
-    ],
+    ]
 })
 export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
-    @Input() attachToBody = true;
+    @Input() disableScrolling = true;
     private _key: string;
-    @Input() set key(value: string) {
+    @Input()
+    set key(value: string) {
         this._key = value;
         if (!value) {
             return;
@@ -68,11 +99,11 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     }
     @Input() title = "Keyboard shortcuts";
     @Input() emptyMessage = "No shortcuts available";
-    shortcuts: {label: string, key: string | string[], description: string}[];
-    labels: string[];
     @ViewChild(TemplateRef) template: TemplateRef<any>;
-
+    shortcuts: { label: string; key: string | string[]; description: string }[];
     showing = false;
+    labels: string[];
+
     private bodyPortalHost: DomPortalOutlet;
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -91,7 +122,9 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     }
     reveal() {
         this.hide();
-
+        if (this.disableScrolling) {
+            disableScroll();
+        }
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
         this.showing = true;
@@ -102,6 +135,9 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     }
 
     hide() {
+        if (this.disableScrolling) {
+            enableScroll();
+        }
         if (!this.bodyPortalHost.hasAttached()) {
             return;
         }
@@ -121,7 +157,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         }
     }
     toggle() {
-      this.visible() ? this.hide() : this.reveal();
+        this.visible() ? this.hide() : this.reveal();
     }
 
     private subscription: SubscriptionLike;
@@ -129,12 +165,11 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     private timeoutId;
 
     ngOnInit() {
-        this.subscription = this.keyboardHelp.shortcuts$.pipe(
-            distinctUntilChanged(),
-            map(shortcuts => groupBy(shortcuts, 'label'))
-        ).subscribe(shortcuts => {
-            this.shortcuts = shortcuts;
-            this.labels = Object.keys(shortcuts);
-        });
+        this.subscription = this.keyboardHelp.shortcuts$
+            .pipe(distinctUntilChanged(), map(shortcuts => groupBy(shortcuts, "label")))
+            .subscribe(shortcuts => {
+                this.shortcuts = shortcuts;
+                this.labels = Object.keys(shortcuts);
+            });
     }
 }

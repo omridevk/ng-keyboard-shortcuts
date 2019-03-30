@@ -170,6 +170,7 @@ Directive that can only be used for focusable elements, such as textarea, select
 |----------|:-------------:|-----------------:  |:-------------:|  
 | ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
+| disableScrolling | `boolean` | `true` | disable body scrolling while modal is open |
 
 #### Inputs
 

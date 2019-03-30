@@ -4,6 +4,8 @@ An Angular module that provides a declarative API using components/directive to 
 
 This documentation is for version **^7.0.0** for version **2.0.0** please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
 
+See demo here:
+[demo](https://codesandbox.io/s/yvyovny43v)
 
 #### important note
 We recommend to update to version **7.0.0** and use the new component API which has a better memory management than previous version.
@@ -168,6 +170,7 @@ Directive that can only be used for focusable elements, such as textarea, select
 |----------|:-------------:|-----------------:  |:-------------:|
 | ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
+| disableScrolling | `boolean` | `true` | disable body scrolling while modal is open |
 
 #### Inputs
 

@@ -12,6 +12,8 @@ export class GettingStartedComponent implements OnInit, AfterViewInit, OnDestroy
     shortcuts: ShortcutInput[] = [
         {
             key: "ctrl + t",
+            description: "ctrl + t",
+            label: "help",
             command: () => console.log("control + t clicked")
         }
     ];
