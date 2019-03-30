@@ -52,9 +52,20 @@ import { SubscriptionLike } from "rxjs";
         ])
     ],
 })
-export class NgKeyboardShortcutsHelpComponent implements OnInit, OnChanges, OnDestroy {
+export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     @Input() attachToBody = true;
-    @Input() key: string;
+    private _key: string;
+    @Input() set key(value: string) {
+        this._key = value;
+        if (!value) {
+            return;
+        }
+        this.clearIds = this.keyboard.add({
+            key: value,
+            preventDefault: true,
+            command: () => this.toggle()
+        });
+    }
     @Input() title = "Keyboard shortcuts";
     @Input() emptyMessage = "No shortcuts available";
     shortcuts: {label: string, key: string | string[], description: string}[];
@@ -124,26 +135,6 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnChanges, OnDe
         ).subscribe(shortcuts => {
             this.shortcuts = shortcuts;
             this.labels = Object.keys(shortcuts);
-        });
-    }
-
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.clearIds) {
-            this.keyboard.remove(this.clearIds);
-        }
-        if (!changes.key.currentValue) {
-            return;
-        }
-        if (this.timeoutId) {
-            clearTimeout(this.timeoutId);
-        }
-        this.timeoutId = setTimeout(() => {
-            this.clearIds = this.keyboard.add({
-                key: this.key,
-                preventDefault: true,
-                command: () => this.toggle()
-            });
         });
     }
 }
