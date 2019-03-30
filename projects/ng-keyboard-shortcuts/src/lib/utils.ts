@@ -15,6 +15,12 @@ export const any = (fn: Function, list: any[]) => {
 export const identity = x => x;
 
 export const isNill = x => x == null;
+export const groupBy = (xs, key) => {
+    return xs.reduce((rv, x) => {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
 
 export const difference = (first: any[], second: any[]) =>
     first.filter(item => !second.includes(item));

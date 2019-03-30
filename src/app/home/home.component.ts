@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.shortcuts.push(
             {
                 key: "cmd + e",
-                label: "ctrl/cmd + e",
+                label: "help",
                 description: "Controlling/Commanding + E",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea],
@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             },
             {
                 key: "cmd + =",
+                label: "help",
+                description: "zoom out",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
             },

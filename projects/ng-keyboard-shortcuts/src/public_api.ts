@@ -7,3 +7,4 @@ export { ShortcutInput, ShortcutEventOutput, AllowIn, Shortcut as ShortcutDirect
 export { NgKeyboardShortcutsHelpService as KeyboardShortcutsHelpService } from './lib/ng-keyboard-shortcuts-help.service';
 export { NgKeyboardShortcutsComponent as KeyboardShortcutsComponent } from './lib/ng-keyboard-shortcuts.component';
 export { NgKeyboardShortcutsDirective as KeyboardShortcutsDirective } from './lib/ng-keyboard-shortcuts.directive';
+export {NgKeyboardShortcutsHelpComponent as KeyboardShortcutsHelpComponent} from './lib/ng-keyboard-shortcuts-help.component';
