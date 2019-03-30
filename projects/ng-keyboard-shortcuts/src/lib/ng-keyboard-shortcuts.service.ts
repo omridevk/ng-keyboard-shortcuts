@@ -134,6 +134,9 @@ export class KeyboardShortcutsService implements OnDestroy {
         this._shortcuts = this._shortcuts.filter(shortcut => {
             return !ids.includes(shortcut.id);
         });
+        setTimeout(() => {
+            this._shortcutsSub.next(this._shortcuts);
+        })
         return this;
     }
 

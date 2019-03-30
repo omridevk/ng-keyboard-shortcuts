@@ -8,7 +8,28 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
     private clearIds;
     @Input() ngKeyboardShortcuts: Shortcut[];
+    private _disabled = false;
+    @Input() set disabled(value) {
+        this._disabled = value;
+        if (this.clearIds) {
+            this.keyboard.remove(this.clearIds);
+        }
+        setTimeout(() => {
+            if (value === false && this.ngKeyboardShortcuts) {
+                this.clearIds = this.keyboard.add(this.transformInput(this.ngKeyboardShortcuts));
+            }
+        })
+
+    }
     constructor(private keyboard: KeyboardShortcutsService, private el: ElementRef) {}
+
+    transformInput(shortcuts: Shortcut[]) {
+        return shortcuts.map(shortcut => ({
+            ...shortcut,
+            target: this.el.nativeElement,
+            allowIn: [AllowIn.Select, AllowIn.Input, AllowIn.Textarea]
+        }));
+    }
 
     ngOnDestroy() {
         if (!this.clearIds) {
@@ -22,14 +43,9 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
-        if (!ngKeyboardShortcuts.currentValue) {
+        if (!ngKeyboardShortcuts || !ngKeyboardShortcuts.currentValue) {
             return;
         }
-        const shortcuts = ngKeyboardShortcuts.currentValue.map(shortcut => ({
-            ...shortcut,
-            target: this.el.nativeElement,
-            allowIn: [AllowIn.Select, AllowIn.Input, AllowIn.Textarea]
-        }));
-        this.clearIds = this.keyboard.add(shortcuts);
+        this.clearIds = this.keyboard.add(this.transformInput(ngKeyboardShortcuts.currentValue));
     }
 }

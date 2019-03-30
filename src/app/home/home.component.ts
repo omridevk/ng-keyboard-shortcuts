@@ -10,6 +10,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     shortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[];
+    public directiveDisabled = false;
+    handleClick() {
+        this.directiveDisabled = !this.directiveDisabled;
+    }
     @ViewChild('input') input: ElementRef;
 
     ngAfterViewInit(): void {
@@ -54,7 +58,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 key: "cmd + e",
                 label: "test",
                 description: "hello world",
-                command: () => console.log('direcitve cmd +f '),
+                command: () => console.log('directive cmd + e'),
                 preventDefault: true
             }];
         });

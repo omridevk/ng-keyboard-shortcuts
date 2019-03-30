@@ -10,7 +10,8 @@
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Only on focus" #input>
       </mat-form-field>
-      <input [ngKeyboardShortcuts]="directiveShortcuts" />
+      <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
+      <button (click)="handleClick()">disable directive</button>
     </mat-card-content>
     <mat-card-actions>
     </mat-card-actions>
