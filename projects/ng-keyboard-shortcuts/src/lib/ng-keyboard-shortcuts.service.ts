@@ -144,6 +144,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     public select(key: string): Observable<ShortcutEventOutput> {
         return this.pressed$.pipe(
             filter(({event, key: eventKeys}) => {
+                eventKeys = Array.isArray(eventKeys) ? eventKeys : [eventKeys];
                 return !!eventKeys.find(eventKey => eventKey === key)
             })
         )

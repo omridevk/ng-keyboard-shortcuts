@@ -8,15 +8,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from "./material-module";
 
-const keyboardShortcutConfig: KeyboardShortcutConfig = {
-    key: "ctrl + e",
-    showHelp: true
-};
-
 @NgModule({
     imports: [
         BrowserModule,
-        KeyboardShortcutsModule.forRoot(keyboardShortcutConfig),
+        KeyboardShortcutsModule.forRoot(),
         BrowserAnimationsModule,
         MaterialModule,
         AppRoutingModule,

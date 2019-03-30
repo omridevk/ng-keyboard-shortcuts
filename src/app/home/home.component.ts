@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, KeyboardShortcutsHelpService} from 'ng-keyboard-shortcuts';
+import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, ShortcutDirectiveInput} from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +9,7 @@ import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput
 export class HomeComponent implements OnInit, AfterViewInit {
 
     shortcuts: ShortcutInput[] = [];
+    directiveShortcuts: ShortcutDirectiveInput[];
     @ViewChild('input') input: ElementRef;
 
     ngAfterViewInit(): void {
@@ -48,7 +49,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             }
         );
-
+        setTimeout(() => {
+            this.directiveShortcuts = [{
+                key: "cmd + e",
+                label: "test",
+                description: "hello world",
+                command: () => console.log('direcitve cmd +f '),
+                preventDefault: true
+            }];
+        });
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
 
@@ -58,6 +67,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+
     }
 
 }
