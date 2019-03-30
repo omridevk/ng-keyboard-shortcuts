@@ -70,7 +70,7 @@ Component that can be used across the app to bind to various shortcuts
 
 #### Inputs:
 | Name   |      Type      |  Default         | Description |
-|----------|:-------------:|-----------------:  |:-------------:|  
+|----------|:-------------:|-----------------:  |:-------------:|
 | shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcut inputs types see [types](#ShortcutInput) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the component |
 
@@ -167,7 +167,7 @@ export class AppComponent {
 Directive that can only be used for focusable elements, such as textarea, select, input, etc...
 
 | Name   |      Type      |  default         | description |
-|----------|:-------------:|-----------------:  |:-------------:|  
+|----------|:-------------:|-----------------:  |:-------------:|
 | ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
 | disableScrolling | `boolean` | `true` | disable body scrolling while modal is open |
@@ -212,7 +212,7 @@ Since shortcuts can be added or removed during the lifecycle of the app, an obse
 
 | properties   |  type   | description |
 |----------|:---------:|:-------------:|
-| shortcuts$ | ```Observable<{ key: string, label: string, description: string }>```| List of registered shortcuts across the whole app |
+| shortcuts$ | ```Observable<{ key: string, label: string, description: string }[]>```| Array of registered shortcuts across the whole app |
 
 # API:
 
