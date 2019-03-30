@@ -69,9 +69,9 @@ Component that can be used across the app to bind to various shortcuts
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
 
 #### Methods:
-| Name  | Input | Description |
-|----------|:------:|:-------------:|
-| select | `string` - key to listen to events (example: `'cmd + e'`) | Listen to specific key events (**will only work for registered keys**) |
+| Name  | Input | Return  | Description |
+|----------|:------|:------:||:-------------:|
+| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
 
 
 ```typescript
