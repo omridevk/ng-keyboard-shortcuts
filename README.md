@@ -66,7 +66,7 @@ Component that can be used across the app to bind to various shortcuts
 | Name   |      Type      |  Default         | Description |
 |----------|:-------------:|-----------------:  |:-------------:|  
 | shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcuts see [types](#types) |
-| disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
+| disabled |    `boolean`  |   `false`   | disable the shortcuts for the component |
 
 #### Methods:
 | Name  | Input | Return  | Description |
