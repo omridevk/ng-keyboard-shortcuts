@@ -14,7 +14,9 @@ Compatible with Angular 5+
 * [Install](#install)
 * [Setup](#setup)
 * [Usage](#usage)
-    * [Component](#component)
+    * [Components](#components)
+        * [Keyboardshortcuts](#ng-keyboard-shortcuts)
+        * [HelpScreen](#ng-keyboard-shortcuts-help)
     * [Directive](#directive)
 * [API](#api)
     * [Types](#types)
@@ -53,7 +55,15 @@ export class AppModule {
 # Usage:
 
 
-## Component
+## Components:
+### ng-keyboard-shortcuts
+Component that can be used across the app to bind to various shortcuts
+
+| Name   |      Type      |  default         | description |
+|----------|:-------------:|-----------------:  |:-------------:|  
+| shortcuts |  `ShortcutInputShortcutInput[][]` | [] | List of shortcuts see [types](#types) |
+| disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
+ 
 ```typescript
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
@@ -104,6 +114,9 @@ export class DemoComponent implements AfterViewInit {
 ```
 
 ## Directive
+
+Directive can be used in either Input, Select or Textarea tags.
+
 ```typescript
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
