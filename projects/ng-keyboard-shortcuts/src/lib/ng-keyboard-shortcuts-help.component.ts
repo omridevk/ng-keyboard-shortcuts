@@ -14,9 +14,9 @@ import { TemplatePortal } from "./portal";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { NgKeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from '@angular/animations';
-import { distinctUntilChanged, groupBy, mergeMap, switchMap, toArray } from 'rxjs/operators';
-import { from } from 'rxjs';
-import { tap } from 'rxjs/internal/operators/tap';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { groupBy } from "./utils";
+import { map } from "rxjs/internal/operators";
 
 @Component({
     selector: "ng-keyboard-shortcuts-help",
@@ -34,7 +34,7 @@ import { tap } from 'rxjs/internal/operators/tap';
             transition(":leave", [
                 style({ transform: "translateX(0)", opacity: 1 }),
                 animate(
-                    "0.13s cubic-bezier(0,0,0.3,1)",
+                    "0.23s cubic-bezier(0,0,0.3,1)",
                     style({ transform: "translateX(-100%)", opacity: 0 })
                 )
             ])
@@ -54,9 +54,13 @@ import { tap } from 'rxjs/internal/operators/tap';
 export class NgKeyboardShortcutsHelpComponent implements OnInit {
     @Input() attachToBody = true;
     @Input() key: string;
-
+    @Input() title = "Keyboard shortcuts";
+    @Input() emptyMessage = "No shortcuts available";
+    shortcuts: {label: string, key: string | string[], description: string}[];
+    labels: string[];
     @ViewChild(TemplateRef) template: TemplateRef<any>;
 
+    showing = false;
     private bodyPortalHost: DomPortalOutlet;
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -73,16 +77,12 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit {
             this.injector
         );
     }
-    handleModalBodyClicked(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-    }
     reveal() {
         this.hide();
 
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
+        this.showing = true;
     }
 
     visible() {
@@ -94,6 +94,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit {
             return;
         }
         this.bodyPortalHost.detach();
+        this.showing = false;
     }
     ngOnDestroy(): void {
         this.hide();
@@ -105,11 +106,11 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit {
     ngOnInit() {
         this.keyboardHelp.shortcuts$.pipe(
             distinctUntilChanged(),
-            switchMap(shortcuts => from(shortcuts)),
-            groupBy(shortcut => shortcut.label),
-            tap(e => console.log(e)),
-            mergeMap(group => group.pipe(toArray()))
-        ).subscribe(e => console.log(e));
+            map(shortcuts => groupBy(shortcuts, 'label'))
+        ).subscribe(shortcuts => {
+            this.shortcuts = shortcuts;
+            this.labels = Object.keys(shortcuts);
+        });
 
         this.keyboard.add({
             key: this.key,
