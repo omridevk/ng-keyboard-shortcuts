@@ -2,7 +2,7 @@
 
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.
 
-This documentation is for version **7.0.0** for version **2.0.0** please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
+This documentation is for version **^7.0.0** for version **2.0.0** please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
 
 
 #### important note
