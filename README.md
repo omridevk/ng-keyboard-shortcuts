@@ -70,7 +70,7 @@ Component that can be used across the app to bind to various shortcuts
 
 #### Methods:
 | Name  | input |description |
-|----------||:------:|:-------------:|
+|----------||:------:||:-------------:|
 | select | `string` - key to listen to events (example: 'cmd + e') | Listen to specific key events (**will only work for registered keys**) |
 
 
