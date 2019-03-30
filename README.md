@@ -114,10 +114,37 @@ export class DemoComponent implements AfterViewInit {
 
 }
 ```
+### ng-keyboard-shortcuts-help
+Should be placed in the root of your app, preferly in app.component.html
+
+`app.component.ts`
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  template: "./app.component.html",
+  styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+  title = "Hello";
+}
+
+```
+`app.component.html`
+```html
+<div style="text-align:center">
+	<h1>
+		Welcome to {{ title }}!
+	</h1>
+	<ng-keyboard-shortcuts-help [key]="f1" [title]="Help"></ng-keyboard-shortcut-help>
+</div>
+
+```
 
 ## Directive
 ### ngKeyboardShortcut
-Directive can be used in either Input, Select or Textarea tags.
+Directive that can only be used for focusable elements, such as textarea, select, input, etc...
 
 | Name   |      Type      |  default         | description |
 |----------|:-------------:|-----------------:  |:-------------:|  
