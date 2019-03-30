@@ -67,7 +67,13 @@ Component that can be used across the app to bind to various shortcuts
 |----------|:-------------:|-----------------:  |:-------------:|  
 | shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcuts see [types](#types) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
- 
+
+#### Methods:
+| Name  | input |description |
+|----------||:------:|:-------------:|
+| select | `string` - key to listen to events (example: 'cmd + e') | Listen to specific key events (**will only work for registered keys**) |
+
+
 ```typescript
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
