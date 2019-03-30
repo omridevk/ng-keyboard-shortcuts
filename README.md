@@ -195,7 +195,7 @@ export class DemoComponent implements AfterViewInit {
 # Service
 ## KeyboardShortcutsHelpService
 
-Singleton service that can be used to render a custom help screen. (see [Built in help component](#ng-keyboard-shortcuts-help)
+Singleton service that can be used to render a custom help screen. (used to build the [Built in help component](#ng-keyboard-shortcuts-help))
 Provides access to all registered shortcuts in the app using Observable that updates on shortcuts changes.
 Since shortcuts can be added or removed during the lifecycle of the app, an observable data structure needed to be used.
 
@@ -206,57 +206,64 @@ Since shortcuts can be added or removed during the lifecycle of the app, an obse
 # API:
 
 ## Types:
-```typescript
 
+### AllowIn
+```typescript
 export enum AllowIn {
     Textarea = 'TEXTAREA',
     Input = 'INPUT',
     Select = "SELECT"
 }
+```
+### Shortcut
+Used for Directive input
+```typescript
+export interface Shortcut {
 
-type ShortcutInput = {
+    key: string | string[];
 
-  /**
-   * key combination to trigger the command, example: "ctrl + shift + g" or ["ctrl + g", "cmd + g"]
-   */
-  key: string | string[],
+    /**
+     * callback to be called when shortcut is pressed.
+     * @param event - the event out
+     */
+    command(event: ShortcutEventOutput): any;
 
-  /**
-   *  the command to be triggered, example: () => console.log('hi world')
-   */
-  command(event: ShortcutEventOutput): any;
+    /**
+     * Description for the command can be used for rendering help menu.
+     */
+    description?: string;
 
-  /**
-   * Optional - provide a description to the command - can be used to render an help menu.
-   */
-  description: string - optional
+    /**
+     * How much time to throttle in ms.
+     */
+    throttleTime?: number;
 
-  /**
-   * Optional (default: 0) - provide a throttle time to each command.
-   */
-  throttleTime?: number;
+    /**
+     * Label, can be used for grouping commands.
+     */
+    label?: string;
 
-  /**
-   * By default shortcuts are disabled when INPUT, TEXTAREA or SELECT elements are in focus
-   * you can override this behavior by provided an array of nodeNames to allow in. example:
-   * allowIn: ["TEXTAREA", "SELECT"]
-   */
-  allowIn?: AllowIn;
+    /**
+     * Prevent browser default, default: false
+     */
+    preventDefault?: boolean;
+}
+```
 
-  /**
-   * Optional - provide a label to allow grouping to later on create an help menu if needed.
-   */
-  label?: string;
+### ShortcutInput
+Used for the component as input.
 
-  /**
-   * Optional - trigger the command only when the provided target is in focus.
-   */
-  target?: HTMLElement;
-
-  /**
-   * Optional - Whether to prevent browser default behavior.
-   */
-  preventDefault?: boolean;
+export interface ShortcutInput extends Shortcut {
+    /**
+     * textarea, select and input are ignored by default, this is used to override
+     * this behavior.
+     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
+     */
+    allowIn?: AllowIn[];
+    /**
+     * Only trigger the command when the target is in focus.
+     */
+    target?: HTMLElement;
 }
 
 
