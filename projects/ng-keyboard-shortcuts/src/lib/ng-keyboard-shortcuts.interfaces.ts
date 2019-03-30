@@ -1,6 +1,7 @@
-import { InjectionToken } from "@angular/core";
+export interface Shortcut {
 
-export interface ShortcutBase {
+    key: string | string[];
+
     /**
      * callback to be called when shortcut is pressed.
      * @param event - the event out
@@ -18,21 +19,9 @@ export interface ShortcutBase {
     throttleTime?: number;
 
     /**
-     * textarea, select and input are ignored by default, this is used to override
-     * this behavior.
-     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
-     */
-    allowIn?: string[];
-
-    /**
      * Label, can be used for grouping commands.
      */
     label?: string;
-
-    /**
-     * Only trigger the command when the target is in focus.
-     */
-    target?: HTMLElement;
 
     /**
      * Prevent browser default, default: false
@@ -40,16 +29,27 @@ export interface ShortcutBase {
     preventDefault?: boolean;
 }
 
-export interface Shortcut extends ShortcutBase {
-    key: string[];
-    component?: any;
+export interface ShortcutInput extends Shortcut {
+    /**
+     * textarea, select and input are ignored by default, this is used to override
+     * this behavior.
+     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
+     */
+    allowIn?: AllowIn[];
+    /**
+     * Only trigger the command when the target is in focus.
+     */
+    target?: HTMLElement;
 }
 
-export interface ShortcutInput extends ShortcutBase {
-    key: string | string[];
+export enum AllowIn {
+    Textarea = 'TEXTAREA',
+    Input = 'INPUT',
+    Select = "SELECT"
 }
 
-export interface ParsedShortcut extends Shortcut {
+
+export interface ParsedShortcut extends ShortcutInput {
     predicates: Function[][];
     id: string;
     priority?: number;
@@ -60,11 +60,5 @@ export interface ShortcutEventOutput {
      * The browser keyboard event
      */
     event: KeyboardEvent;
-    key: string[];
+    key: string[] | string;
 }
-
-export interface KeyboardShortcutConfig {
-    showHelp: boolean;
-    key: string;
-}
-

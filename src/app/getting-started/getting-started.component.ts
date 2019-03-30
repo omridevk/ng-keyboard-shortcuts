@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ShortcutInput } from "ng-keyboard-shortcuts";
-import { NgKeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
+import { KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -12,13 +12,13 @@ export class GettingStartedComponent implements OnInit, AfterViewInit, OnDestroy
     shortcuts: ShortcutInput[] = [
         {
             key: "ctrl + t",
-            command: () => console.log("ctron tol + t my man")
+            command: () => console.log("control + t clicked")
         }
     ];
 
     shortcutsDisabled = false;
 
-    @ViewChild(NgKeyboardShortcutsComponent) keyboard: NgKeyboardShortcutsComponent;
+    @ViewChild(KeyboardShortcutsComponent) keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
 

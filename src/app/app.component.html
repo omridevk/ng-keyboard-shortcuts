@@ -9,15 +9,22 @@
     <mat-sidenav #snav [mode]="'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-       <a>Testing</a>
-       <a>Testing</a>
-       <a>Testing</a>
-       <a>Testing</a>
+        <a mat-list-item routerLink="/home" routerLinkActive="active">Home</a>
+        <a mat-list-item routerLink="/getting-started" routerLinkActive="active">Getting Started</a>
+      </mat-nav-list>
+      Available Shortcuts:
+      <mat-nav-list>
+        <mat-list>
+          <mat-list-item *ngFor="let shortcut of help.shortcuts$ | async">
+            {{shortcut.description}}
+          </mat-list-item>
+        </mat-list>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
       <router-outlet></router-outlet>
+      <ng-keyboard-shortcuts-help [key]="'cmd + g'" [title]="'Help Screen'"></ng-keyboard-shortcuts-help>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

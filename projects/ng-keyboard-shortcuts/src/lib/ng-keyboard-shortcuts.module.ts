@@ -1,30 +1,27 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { NgKeyboardShortcutsComponent } from "./ng-keyboard-shortcuts.component";
-import { KeyboardShortcutConfigToken, KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { KeyboardShortcutConfig } from "./ng-keyboard-shortcuts.interfaces";
+import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
+import { NgKeyboardShortcutsHelpService } from './ng-keyboard-shortcuts-help.service';
+import { NgKeyboardShortcutsDirective } from './ng-keyboard-shortcuts.directive';
 import { NgKeyboardShortcutsHelpComponent } from './ng-keyboard-shortcuts-help.component';
-import { BodyPortal } from "./body-portal.service";
-import { Overlay } from "@angular/cdk/overlay";
+import { BrowserModule } from "@angular/platform-browser";
+import { NgKeyboardShortcutsHelpItemComponent } from './ng-keyboard-shortcuts-help-item.component';
 
 
 
 @NgModule({
-    imports: [],
-    declarations: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsHelpComponent],
-    exports: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsHelpComponent]
+    imports: [BrowserModule],
+    entryComponents: [NgKeyboardShortcutsHelpComponent],
+    declarations: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsDirective, NgKeyboardShortcutsHelpComponent, NgKeyboardShortcutsHelpItemComponent],
+    exports: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsDirective, NgKeyboardShortcutsHelpComponent]
 })
 export class KeyboardShortcutsModule {
-    public static forRoot(config: KeyboardShortcutConfig): ModuleWithProviders {
+    public static forRoot(): ModuleWithProviders {
         return {
             ngModule: KeyboardShortcutsModule,
             providers: [
-                BodyPortal,
-                Overlay,
                 KeyboardShortcutsService,
-                {
-                    provide: KeyboardShortcutConfigToken,
-                    useValue: config
-                }
+                NgKeyboardShortcutsHelpService
             ]
         };
     }

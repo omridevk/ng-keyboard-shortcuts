@@ -1,0 +1,11 @@
+<div class="item" [class.item--odd]="index % 2 !== 0" *ngIf="shortcut.description">
+  <div class="description">
+    <span>{{shortcut.description}}</span>
+  </div>
+  <div class="keys">
+    <div *ngFor="let sKey of parsedKeys;let i = index" class="key__container">
+      <span class="key" *ngFor="let key of sKey;">{{key}}</span>
+      <span *ngIf="parsedKeys.length > 1 && i < parsedKeys.length - 1" class="separator"> / </span>
+    </div>
+  </div>
+</div>

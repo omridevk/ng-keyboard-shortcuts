@@ -1,16 +1,17 @@
 {
   "name": "ng-keyboard-shortcuts-app",
-  "version": "6.1.1",
+  "version": "7.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "clean": "rm -rf dist/",
     "npm-pack": "cd dist/ng-keyboard-shortcuts && npm pack",
-    "build:prod": "ng build --prod ng-keyboard-shortcuts",
-    "build:watch": "ng build ng-keyboard-shortcuts --watch",
-    "publish": "npm run build-lib && npm publish dist/ng-keyboard-shortcuts",
-    "package": "npm run build-lib && npm run npm-pack",
+    "build:prod": "npm run clean && ng build --prod ng-keyboard-shortcuts",
+    "build:watch": "npm run clean && ng build ng-keyboard-shortcuts --watch",
+    "publish": "npm run build:prod && npm publish dist/ng-keyboard-shortcuts",
+    "package": "npm run build:prod && npm run npm-pack",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -27,13 +28,14 @@
     "@angular/platform-browser-dynamic": "^7.2.9",
     "@angular/router": "^7.2.9",
     "core-js": "^2.5.4",
+    "prettier": "^1.16.4",
     "rxjs": "^6.4.0",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.6",
     "@angular-devkit/build-ng-packagr": "~0.13.6",
-    "@angular/cli": "~7.3.6",
+    "@angular/cli": "~7.3.7",
     "@angular/compiler-cli": "^7.2.9",
     "@angular/language-service": "^7.2.9",
     "@types/jasmine": "~2.8.6",

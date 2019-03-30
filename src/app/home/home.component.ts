@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ShortcutInput, ShortcutEventOutput} from "ng-keyboard-shortcuts";
-import { MatButton } from "@angular/material";
-import { Subject } from "rxjs";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, ShortcutDirectiveInput} from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -10,63 +8,70 @@ import { Subject } from "rxjs";
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-    private html$;
-
-    private _clear = new Subject();
-    private clear$ = this._clear.asObservable();
+    shortcuts: ShortcutInput[] = [];
+    directiveShortcuts: ShortcutDirectiveInput[] = [];
+    public directiveDisabled = false;
+    handleClick() {
+        this.directiveDisabled = !this.directiveDisabled;
+    }
+    @ViewChild('input') input: ElementRef;
 
     ngAfterViewInit(): void {
         this.shortcuts.push(
             {
-                key: "ctrl + shift + g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "g",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "ctrl + shift + f",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key)
-            },
-            {
-                key: "ctrl + t",
+                key: "cmd + e",
+                label: "help",
+                description: "Controlling/Commanding + E",
                 preventDefault: true,
-                allowIn: ['TEXTAREA'],
+                allowIn: [AllowIn.Textarea],
+                command: e => console.log("clicked " , e.key)
+            },
+            {
+                key: "F1",
+                preventDefault: true,
+                label: "help",
+                description: "Open Help menu",
+                allowIn: [AllowIn.Textarea],
                 command: e => console.log("clicked " , e.key)
             },
             {
                 key: "cmd + shift + f",
-                command: (output: ShortcutEventOutput) =>
-                    (this.input.nativeElement.value = this.pressed = output.key),
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
                 throttleTime: 250,
                 target: this.input.nativeElement
             },
             {
                 key: "cmd + =",
-                command: (output: ShortcutEventOutput) => (this.pressed = output.key),
+                label: "help",
+                description: "zoom out",
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
             },
             {
                 key: "cmd + f",
-                command: (output: ShortcutEventOutput) => {
-                    this.pressed = output.key;
-                    this._clear.next();
-                },
+                allowIn: [AllowIn.Input],
+                command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
             }
         );
+        this.directiveShortcuts.push({
+            key: "cmd + e",
+            label: "test",
+            description: "hello world",
+            command: () => console.log('directive cmd + e'),
+            preventDefault: true
+        });
+        this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
-    pressed: string | string[];
 
-    @ViewChild("input") private input: ElementRef;
-    @ViewChild("clear") private clearButton: MatButton;
-    shortcuts: ShortcutInput[] = [];
+    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
 
-    constructor() {}
+    constructor() {
+    }
 
     ngOnInit(): void {
+
     }
 
 }

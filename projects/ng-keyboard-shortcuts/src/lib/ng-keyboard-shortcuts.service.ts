@@ -1,22 +1,14 @@
-import { Inject, Injectable, InjectionToken, OnDestroy } from "@angular/core";
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
-import { fromEvent, Subscription, timer, Subject, throwError, Observable } from "rxjs";
+import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject } from 'rxjs';
 import {
     ShortcutEventOutput,
     ParsedShortcut,
-    ShortcutInput, KeyboardShortcutConfig
+    ShortcutInput
 } from "./ng-keyboard-shortcuts.interfaces";
 import { map, filter, tap, debounce, catchError } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
-import { BodyPortal } from "./body-portal.service";
 
-/**
- * This is not a real service, but it looks like it from the outside.
- * It's just an InjectionTToken used to import the config object, provided from the outside
- */
-export const KeyboardShortcutConfigToken = new InjectionToken<KeyboardShortcutConfig>(
-    "KeyboardShortcutConfig"
-);
 
 let guid = 0;
 
@@ -46,6 +38,9 @@ export class KeyboardShortcutsService implements OnDestroy {
      * Disable all keyboard shortcuts
      */
     private disabled = false;
+
+    private _shortcutsSub = new ReplaySubject<ParsedShortcut[]>(1);
+    public shortcuts$ = this._shortcutsSub.asObservable();
 
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
@@ -102,7 +97,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         return this._shortcuts;
     }
 
-    constructor(@Inject(KeyboardShortcutConfigToken) private config, private bodyPortal: BodyPortal) {
+    constructor() {
         this.subscription = this.keydown$.subscribe();
     }
 
@@ -122,6 +117,9 @@ export class KeyboardShortcutsService implements OnDestroy {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
         const commands = this.parseCommand(shortcuts);
         this._shortcuts.push(...commands);
+        setTimeout(() => {
+            this._shortcutsSub.next(this._shortcuts);
+        });
         return commands.map(command => command.id);
     }
 
@@ -136,6 +134,9 @@ export class KeyboardShortcutsService implements OnDestroy {
         this._shortcuts = this._shortcuts.filter(shortcut => {
             return !ids.includes(shortcut.id);
         });
+        setTimeout(() => {
+            this._shortcutsSub.next(this._shortcuts);
+        })
         return this;
     }
 
@@ -146,6 +147,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     public select(key: string): Observable<ShortcutEventOutput> {
         return this.pressed$.pipe(
             filter(({event, key: eventKeys}) => {
+                eventKeys = Array.isArray(eventKeys) ? eventKeys : [eventKeys];
                 return !!eventKeys.find(eventKey => eventKey === key)
             })
         )
@@ -157,7 +159,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private getKeys = (command: string[]) =>
         command
-            .map(key => key.trim())
+            .map(key => key.trim().toLowerCase())
             .filter(key => key !== "+")
             .map(key => {
                 // for modifiers like control key
