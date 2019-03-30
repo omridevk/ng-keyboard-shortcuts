@@ -127,8 +127,12 @@ export class DemoComponent implements AfterViewInit {
 }
 ```
 ### ng-keyboard-shortcuts-help
+1. **Make sure to install `@angular/animations` ( `npm install --save @angular/animations` or `yarn add @angular/animations`**
+2. **Add BrowserAnimationsModule to your app.module imports**
+
 Can be used to show an help screen ( will be attached to body and be shown as a modal)
-Should be placed in the root of your app, preferly in app.component.html
+
+Should be placed in the root of your app, preferably in app.component.html
 
 
 `app.component.ts`
@@ -151,7 +155,7 @@ export class AppComponent {
 	<h1>
 		Welcome to {{ title }}!
 	</h1>
-	<ng-keyboard-shortcuts-help [key]="f1" [title]="Help"></ng-keyboard-shortcut-help>
+	<ng-keyboard-shortcuts-help [key]="'f1'" [title]="Help"></ng-keyboard-shortcut-help>
 </div>
 
 ```
