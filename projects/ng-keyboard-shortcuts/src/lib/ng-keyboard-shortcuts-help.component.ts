@@ -3,8 +3,8 @@ import {
     Component,
     ComponentFactoryResolver,
     Injector,
-    Input,
-    OnInit,
+    Input, OnChanges, OnDestroy,
+    OnInit, SimpleChange, SimpleChanges,
     TemplateRef,
     ViewChild,
     ViewContainerRef
@@ -17,6 +17,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { groupBy } from "./utils";
 import { map } from "rxjs/internal/operators";
+import { SubscriptionLike } from "rxjs";
 
 @Component({
     selector: "ng-keyboard-shortcuts-help",
@@ -51,7 +52,7 @@ import { map } from "rxjs/internal/operators";
         ])
     ],
 })
-export class NgKeyboardShortcutsHelpComponent implements OnInit {
+export class NgKeyboardShortcutsHelpComponent implements OnInit, OnChanges, OnDestroy {
     @Input() attachToBody = true;
     @Input() key: string;
     @Input() title = "Keyboard shortcuts";
@@ -98,24 +99,51 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit {
     }
     ngOnDestroy(): void {
         this.hide();
+        if (this.clearIds) {
+            this.keyboard.remove(this.clearIds);
+        }
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        if (this.timeoutId) {
+            clearTimeout(this.timeoutId);
+        }
     }
     toggle() {
       this.visible() ? this.hide() : this.reveal();
     }
 
+    private subscription: SubscriptionLike;
+    private clearIds;
+    private timeoutId;
+
     ngOnInit() {
-        this.keyboardHelp.shortcuts$.pipe(
+        this.subscription = this.keyboardHelp.shortcuts$.pipe(
             distinctUntilChanged(),
             map(shortcuts => groupBy(shortcuts, 'label'))
         ).subscribe(shortcuts => {
             this.shortcuts = shortcuts;
             this.labels = Object.keys(shortcuts);
         });
+    }
 
-        this.keyboard.add({
-            key: this.key,
-            preventDefault: true,
-            command: () => this.toggle()
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.clearIds) {
+            this.keyboard.remove(this.clearIds);
+        }
+        if (!changes.key.currentValue) {
+            return;
+        }
+        if (this.timeoutId) {
+            clearTimeout(this.timeoutId);
+        }
+        this.timeoutId = setTimeout(() => {
+            this.clearIds = this.keyboard.add({
+                key: this.key,
+                preventDefault: true,
+                command: () => this.toggle()
+            });
         });
     }
 }
