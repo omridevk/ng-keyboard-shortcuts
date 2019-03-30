@@ -212,7 +212,7 @@ Since shortcuts can be added or removed during the lifecycle of the app, an obse
 
 | properties   |  type   | description |
 |----------|:---------:|:-------------:|
-| shortcuts$ | ```Observable<{ key: string, label: string, description: string }>```| List of registered shortcuts across the whole app |
+| shortcuts$ | ```Observable<{ key: string, label: string, description: string }[]>```| Array of registered shortcuts across the whole app |
 
 # API:
 
