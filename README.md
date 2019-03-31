@@ -1,4 +1,6 @@
 # ng-keyboard-shortcuts
+[![npm version](https://badge.fury.io/js/ng-keyboard-shortcuts.svg)](https://badge.fury.io/js/ng-keyboard-shortcuts)
+
 
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.
 
