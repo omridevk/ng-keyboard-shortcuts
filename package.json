@@ -1,6 +1,6 @@
 {
   "name": "ng-keyboard-shortcuts-app",
-  "version": "7.0.7",
+  "version": "7.0.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
