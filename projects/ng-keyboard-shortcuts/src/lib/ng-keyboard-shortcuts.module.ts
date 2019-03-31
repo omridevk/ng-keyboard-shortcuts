@@ -4,13 +4,13 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { NgKeyboardShortcutsHelpService } from './ng-keyboard-shortcuts-help.service';
 import { NgKeyboardShortcutsDirective } from './ng-keyboard-shortcuts.directive';
 import { NgKeyboardShortcutsHelpComponent } from './ng-keyboard-shortcuts-help.component';
-import { BrowserModule } from "@angular/platform-browser";
 import { NgKeyboardShortcutsHelpItemComponent } from './ng-keyboard-shortcuts-help-item.component';
+import { CommonModule } from "@angular/common";
 
 
 
 @NgModule({
-    imports: [BrowserModule],
+    imports: [CommonModule],
     entryComponents: [NgKeyboardShortcutsHelpComponent],
     declarations: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsDirective, NgKeyboardShortcutsHelpComponent, NgKeyboardShortcutsHelpItemComponent],
     exports: [NgKeyboardShortcutsComponent, NgKeyboardShortcutsDirective, NgKeyboardShortcutsHelpComponent]
