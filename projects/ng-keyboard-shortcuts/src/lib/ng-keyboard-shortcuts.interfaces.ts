@@ -1,5 +1,11 @@
+/**
+ * The shortcut input for the Directive
+ */
 export interface Shortcut {
 
+    /**
+     * A key or list of keys to listen to and fire the command.
+     */
     key: string | string[];
 
     /**
@@ -29,6 +35,9 @@ export interface Shortcut {
     preventDefault?: boolean;
 }
 
+/**
+ * The shortcut input type for ng-keyboard-shortcuts component
+ */
 export interface ShortcutInput extends Shortcut {
     /**
      * textarea, select and input are ignored by default, this is used to override
@@ -48,17 +57,26 @@ export enum AllowIn {
     Select = "SELECT"
 }
 
-
+/**
+ * @ignore
+ */
 export interface ParsedShortcut extends ShortcutInput {
     predicates: Function[][];
     id: string;
     priority?: number;
     event?: KeyboardEvent;
 }
+
+/**
+ * The output type fired by the command when shortcut is triggered.
+ */
 export interface ShortcutEventOutput {
     /**
      * The browser keyboard event
      */
     event: KeyboardEvent;
+    /**
+     * The registered key that was triggered
+     */
     key: string[] | string;
 }

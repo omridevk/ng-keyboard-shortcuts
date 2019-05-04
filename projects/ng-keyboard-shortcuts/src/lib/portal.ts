@@ -8,12 +8,16 @@ import {
     ComponentFactoryResolver,
 } from '@angular/core';
 
-/** Interface that can be used to generically type a class. */
+/**
+ * @ignore
+ * Interface that can be used to generically type a class.
+ */
 export interface ComponentType<T> {
     new (...args: any[]): T;
 }
 
 /**
+ * @ignore
  * A `Portal` is something that you want to render somewhere else.
  * It can be attach to / detached from a `PortalOutlet`.
  */
@@ -65,6 +69,7 @@ export abstract class Portal<T> {
 
 
 /**
+ * @ignore
  * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
  */
 export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
@@ -101,6 +106,7 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
 }
 
 /**
+ * @ignore
  * A `TemplatePortal` is a portal that represents some embedded template (TemplateRef).
  */
 export class TemplatePortal<C = any> extends Portal<C> {
@@ -141,7 +147,10 @@ export class TemplatePortal<C = any> extends Portal<C> {
 }
 
 
-/** A `PortalOutlet` is an space that can contain a single `Portal`. */
+/**
+ * @ignore
+ * A `PortalOutlet` is an space that can contain a single `Portal`.
+ */
 export interface PortalOutlet {
     /** Attaches a portal to this outlet. */
     attach(portal: Portal<any>): any;
@@ -158,6 +167,7 @@ export interface PortalOutlet {
 
 
 /**
+ * @ignore
  * Partial implementation of PortalOutlet that handles attaching
  * ComponentPortal and TemplatePortal.
  */

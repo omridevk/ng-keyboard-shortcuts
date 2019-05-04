@@ -9,7 +9,10 @@ import {
 import { map, filter, tap, throttle, catchError } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
 
-
+/**
+ * @ignore
+ * @type {number}
+ */
 let guid = 0;
 
 @Injectable({

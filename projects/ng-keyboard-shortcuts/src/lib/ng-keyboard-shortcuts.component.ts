@@ -11,6 +11,10 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { ShortcutInput, ShortcutEventOutput } from "./ng-keyboard-shortcuts.interfaces";
 import { Observable } from "rxjs";
 
+/**
+ * A component to bind global shortcuts, can be used multiple times across the app
+ * will remove registered shortcuts when element is removed from DOM.
+ */
 @Component({
     selector: "ng-keyboard-shortcuts",
     template: ""
@@ -22,11 +26,15 @@ export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnCh
     @Input() shortcuts: ShortcutInput[] | ShortcutInput = [];
 
     /**
+     * @ignore
      * list of registered keyboard shortcuts
      * used for clean up on NgDestroy.
      */
     private clearIds: string[] = [];
 
+    /**
+     * @ignore
+     */
     private _disabled = false;
     /**
      * Disable all shortcuts for this component.
@@ -43,8 +51,15 @@ export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnCh
         this.clearIds = this.keyboard.add(this.shortcuts);
     }
 
+    /**
+     * @ignore
+     * @param {KeyboardShortcutsService} keyboard
+     */
     constructor(private keyboard: KeyboardShortcutsService) {}
 
+    /**
+     * @ignore
+     */
     ngOnInit() {}
 
     /**
@@ -54,8 +69,14 @@ export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnCh
         return this.keyboard.select(key);
     }
 
+    /**
+     * @ignore
+     */
     ngAfterViewInit(): void {}
 
+    /**
+     * @ignore
+     */
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes.shortcuts || !changes.shortcuts.currentValue) {
             return;
@@ -66,6 +87,9 @@ export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnCh
         setTimeout(() => this.clearIds = this.keyboard.add(changes.shortcuts.currentValue));
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy(): void {
         this.keyboard.remove(this.clearIds);
     }

@@ -2,13 +2,34 @@ import { Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } fro
 import { AllowIn, Shortcut } from "./ng-keyboard-shortcuts.interfaces";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 
+/**
+ * A directive to be used with "focusable" elements, like:
+ * textarea, input, select.
+ */
 @Directive({
     selector: "[ngKeyboardShortcuts]"
 })
 export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
+    /**
+     * clearId to remove shortcuts.
+     */
     private clearIds;
+    /**
+     * Shortcut inputs for the directive.
+     * will only work when the element is in focus
+     */
     @Input() ngKeyboardShortcuts: Shortcut[];
+    /**
+     * @ignore
+     * @type {boolean}
+     * @private
+     */
     private _disabled = false;
+
+    /**
+     * whether to disable the shortcuts for this directive
+     * @param value
+     */
     @Input() set disabled(value) {
         this._disabled = value;
         if (this.clearIds) {
@@ -21,9 +42,20 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
         })
 
     }
+
+    /**
+     * @ignore
+     * @param {KeyboardShortcutsService} keyboard
+     * @param {ElementRef} el
+     */
     constructor(private keyboard: KeyboardShortcutsService, private el: ElementRef) {}
 
-    transformInput(shortcuts: Shortcut[]) {
+    /**
+     * @ignore
+     * @param {Shortcut[]} shortcuts
+     * @returns {any}
+     */
+    private transformInput(shortcuts: Shortcut[]) {
         return shortcuts.map(shortcut => ({
             ...shortcut,
             target: this.el.nativeElement,
@@ -31,6 +63,9 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
         }));
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy() {
         if (!this.clearIds) {
             return;
@@ -38,6 +73,10 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
         this.keyboard.remove(this.clearIds);
     }
 
+    /**
+     * @ignore
+     * @param {SimpleChanges} changes
+     */
     ngOnChanges(changes: SimpleChanges) {
         const { ngKeyboardShortcuts } = changes;
         if (this.clearIds) {

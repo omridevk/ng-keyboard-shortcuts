@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Shortcut } from "./ng-keyboard-shortcuts.interfaces";
 import { symbols } from "./keys";
 
+/**
+ * @ignore
+ */
 @Component({
     selector: "ng-keyboard-shortcuts-help-item",
     templateUrl: "./ng-keyboard-shortcuts-help-item.component.html",

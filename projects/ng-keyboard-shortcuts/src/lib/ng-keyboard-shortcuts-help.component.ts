@@ -23,13 +23,25 @@ import { groupBy } from "./utils";
 import { map } from "rxjs/internal/operators";
 import { SubscriptionLike } from "rxjs";
 
+/**
+ * @ignore
+ * @type {Map}
+ */
 const scrollAbleKeys = new Map([[31, 1], [38,1], [39, 1], [40, 1]]);
+/**
+ * @ignore
+ * @param e
+ */
 const preventDefault = e => {
     e = e || window.event;
     if (e.preventDefault) e.preventDefault();
     e.returnValue = false;
 };
-
+/**
+ * @ignore
+ * @param e
+ * @returns {boolean}
+ */
 const preventDefaultForScrollKeys = e => {
     if (!scrollAbleKeys.has(e.keyCode)) {
         return;
@@ -37,18 +49,31 @@ const preventDefaultForScrollKeys = e => {
     preventDefault(e);
     return false;
 };
+/**
+ * @ignore
+ * @type {string[]}
+ */
 const scrollEvents = ['wheel', 'touchmove', 'DOMMouseScroll'];
 
+/**
+ * @ignore
+ */
 const disableScroll = () => {
     scrollEvents.forEach(event => window.addEventListener(event, preventDefault, false));
     window.addEventListener('keydown', preventDefaultForScrollKeys);
 };
-
+/**
+ * @ignore
+ */
 const enableScroll = () => {
     scrollEvents.forEach(event => window.removeEventListener(event, preventDefault));
     window.removeEventListener('keydown', preventDefaultForScrollKeys);
 };
 
+/**
+ * A Component to show all registered shortcut in the app
+ * it is shown as a modal
+ */
 @Component({
     selector: "ng-keyboard-shortcuts-help",
     templateUrl: "./ng-keyboard-shortcuts-help.component.html",
@@ -83,8 +108,19 @@ const enableScroll = () => {
     ]
 })
 export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
+    /**
+     * Disable scrolling while modal is open
+     * @type {boolean}
+     */
     @Input() disableScrolling = true;
+    /**
+     * @ignore
+     */
     private _key: string;
+    /**
+     * The shortcut to show/hide the help screen
+     * @param {string} value
+     */
     @Input()
     set key(value: string) {
         this._key = value;
@@ -97,14 +133,42 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             command: () => this.toggle()
         });
     }
-    @Input() title = "Keyboard shortcuts";
-    @Input() emptyMessage = "No shortcuts available";
-    @ViewChild(TemplateRef) template: TemplateRef<any>;
-    shortcuts: { label: string; key: string | string[]; description: string }[];
-    showing = false;
-    labels: string[];
 
+    /**
+     * The title of the help screen
+     * @default: "Keyboard shortcuts"
+     * @type {string}
+     */
+    @Input() title = "Keyboard shortcuts";
+    /**
+     * What message to show when no shortcuts are available on the page.
+     * @default "No shortcuts available"
+     * @type {string}
+     */
+    @Input() emptyMessage = "No shortcuts available";
+    /**
+     * @ignore
+     */
+    @ViewChild(TemplateRef) template: TemplateRef<any>;
+    /**
+     * @ignore
+     */
+    shortcuts: { label: string; key: string | string[]; description: string }[];
+    /**
+     * @ignore
+     */
+    showing = false;
+    /**
+     * @ignore
+     */
+    labels: string[];
+    /**
+     * @ignore
+     */
     private bodyPortalHost: DomPortalOutlet;
+    /**
+     * @ignore
+     */
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private appRef: ApplicationRef,
@@ -120,7 +184,11 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             this.injector
         );
     }
-    reveal() {
+
+    /**
+     * Reveal the help screen manually.
+     */
+    private reveal() {
         this.hide();
         if (this.disableScrolling) {
             disableScroll();
@@ -130,10 +198,17 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         this.showing = true;
     }
 
+    /**
+     * Check if help screen is visible.
+     * @returns {boolean}
+     */
     visible() {
         return this.bodyPortalHost.hasAttached();
     }
 
+    /**
+     * Hide the help screen manually.
+     */
     hide() {
         if (this.disableScrolling) {
             enableScroll();
@@ -144,6 +219,10 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         this.bodyPortalHost.detach();
         this.showing = false;
     }
+
+    /**
+     * @ignore
+     */
     ngOnDestroy(): void {
         this.hide();
         if (this.clearIds) {
@@ -156,14 +235,29 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             clearTimeout(this.timeoutId);
         }
     }
+
+    /**
+     * Show/Hide the help screen manually.
+     */
     toggle() {
         this.visible() ? this.hide() : this.reveal();
     }
 
+    /**
+     * @ignore
+     */
     private subscription: SubscriptionLike;
+    /**
+     * @ignore
+     */
     private clearIds;
+    /**
+     * @ignore
+     */
     private timeoutId;
-
+    /**
+     * @ignore
+     */
     ngOnInit() {
         this.subscription = this.keyboardHelp.shortcuts$
             .pipe(distinctUntilChanged(), map(shortcuts => groupBy(shortcuts, "label")))

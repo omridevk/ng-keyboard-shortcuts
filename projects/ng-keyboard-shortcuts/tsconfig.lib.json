@@ -30,6 +30,9 @@
   },
   "exclude": [
     "src/test.ts",
+    "src/lib/utils.ts",
+    "src/lib/keys.ts",
+    "src/lib/ng-keyboard-shortcuts.service.ts",
     "**/*.spec.ts"
   ]
 }
