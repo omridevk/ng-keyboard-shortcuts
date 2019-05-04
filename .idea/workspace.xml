@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e05dae60-51b6-433d-82e0-4d51a0d9ac56" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <autoscrollFromSource ProjectPane="true" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ng-keyboard-shortcuts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ng-keyboard-shortcuts" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.prettier" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="node.js.selected.package.tslint" value="$PROJECT_DIR$/node_modules/tslint" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e05dae60-51b6-433d-82e0-4d51a0d9ac56" name="Default" comment="" />
+      <created>1528999368810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1528999368810</updated>
+      <workItem from="1528999370272" duration="2306000" />
+      <workItem from="1529001726584" duration="1478000" />
+      <workItem from="1529069530369" duration="2707000" />
+      <workItem from="1529160718582" duration="13762000" />
+      <workItem from="1529516566510" duration="6868000" />
+      <workItem from="1533832238543" duration="16304000" />
+      <workItem from="1552689702482" duration="34875000" />
+      <workItem from="1553910745994" duration="11891000" />
+      <workItem from="1553961130510" duration="1662000" />
+      <workItem from="1553962870856" duration="237000" />
+      <workItem from="1553963120787" duration="10134000" />
+      <workItem from="1554017748900" duration="44000" />
+      <workItem from="1554025324022" duration="10890000" />
+      <workItem from="1554416568820" duration="963000" />
+      <workItem from="1554650428344" duration="895000" />
+      <workItem from="1556949462038" duration="2473000" />
+      <workItem from="1556953702931" duration="918000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="927000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2616034" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Bucklescript" order="7" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.46968028" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3296582" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="7" weight="0.6692392" />
+      <window_info anchor="bottom" id="Salesforce" order="7" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="PlantUML" order="3" weight="0.32989994" />
+      <window_info anchor="bottom" id="Debug Logs" order="7" />
+      <window_info anchor="bottom" id="Execute Anonymous" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="Salesforce" order="10" />
+      <window_info anchor="bottom" id="Debug Logs" order="11" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32922128" />
+      <window_info anchor="bottom" id="Bucklescript" order="8" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="9" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Execute Anonymous" order="12" />
+      <window_info anchor="bottom" id="Terminal" order="13" />
+      <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="PlantUML" order="3" weight="0.32989994" />
+      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12477396" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help.component.spec.ts" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/portal/typings/portal.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="49" column="4" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/ng-keyboard-shortcuts/ng-keyboard-shortcuts.metadata.json" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/bidi/typings/directionality.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/overlay/typings/overlay-config.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-232">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/overlay/typings/overlay-ref.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/overlay/typings/overlay.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="51" column="22" lean-forward="true" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/overlay/typings/position/overlay-position-builder.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="39" column="44" lean-forward="true" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/overlay/typings/position/flexible-connected-position-strategy.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="172" column="4" selection-start-line="172" selection-start-column="4" selection-end-line="172" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app-routing.module.ts" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/cdk/layout/typings/media-matcher.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/material-module.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/body-portal.service.ts" />
+    <entry file="file://$PROJECT_DIR$/angular.json" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/keys.ts" />
+    <entry file="file://$PROJECT_DIR$/src/app/home/home.component.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/app.component.ts" />
+    <entry file="file://$PROJECT_DIR$/dist/ng-keyboard-shortcuts/ng-keyboard-shortcuts.d.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.service.spec.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help-item.component.spec.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help.component.html" />
+    <entry file="file://$PROJECT_DIR$/dist/ng-keyboard-shortcuts/README.md" />
+    <entry file="file://$PROJECT_DIR$/src/app/app.module.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help-item.component.css" />
+    <entry file="file://$PROJECT_DIR$/src/app/app.component.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/getting-started/getting-started.component.html" />
+    <entry file="file://$PROJECT_DIR$/src/app/getting-started/getting-started.component.ts" />
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241722">
+          <caret line="9310" column="13" selection-start-line="9310" selection-start-column="13" selection-end-line="9310" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/README.md" />
+    <entry file="file://$PROJECT_DIR$/node_modules/@angular/common/src/common_module.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md" />
+    <entry file="file://$PROJECT_DIR$/src/app/home/home.component.css" />
+    <entry file="file://$PROJECT_DIR$/src/app/home/home.component.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/package.json" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/dom-portal-outlet.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/portal.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.module.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/public_api.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help-item.component.html" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help-item.component.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/utils.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help.component.css" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/tsconfig.lib.json" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help.component.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.service.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.directive.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts-help.service.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.interfaces.ts" />
+    <entry file="file://$PROJECT_DIR$/projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts" />
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
