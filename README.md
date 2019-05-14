@@ -53,7 +53,7 @@ import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
     ],
     imports: [
         BrowserModule,
-        KeyboardShortcutsModule.foRoot()
+        KeyboardShortcutsModule.forRoot()
     ],
     bootstrap: [AppComponent]
 })
