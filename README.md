@@ -89,7 +89,7 @@ import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "
 
 @Component({
     selector: 'demo-component',
-    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcut>"
+    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>"
 })
 export class DemoComponent implements AfterViewInit {
 
