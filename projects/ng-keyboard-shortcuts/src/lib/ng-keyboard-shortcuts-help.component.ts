@@ -217,7 +217,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Reveal the help screen manually.
      */
-    private reveal(): NgKeyboardShortcutsHelpComponent {
+    reveal(): NgKeyboardShortcutsHelpComponent {
         this.hide();
         if (this.disableScrolling) {
             disableScroll(`.${this.className}`);
