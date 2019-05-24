@@ -1,14 +1,11 @@
 import {
     ApplicationRef,
     Component,
-    ComponentFactoryResolver,
+    ComponentFactoryResolver, ElementRef, HostBinding,
     Injector,
     Input,
-    OnChanges,
     OnDestroy,
     OnInit,
-    SimpleChange,
-    SimpleChanges,
     TemplateRef,
     ViewChild,
     ViewContainerRef
@@ -25,22 +22,22 @@ import { SubscriptionLike } from "rxjs";
 
 /**
  * @ignore
- * @type {Map}
  */
 const scrollAbleKeys = new Map([[31, 1], [38,1], [39, 1], [40, 1]]);
 /**
  * @ignore
- * @param e
  */
-const preventDefault = e => {
+const preventDefault = (ignore: string) => e => {
+    const modal = e.target.closest(ignore);
+    if (modal) {
+        return;
+    }
     e = e || window.event;
     if (e.preventDefault) e.preventDefault();
     e.returnValue = false;
 };
 /**
  * @ignore
- * @param e
- * @returns {boolean}
  */
 const preventDefaultForScrollKeys = e => {
     if (!scrollAbleKeys.has(e.keyCode)) {
@@ -51,22 +48,35 @@ const preventDefaultForScrollKeys = e => {
 };
 /**
  * @ignore
- * @type {string[]}
  */
-const scrollEvents = ['wheel', 'touchmove', 'DOMMouseScroll'];
+let scrollEvents = [{name: 'wheel', callback: null}, {name: 'touchmove', callback: null}, {name: 'DOMMouseScroll', callback: null} ];
+
 
 /**
  * @ignore
  */
-const disableScroll = () => {
-    scrollEvents.forEach(event => window.addEventListener(event, preventDefault, false));
+const disableScroll = (ignore: string) => {
+    scrollEvents = scrollEvents.map(event => {
+        const callback = preventDefault(ignore);
+        window.addEventListener(event.name, callback, {passive: false});
+        return {
+            ...event,
+            callback
+        }
+    });
     window.addEventListener('keydown', preventDefaultForScrollKeys);
 };
 /**
  * @ignore
  */
 const enableScroll = () => {
-    scrollEvents.forEach(event => window.removeEventListener(event, preventDefault));
+    scrollEvents = scrollEvents.map(event => {
+        window.removeEventListener(event.name, event.callback);
+        return {
+            ...event,
+            callback: null
+        }
+    });
     window.removeEventListener('keydown', preventDefaultForScrollKeys);
 };
 
@@ -110,16 +120,17 @@ const enableScroll = () => {
 export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Disable scrolling while modal is open
-     * @type {boolean}
      */
     @Input() disableScrolling = true;
     /**
      * @ignore
      */
     private _key: string;
+
+    public className = 'help-modal';
+
     /**
      * The shortcut to show/hide the help screen
-     * @param {string} value
      */
     @Input()
     set key(value: string) {
@@ -127,23 +138,40 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         if (!value) {
             return;
         }
+        if(this.clearIds) {
+            this.keyboard.remove(this.clearIds);
+        }
         this.clearIds = this.keyboard.add({
             key: value,
             preventDefault: true,
             command: () => this.toggle()
         });
     }
+    private _closeKey;
+    @Input()
+    set closeKey(value: string) {
+        this._closeKey = value;
+        if (!value) {
+            return;
+        }
+        if (this.closeKeyIds) {
+            this.keyboard.remove(this.closeKeyIds);
+        }
+        this.closeKeyIds = this.keyboard.add({
+            key: value,
+            preventDefault: true,
+            command: () => this.hide()
+        });
+    }
 
     /**
      * The title of the help screen
      * @default: "Keyboard shortcuts"
-     * @type {string}
      */
     @Input() title = "Keyboard shortcuts";
     /**
      * What message to show when no shortcuts are available on the page.
      * @default "No shortcuts available"
-     * @type {string}
      */
     @Input() emptyMessage = "No shortcuts available";
     /**
@@ -173,6 +201,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         private componentFactoryResolver: ComponentFactoryResolver,
         private appRef: ApplicationRef,
         private keyboard: KeyboardShortcutsService,
+        private element: ElementRef,
         private keyboardHelp: NgKeyboardShortcutsHelpService,
         private viewContainer: ViewContainerRef,
         private injector: Injector
@@ -188,36 +217,38 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Reveal the help screen manually.
      */
-    private reveal() {
+    private reveal(): NgKeyboardShortcutsHelpComponent {
         this.hide();
         if (this.disableScrolling) {
-            disableScroll();
+            disableScroll(`.${this.className}`);
         }
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
         this.showing = true;
+        return this;
     }
 
     /**
      * Check if help screen is visible.
-     * @returns {boolean}
+     * @returns boolean
      */
-    visible() {
+    visible() : boolean {
         return this.bodyPortalHost.hasAttached();
     }
 
     /**
      * Hide the help screen manually.
      */
-    hide() {
+    hide() : NgKeyboardShortcutsHelpComponent {
         if (this.disableScrolling) {
             enableScroll();
         }
         if (!this.bodyPortalHost.hasAttached()) {
-            return;
+            return this;
         }
         this.bodyPortalHost.detach();
         this.showing = false;
+        return this;
     }
 
     /**
@@ -227,6 +258,9 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         this.hide();
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
+        }
+        if (this.closeKeyIds) {
+            this.keyboard.remove(this.closeKeyIds);
         }
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -239,8 +273,9 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Show/Hide the help screen manually.
      */
-    toggle() {
+    toggle() : NgKeyboardShortcutsHelpComponent {
         this.visible() ? this.hide() : this.reveal();
+        return this;
     }
 
     /**
@@ -251,6 +286,11 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private clearIds;
+
+    /**
+     * @ignore
+     */
+    private closeKeyIds;
     /**
      * @ignore
      */
