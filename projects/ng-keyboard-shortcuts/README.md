@@ -1,8 +1,10 @@
 # ng-keyboard-shortcuts
+[![npm version](https://badge.fury.io/js/ng-keyboard-shortcuts.svg)](https://badge.fury.io/js/ng-keyboard-shortcuts) [![Join the chat at https://gitter.im/ng-keyboard-shortcuts/community](https://badges.gitter.im/ng-keyboard-shortcuts/community.svg)](https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.
 
-This documentation is for version **^7.0.0** for version **2.0.0** please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
+This documentation is for version **^7.0.0**.  For older versions (**2.0.0/6.0.0**) please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
 
 See demo here:
 [demo](https://codesandbox.io/s/yvyovny43v)
@@ -51,7 +53,7 @@ import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';
     ],
     imports: [
         BrowserModule,
-        KeyboardShortcutsModule.foRoot()
+        KeyboardShortcutsModule.forRoot()
     ],
     bootstrap: [AppComponent]
 })
@@ -87,7 +89,7 @@ import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "
 
 @Component({
     selector: 'demo-component',
-    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcut>"
+    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>"
 })
 export class DemoComponent implements AfterViewInit {
 
@@ -136,6 +138,27 @@ Can be used to show an help screen ( will be attached to body and be shown as a 
 
 Should be placed in the root of your app, preferably in app.component.html
 
+ #### Inputs
+| Name   |      Type      |  default         | description |
+|----------|:-------------:|-----------------:  |:-------------:|
+| key |  ```string``` | none | The key to show/hide the help modal
+| closeKey |  ```string``` | none | Close key to be used to close the modal
+| title |  ```string``` | "Keyboard shortcuts" | The title of the help screen
+| emptyMessage |  ```string``` | "No shortcuts available" | What message to show when no commands are registered when help modal is opened.
+| disableScrolling |  ```boolean``` | true | Whether to disable body scrolling when modal help screen is opened.
+
+ #### Methods:
+| Name  | Input | Return  | Description |
+|----------|:------|:------:|:-------------:|
+| hide | void| ```KeyboardShortcutsHelpComponent``` | Programmatically hide the modal |
+| reveal | void| ```KeyboardShortcutsHelpComponent``` | Programmatically hide the modal |
+| visible | void| ```boolean``` | Check whether the modal is visible or not. |
+| toggle | void| ```KeyboardShortcutsHelpComponent``` | Programmatically toggle the modal visibility |
+
+#### Methods:
+| Name  | Input | Return  | Description |
+|----------|:------|:------:|:-------------:|
+| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
 
 `app.component.ts`
 ```typescript
@@ -154,10 +177,10 @@ export class AppComponent {
 `app.component.html`
 ```html
 <div style="text-align:center">
-	<h1>
-		Welcome to {{ title }}!
-	</h1>
-	<ng-keyboard-shortcuts-help [key]="'f1'" [title]="Help"></ng-keyboard-shortcut-help>
+   <h1>
+      Welcome to {{ title }}!
+   </h1>
+   <ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="Help"></ng-keyboard-shortcut-help>
 </div>
 
 ```
@@ -166,13 +189,14 @@ export class AppComponent {
 ### ngKeyboardShortcut
 Directive that can only be used for focusable elements, such as textarea, select, input, etc...
 
+#### Inputs
 | Name   |      Type      |  default         | description |
 |----------|:-------------:|-----------------:  |:-------------:|
 | ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |
 | disableScrolling | `boolean` | `true` | disable body scrolling while modal is open |
 
-#### Inputs
+#### Example
 
 ```typescript
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
