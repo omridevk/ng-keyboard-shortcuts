@@ -1,6 +1,15 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
-import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject, BehaviorSubject } from "rxjs";
+import {
+    fromEvent,
+    Subscription,
+    timer,
+    Subject,
+    throwError,
+    Observable,
+    ReplaySubject,
+    BehaviorSubject
+} from "rxjs";
 import {
     ShortcutEventOutput,
     ParsedShortcut,
@@ -16,7 +25,7 @@ import { allPass, any, difference, identity, isFunction, isNill } from "./utils"
 let guid = 0;
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: "root"
 })
 export class KeyboardShortcutsService implements OnDestroy {
     /**
@@ -43,7 +52,9 @@ export class KeyboardShortcutsService implements OnDestroy {
     private disabled = false;
 
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
-    public shortcuts$ = this._shortcutsSub.asObservable().pipe(filter(shortcuts => !!shortcuts.length));
+    public shortcuts$ = this._shortcutsSub
+        .asObservable()
+        .pipe(filter(shortcuts => !!shortcuts.length));
 
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
@@ -78,7 +89,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), {
                 priority: 0
             } as ParsedShortcut);
-    }
+    };
 
     private keydown$ = fromEvent(document, "keydown").pipe(
         filter(_ => !this.disabled),
@@ -139,7 +150,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         });
         setTimeout(() => {
             this._shortcutsSub.next(this._shortcuts);
-        })
+        });
         return this;
     }
 
@@ -149,19 +160,20 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     public select(key: string): Observable<ShortcutEventOutput> {
         return this.pressed$.pipe(
-            filter(({event, key: eventKeys}) => {
+            filter(({ event, key: eventKeys }) => {
                 eventKeys = Array.isArray(eventKeys) ? eventKeys : [eventKeys];
-                return !!eventKeys.find(eventKey => eventKey === key)
+                return !!eventKeys.find(eventKey => eventKey === key);
             })
-        )
+        );
     }
 
     /**
      * transforms a shortcut to:
      * a predicate function
      */
-    private getKeys = (command: string[]) =>
-        command
+    private getKeys = (keys: string[]) => {
+        const single = keys.length === 1;
+        return keys
             .map(key => key.trim().toLowerCase())
             .filter(key => key !== "+")
             .map(key => {
@@ -171,11 +183,20 @@ export class KeyboardShortcutsService implements OnDestroy {
                 if (modifiers.hasOwnProperty(key)) {
                     return event => !!event[modifiers[key]];
                 }
-                return event =>
-                    codes[key]
+
+                return event => {
+                    if (single && this.modifiersOn(event)) {
+                        return false;
+                    }
+                    return codes[key]
                         ? event.keyCode === codes[key] || event.key === key
                         : event.keyCode === key.toUpperCase().charCodeAt(0);
+                }
             });
+    };
+    private modifiersOn(event) {
+        return ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'].some(mod => event[mod])
+    }
 
     /**
      * Parse each command using getKeys function

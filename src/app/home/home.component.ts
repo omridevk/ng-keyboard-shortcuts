@@ -42,6 +42,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 target: this.input.nativeElement
             },
             {
+                key: "f",
+                command: (output: ShortcutEventOutput) => console.log("f", output),
+                preventDefault: true
+            },
+            {
                 key: "cmd + =",
                 label: "help",
                 description: "zoom out",
