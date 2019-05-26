@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked " , e.key)
             },
             {
-                key: "F1",
+                key: "f2",
                 preventDefault: true,
                 label: "help",
                 description: "Open Help menu",
@@ -80,10 +80,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
-                key: ["up down right"],
+                key: ["up up down down left right left right b a enter"],
                 label: "Sequences",
-                description: "Sequence up down right",
-                command: (output: ShortcutEventOutput) => console.log("up down right", output),
+                description: "Konami code!",
+                command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
                 preventDefault: true
             },
             {

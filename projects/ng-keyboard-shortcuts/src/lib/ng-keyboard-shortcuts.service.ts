@@ -123,7 +123,10 @@ export class KeyboardShortcutsService implements OnDestroy {
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
         catchError(error => throwError(error))
     );
-    private timer$ = timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE);
+    private timer$ = new Subject();
+    private resetCounter$ = this.timer$.asObservable().pipe(
+        switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)),
+    );
 
     private keydownSequence$ = this.shortcuts$.pipe(
         map(shortcuts => shortcuts.filter(shortcut => shortcut.isSequence)),
@@ -134,8 +137,10 @@ export class KeyboardShortcutsService implements OnDestroy {
                         event,
                         sequences
                     };
-                })
-            )
+                }),
+                tap(this.timer$),
+            ),
+
         ),
         scan(
             (acc: { events: any[]; command?: any; sequences: any[] }, arg: any) => {
@@ -179,7 +184,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         throttle(shortcut => timer(shortcut.throttleTime)),
         tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
-        takeUntil(this.timer$),
+        takeUntil(this.resetCounter$),
         repeat()
     );
 
