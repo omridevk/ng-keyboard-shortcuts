@@ -83,6 +83,7 @@ export const modifiers = {
     'alt': 'altKey',
     'cmd': isMac ? 'metaKey' : 'ctrlKey',
     'command': isMac ? 'metaKey' : 'ctrlKey',
+    'meta': isMac? 'metaKey' : 'ctrlKey',
     'left command': 'metaKey',
     'right command': 'MetaRight',
     '⌘': isMac ? 'metaKey' : 'ctrlKey',
@@ -132,13 +133,14 @@ export const _MAP = {
     224: 'meta'
 };
 
+
 /**
  * mapping for special characters so they can support
  *
  * this dictionary is only used incase you want to bind a
  * keyup or keydown event to one of these keys
  *
- * @type {Object}
+ * @type
  */
 export const _KEYCODE_MAP = {
     106: '*',
@@ -167,28 +169,27 @@ export const _KEYCODE_MAP = {
  *
  * note that this will only work reliably on US keyboards
  *
- * @type {Object}
  */
 export const _SHIFT_MAP = {
-    '~': '`',
-    '!': '1',
-    '@': '2',
-    '#': '3',
-    '$': '4',
-    '%': '5',
-    '^': '6',
-    '&': '7',
-    '*': '8',
-    '(': '9',
-    ')': '0',
-    '_': '-',
-    '+': '=',
-    ':': ';',
-    '\"': '\'',
-    '<': ',',
-    '>': '.',
-    '?': '/',
-    '|': '\\'
+    '`': '~',
+    '1': '!',
+    '2': '@',
+    '3': '#',
+    '4': '$',
+    '5': '%',
+    '6': '^',
+    '7': '&',
+    '8': '*',
+    '9': '(',
+    '0': ')',
+    '-': '_',
+    '=': '+',
+    ';': ':',
+    '\'': '\"',
+    ',': '<',
+    '.': '>',
+    '/': '?',
+    '\\': '|'
 };
 
 /**

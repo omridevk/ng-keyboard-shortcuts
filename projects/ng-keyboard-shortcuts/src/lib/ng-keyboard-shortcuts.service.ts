@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { _KEYCODE_MAP, _MAP, codes, modifiers } from "./keys";
+import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, modifiers } from "./keys";
 import {
     BehaviorSubject,
     fromEvent,
@@ -173,14 +173,13 @@ export class KeyboardShortcutsService implements OnDestroy {
                 let { event } = arg;
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
-                const key = this.characterFromEvent(event);
+                const [key] = this.characterFromEvent(event);
                 const result = sequences
                     .map(sequence => {
                         const partialMatch = sequence.sequence
                             .map(
                                 seque =>
-                                    seque[currentLength] === key ||
-                                    seque[currentLength] === event.key
+                                    seque[currentLength] === key
                             )
                             .some(identity);
                         return {
@@ -246,22 +245,34 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @ignore
      * @param event
      */
-    private characterFromEvent(event) {
+    private _characterFromEvent(event): [string, boolean] {
+        if (typeof event.which !== 'number') {
+            event.which = event.keyCode;
+        }
         // for non keypress events the special maps are needed
         if (_MAP[event.which]) {
-            return _MAP[event.which];
+            return [_MAP[event.which], event.shiftKey];
         }
 
         if (_KEYCODE_MAP[event.which]) {
-            return _KEYCODE_MAP[event.which];
+            return [_KEYCODE_MAP[event.which], event.shiftKey];
         }
         // if it is not in the special map
 
         // with keydown and keyup events the character seems to always
         // come in as an uppercase character whether you are pressing shift
         // or not.  we should make sure it is always lowercase for comparisons
-        return String.fromCharCode(event.which).toLowerCase();
+        return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
     }
+
+    private characterFromEvent(event) {
+        let [key, shiftKey] = this._characterFromEvent(event);
+        if (shiftKey && _SHIFT_MAP[key]) {
+            return [_SHIFT_MAP[key], shiftKey];
+        }
+        return [key, shiftKey];
+    }
+
 
     /**
      * @ignore
@@ -292,7 +303,6 @@ export class KeyboardShortcutsService implements OnDestroy {
             }
             this._shortcuts.push(command);
         });
-
         setTimeout(() => {
             this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
@@ -334,7 +344,6 @@ export class KeyboardShortcutsService implements OnDestroy {
      * a predicate function
      */
     private getKeys = (keys: string[]) => {
-        const single = keys.length === 1;
         return keys
             .map(key => key.trim().toLowerCase())
             .filter(key => key !== "+")
@@ -347,12 +356,11 @@ export class KeyboardShortcutsService implements OnDestroy {
                 }
 
                 return event => {
-                    if (single && this.modifiersOn(event)) {
-                        return false;
+                    const [char, shiftKey] = this.characterFromEvent(event);
+                    if (char === key && shiftKey) {
+                        return true;
                     }
-                    return codes[key]
-                        ? event.keyCode === codes[key] || event.key === key
-                        : event.keyCode === key.toUpperCase().charCodeAt(0);
+                    return key === char;
                 };
             });
     };

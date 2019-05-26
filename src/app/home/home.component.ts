@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, ShortcutDirectiveInput} from 'ng-keyboard-shortcuts';
+import {
+    AllowIn,
+    KeyboardShortcutsComponent,
+    ShortcutDirectiveInput,
+    ShortcutEventOutput,
+    ShortcutInput
+} from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +36,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea],
                 command: e => console.log("clicked " , e.key)
+            },
+            {
+                key: "~",
+                label: "help",
+                description: "~ sign",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked ~ sign" , e.key)
+            },
+            {
+                key: "?",
+                label: "help",
+                description: "Question mark",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked question mark" , e.key)
+            },
+            {
+                key: "ctrl + ?",
+                label: "help",
+                description: "Shift + Question mark",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked ctrl + question mark" , e.key)
             },
             {
                 key: "f2",
