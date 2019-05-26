@@ -61,9 +61,12 @@ export enum AllowIn {
  * @ignore
  */
 export interface ParsedShortcut extends ShortcutInput {
+    key: string[];
     predicates: Function[][];
     id: string;
     priority?: number;
+    isSequence: boolean;
+    sequence?: string[][];
     event?: KeyboardEvent;
 }
 

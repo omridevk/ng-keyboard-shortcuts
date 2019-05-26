@@ -1,21 +1,8 @@
-import { Inject, Injectable, OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
-import {
-    fromEvent,
-    Subscription,
-    timer,
-    Subject,
-    throwError,
-    Observable,
-    ReplaySubject,
-    BehaviorSubject
-} from "rxjs";
-import {
-    ShortcutEventOutput,
-    ParsedShortcut,
-    ShortcutInput
-} from "./ng-keyboard-shortcuts.interfaces";
-import { map, filter, tap, throttle, catchError } from "rxjs/operators";
+import { BehaviorSubject, fromEvent, Observable, Subject, Subscription, throwError, timer } from "rxjs";
+import { ParsedShortcut, ShortcutEventOutput, ShortcutInput } from "./ng-keyboard-shortcuts.interfaces";
+import { catchError, filter, map, scan, tap, throttle } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
 
 /**
@@ -33,6 +20,8 @@ export class KeyboardShortcutsService implements OnDestroy {
      * for each key create a predicate function
      */
     private _shortcuts: ParsedShortcut[] = [];
+
+    private _sequences: ParsedShortcut[] = [];
 
     /**
      * Throttle the keypress event.
@@ -61,7 +50,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * Subscription for on destroy.
      */
-    private readonly subscription: Subscription;
+    private readonly subscriptions: Subscription[] = [];
 
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
@@ -107,21 +96,72 @@ export class KeyboardShortcutsService implements OnDestroy {
         catchError(error => throwError(error))
     );
 
+    private keydownSequence$ = fromEvent(document, "keydown").pipe(
+        scan((acc: {events: any[], command?: any}, event: any) => {
+            const sequences = this._sequences;
+            const currentLength = acc.events.length;
+            const {key} = event;
+            const [result] = sequences.map(sequence => {
+                const triggered = sequence.sequence.map(seque => seque[currentLength] === key).some(identity);
+                return {
+                    ...sequence,
+                    partialMatch: triggered,
+                    event: event,
+                    fullMatch: triggered && sequence.sequence.map(seq => seq.length === acc.events.length + 1).some(identity)
+                }
+            }).filter(sequences => sequences.partialMatch);
+            if (!result) {
+                return {events: []};
+            }
+            if (result.fullMatch) {
+                return {events: [], command: result};
+            }
+            return {events: [...acc.events, event], command: result};
+        }, {events: []}),
+        tap(({command}) => {
+            if (!command || !command.fullMatch) {
+                return;
+            }
+            command.command({ event: command.event, key: command.key });
+        })
+    );
+
+    private checkIfTriggered({command, events}) {
+        if (!command) {
+            return false;
+        }
+        return command.sequence.some(sequence => {
+            return (sequence.length === events.length);
+        });
+    }
+
     private get shortcuts() {
         return this._shortcuts;
     }
 
     constructor() {
-        this.subscription = this.keydown$.subscribe();
+        this.subscriptions.push(
+            this.keydownSequence$.subscribe(),
+            this.keydown$.subscribe()
+        );
     }
 
     /**
      * Remove subscription.
      */
     ngOnDestroy(): void {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+
+    private isSequence(shortcuts: string[]): boolean {
+        const [key] = shortcuts;
+        const regex = /^\w$/gim;
+        let keys = key.split("+").map(key => key.trim());
+        const keysAfter = keys.filter(key => key.match(regex));
+        if (keys.length === 1) {
+            return false;
         }
+        return keys.length === keysAfter.length;
     }
 
     /**
@@ -130,7 +170,14 @@ export class KeyboardShortcutsService implements OnDestroy {
     public add(shortcuts: ShortcutInput[] | ShortcutInput): string[] {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
         const commands = this.parseCommand(shortcuts);
-        this._shortcuts.push(...commands);
+        commands.forEach(command => {
+            if (command.isSequence) {
+                this._sequences.push(command);
+                return;
+            }
+            this._shortcuts.push(command);
+        });
+
         setTimeout(() => {
             this._shortcutsSub.next(this._shortcuts);
         });
@@ -191,11 +238,11 @@ export class KeyboardShortcutsService implements OnDestroy {
                     return codes[key]
                         ? event.keyCode === codes[key] || event.key === key
                         : event.keyCode === key.toUpperCase().charCodeAt(0);
-                }
+                };
             });
     };
     private modifiersOn(event) {
-        return ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'].some(mod => event[mod])
+        return ["metaKey", "altKey", "ctrlKey", "shiftKey"].some(mod => event[mod]);
     }
 
     /**
@@ -207,8 +254,13 @@ export class KeyboardShortcutsService implements OnDestroy {
             const keys = Array.isArray(command.key) ? command.key : [command.key];
             const priority = Math.max(...keys.map(key => key.split(" ").length));
             const predicates = keys.map(key => this.getKeys(key.split(" ")));
+            const isSequence = this.isSequence(keys);
+            const sequence = keys
+                    .map(key => key.split("+").map(key => key.trim()));
             return {
                 ...command,
+                isSequence,
+                sequence: isSequence ? sequence : [],
                 allowIn: command.allowIn || [],
                 key: keys,
                 id: `${guid++}`,

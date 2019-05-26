@@ -47,6 +47,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
+                key: ["g + e", "a + b"],
+                label: "Sequences",
+                description: "Sequence g + e and a + b",
+                command: (output: ShortcutEventOutput) => console.log("g + e", output),
+                preventDefault: true
+            },
+            {
                 key: "cmd + =",
                 label: "help",
                 description: "zoom out",
