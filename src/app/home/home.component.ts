@@ -9,10 +9,15 @@ import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput
 export class HomeComponent implements OnInit, AfterViewInit {
 
     shortcuts: ShortcutInput[] = [];
+    secondShortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[] = [];
+    showSecondShortcuts = false;
     public directiveDisabled = false;
     handleClick() {
         this.directiveDisabled = !this.directiveDisabled;
+    }
+    toggleSecondShortcuts() {
+        this.showSecondShortcuts = !this.showSecondShortcuts;
     }
     @ViewChild('input') input: ElementRef;
 
@@ -54,6 +59,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
+                key: "c + b + a",
+                label: "Sequences",
+                description: "Sequence c + b + a",
+                command: (output: ShortcutEventOutput) => console.log("c + b + a", output),
+                preventDefault: true
+            },
+            {
                 key: "cmd + =",
                 label: "help",
                 description: "zoom out",
@@ -67,6 +79,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             }
         );
+        this.secondShortcuts.push({
+            key: ["c + a "],
+            label: "Sequences",
+            description: "Sequence c + a",
+            allowIn: [AllowIn.Input],
+            command: (output: ShortcutEventOutput) => console.log("c + a", output),
+            preventDefault: true
+        });
         this.directiveShortcuts.push({
             key: "cmd + e",
             label: "test",

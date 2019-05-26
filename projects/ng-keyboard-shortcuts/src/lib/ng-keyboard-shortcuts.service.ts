@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { codes, modifiers } from "./keys";
 import { BehaviorSubject, fromEvent, Observable, Subject, Subscription, throwError, timer } from "rxjs";
 import { ParsedShortcut, ShortcutEventOutput, ShortcutInput } from "./ng-keyboard-shortcuts.interfaces";
-import { catchError, filter, map, scan, tap, throttle } from "rxjs/operators";
+import { catchError, filter, map, repeat, scan, switchMap, takeUntil, tap, throttle } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
 
 /**
@@ -39,6 +39,11 @@ export class KeyboardShortcutsService implements OnDestroy {
      * Disable all keyboard shortcuts
      */
     private disabled = false;
+    /**
+     * 2000 ms window to allow between key sequences otherwise
+     * the sequence will reset.
+     */
+    private static readonly TIMEOUT_SEQUENCE = 2000;
 
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
     public shortcuts$ = this._shortcutsSub
@@ -95,43 +100,57 @@ export class KeyboardShortcutsService implements OnDestroy {
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
         catchError(error => throwError(error))
     );
+    private timer$ = timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE);
 
-    private keydownSequence$ = fromEvent(document, "keydown").pipe(
-        scan((acc: {events: any[], command?: any}, event: any) => {
-            const sequences = this._sequences;
+
+    private keydownSequence$ = this.shortcuts$.pipe(map(shortcuts => shortcuts.filter(shortcut => shortcut.isSequence)),
+        switchMap(sequences => fromEvent(document, "keydown").pipe(map(event => {
+            return {
+                event,
+                sequences
+            }
+        }))),
+        scan((acc: {events: any[], command?: any, sequences: any[]}, arg: any) => {
+            let {event} = arg;
             const currentLength = acc.events.length;
+            const sequences = currentLength ? acc.sequences : arg.sequences;
             const {key} = event;
-            const [result] = sequences.map(sequence => {
-                const triggered = sequence.sequence.map(seque => seque[currentLength] === key).some(identity);
+            const result = sequences.map(sequence => {
+                const partialMatch = sequence.sequence.map(seque => seque[currentLength] === key).some(identity);
                 return {
                     ...sequence,
-                    partialMatch: triggered,
+                    partialMatch,
                     event: event,
-                    fullMatch: triggered && sequence.sequence.map(seq => seq.length === acc.events.length + 1).some(identity)
+                    fullMatch: this.isFullMatch({command: sequence, events: acc.events})
                 }
             }).filter(sequences => sequences.partialMatch);
-            if (!result) {
-                return {events: []};
+            const [match] = result;
+            if (!match) {
+                return {events: [], sequences: this._sequences};
             }
-            if (result.fullMatch) {
-                return {events: [], command: result};
+            if (match.fullMatch) {
+                return {events: [], command: match, sequences: this._sequences};
             }
-            return {events: [...acc.events, event], command: result};
-        }, {events: []}),
-        tap(({command}) => {
-            if (!command || !command.fullMatch) {
-                return;
-            }
-            command.command({ event: command.event, key: command.key });
-        })
+            return {events: [...acc.events, event], command: result, sequences: result};
+        }, {events: [], sequences: []}),
+        filter(({command}) => command && command.fullMatch),
+        map(({command}) => command),
+        filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
+        filter(this.isAllowed),
+        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
+        throttle(shortcut => timer(shortcut.throttleTime)),
+        tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
+        tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
+        takeUntil(this.timer$),
+        repeat()
     );
 
-    private checkIfTriggered({command, events}) {
+    private isFullMatch({command, events}) {
         if (!command) {
             return false;
         }
         return command.sequence.some(sequence => {
-            return (sequence.length === events.length);
+            return (sequence.length === events.length + 1);
         });
     }
 
@@ -179,7 +198,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         });
 
         setTimeout(() => {
-            this._shortcutsSub.next(this._shortcuts);
+            this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
         return commands.map(command => command.id);
     }
@@ -192,11 +211,10 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     public remove(ids: string | string[]): KeyboardShortcutsService {
         ids = Array.isArray(ids) ? ids : [ids];
-        this._shortcuts = this._shortcuts.filter(shortcut => {
-            return !ids.includes(shortcut.id);
-        });
+        this._shortcuts = this._shortcuts.filter(shortcut => !ids.includes(shortcut.id));
+        this._sequences = this._sequences.filter(shortcut => !ids.includes(shortcut.id));
         setTimeout(() => {
-            this._shortcutsSub.next(this._shortcuts);
+            this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
         return this;
     }
@@ -252,11 +270,11 @@ export class KeyboardShortcutsService implements OnDestroy {
         const commands = Array.isArray(command) ? command : [command];
         return commands.map(command => {
             const keys = Array.isArray(command.key) ? command.key : [command.key];
-            const priority = Math.max(...keys.map(key => key.split(" ").length));
-            const predicates = keys.map(key => this.getKeys(key.split(" ")));
+            const priority = Math.max(...keys.map(key => key.split(" ").filter(identity).length));
+            const predicates = keys.map(key => this.getKeys(key.split(" ").filter(identity)));
             const isSequence = this.isSequence(keys);
             const sequence = keys
-                    .map(key => key.split("+").map(key => key.trim()));
+                    .map(key => key.split("+").filter(identity).map(key => key.trim()));
             return {
                 ...command,
                 isSequence,
