@@ -62,6 +62,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private disabled = false;
     /**
+     * @ignore
      * 2000 ms window to allow between key sequences otherwise
      * the sequence will reset.
      */
@@ -75,10 +76,15 @@ export class KeyboardShortcutsService implements OnDestroy {
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
     /**
+     * @ignore
      * Subscription for on destroy.
      */
     private readonly subscriptions: Subscription[] = [];
 
+    /**
+     * @ignore
+     * @param shortcut
+     */
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
         if (target === shortcut.target) {
@@ -90,6 +96,10 @@ export class KeyboardShortcutsService implements OnDestroy {
         return !this._ignored.includes(target.nodeName);
     };
 
+    /**
+     * @ignore
+     * @param event
+     */
     private mapEvent = event => {
         return this._shortcuts
             .map(shortcut =>
@@ -106,8 +116,15 @@ export class KeyboardShortcutsService implements OnDestroy {
                 priority: 0
             } as ParsedShortcut);
     };
+
+    /**
+     * @ignore
+     */
     private keydown$ = fromEvent(document, "keydown");
 
+    /**
+     * @ignore
+     */
     private keydownCombo$ = this.keydown$.pipe(
         filter(_ => !this.disabled),
         map(this.mapEvent),
@@ -123,11 +140,20 @@ export class KeyboardShortcutsService implements OnDestroy {
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
         catchError(error => throwError(error))
     );
+
+    /**
+     * @ignore
+     */
     private timer$ = new Subject();
+    /**
+     * @ignore
+     */
     private resetCounter$ = this.timer$.asObservable().pipe(
         switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)),
     );
-
+    /**
+     * @ignore
+     */
     private keydownSequence$ = this.shortcuts$.pipe(
         map(shortcuts => shortcuts.filter(shortcut => shortcut.isSequence)),
         switchMap(sequences =>
@@ -188,6 +214,11 @@ export class KeyboardShortcutsService implements OnDestroy {
         repeat()
     );
 
+    /**
+     * @ignore
+     * @param command
+     * @param events
+     */
     private isFullMatch({ command, events }) {
         if (!command) {
             return false;
@@ -197,14 +228,24 @@ export class KeyboardShortcutsService implements OnDestroy {
         });
     }
 
+    /**
+     * @ignore
+     */
     private get shortcuts() {
         return this._shortcuts;
     }
 
+    /**
+     * @ignore
+     */
     constructor() {
         this.subscriptions.push(this.keydownSequence$.subscribe(), this.keydownCombo$.subscribe());
     }
 
+    /**
+     * @ignore
+     * @param event
+     */
     private characterFromEvent(event) {
         // for non keypress events the special maps are needed
         if (_MAP[event.which]) {
@@ -223,15 +264,18 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
+     * @ignore
      * Remove subscription.
      */
     ngOnDestroy(): void {
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
+    /**
+     * @ignore
+     * @param shortcuts
+     */
     private isSequence(shortcuts: string[]): boolean {
-        const [key] = shortcuts;
-        const regex = /^\w$/gim;
         return !shortcuts.some(shortcut => shortcut.includes("+"));
     }
 
@@ -285,6 +329,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
+     * @ignore
      * transforms a shortcut to:
      * a predicate function
      */
@@ -311,11 +356,17 @@ export class KeyboardShortcutsService implements OnDestroy {
                 };
             });
     };
+
+    /**
+     * @ignore
+     * @param event
+     */
     private modifiersOn(event) {
         return ["metaKey", "altKey", "ctrlKey", "shiftKey"].some(mod => event[mod]);
     }
 
     /**
+     * @ignore
      * Parse each command using getKeys function
      */
     private parseCommand(command: ShortcutInput | ShortcutInput[]): ParsedShortcut[] {
