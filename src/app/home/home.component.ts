@@ -52,14 +52,42 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
-                key: ["g + e", "a + b"],
+                key: ["g e", "a b"],
                 label: "Sequences",
                 description: "Sequence g + e and a + b",
-                command: (output: ShortcutEventOutput) => console.log("g + e", output),
+                command: (output: ShortcutEventOutput) => console.log("g e / a b", output),
                 preventDefault: true
             },
             {
-                key: "c + b + a",
+                key: ["g t"],
+                label: "Sequences",
+                description: "Sequence g and t",
+                command: (output: ShortcutEventOutput) => console.log("g t", output),
+                preventDefault: true
+            },
+            {
+                key: ["f1 t"],
+                label: "Sequences",
+                description: "Sequence f1 and t",
+                command: (output: ShortcutEventOutput) => console.log("f1 t", output),
+                preventDefault: true
+            },
+            {
+                key: ["? a"],
+                label: "Sequences",
+                description: "Sequence ? and a",
+                command: (output: ShortcutEventOutput) => console.log("? a", output),
+                preventDefault: true
+            },
+            {
+                key: ["up down right"],
+                label: "Sequences",
+                description: "Sequence up down right",
+                command: (output: ShortcutEventOutput) => console.log("up down right", output),
+                preventDefault: true
+            },
+            {
+                key: "c b a",
                 label: "Sequences",
                 description: "Sequence c + b + a",
                 command: (output: ShortcutEventOutput) => console.log("c + b + a", output),
