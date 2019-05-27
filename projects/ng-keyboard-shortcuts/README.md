@@ -67,6 +67,16 @@ export class AppModule {
 # Usage:  
 ## Sequences
 
+It is important to note that the library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
+This is because it can't tell if you are starting the sequence or if you are pressing that key on its own.
+
+To counter this, there is a __500ms__ delay(__only__ when single key is used in the beginning of another sequence, so it won't affect performance)
+. This gives the library time to wait for a more complete sequence, otherwise the single sequence will be triggered.
+
+for example: binding both "? a" and "?", then clicking "?" will trigger the "?" callback, but only after 500ms delay.
+However, in all other cases there's no delay in execution of the callback (unless debounceTime is provided)
+
+
 This library supports gmail style sequences:
 ```typescript
    [{
