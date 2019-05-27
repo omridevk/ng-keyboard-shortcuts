@@ -65,6 +65,7 @@ export interface ParsedShortcut extends ShortcutInput {
     predicates: Function[][];
     id: string;
     priority?: number;
+
     isSequence: boolean;
     sequence?: string[][];
     event?: KeyboardEvent;

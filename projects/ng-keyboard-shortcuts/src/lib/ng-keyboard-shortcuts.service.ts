@@ -7,7 +7,8 @@ import {
     Subject,
     Subscription,
     throwError,
-    timer
+    timer,
+    of
 } from "rxjs";
 import {
     ParsedShortcut,
@@ -25,7 +26,7 @@ import {
     tap,
     throttle
 } from "rxjs/operators";
-import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
+import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./utils";
 
 /**
  * @ignore
@@ -148,9 +149,9 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * @ignore
      */
-    private resetCounter$ = this.timer$.asObservable().pipe(
-        switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)),
-    );
+    private resetCounter$ = this.timer$
+        .asObservable()
+        .pipe(switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)));
     /**
      * @ignore
      */
@@ -164,9 +165,8 @@ export class KeyboardShortcutsService implements OnDestroy {
                         sequences
                     };
                 }),
-                tap(this.timer$),
-            ),
-
+                tap(this.timer$)
+            )
         ),
         scan(
             (acc: { events: any[]; command?: any; sequences: any[] }, arg: any) => {
@@ -174,23 +174,43 @@ export class KeyboardShortcutsService implements OnDestroy {
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
                 const [key] = this.characterFromEvent(event);
+                // TODO:
+                // calculate priority if there's a possibility for bigger match like:
+                // "? a" and "?", obviously only "? a" should fire.
                 const result = sequences
                     .map(sequence => {
-                        const partialMatch = sequence.sequence
-                            .map(
-                                seque =>
-                                    seque[currentLength] === key
-                            )
-                            .some(identity);
+                        const sequences = sequence.sequence.filter(
+                            seque => seque[currentLength] === key
+                        );
+                        const partialMatch = sequences.length > 0;
+                        if (sequence.fullMatch) {
+                            return sequence;
+                        }
                         return {
                             ...sequence,
+                            sequence: sequences,
                             partialMatch,
                             event: event,
-                            fullMatch: this.isFullMatch({ command: sequence, events: acc.events })
+                            fullMatch:
+                                partialMatch &&
+                                this.isFullMatch({ command: sequence, events: acc.events })
                         };
                     })
-                    .filter(sequences => sequences.partialMatch);
-                const [match] = result;
+                    .filter(sequences => sequences.partialMatch || sequences.fullMatch);
+
+                let [match] = result;
+                /*
+                 * handle case of "?" sequence and "? a" sequence
+                 * need to determine which one to trigger.
+                 * if both match, we pick the longer one (? a) in this case.
+                 */
+                const guess = maxArrayProp('priority', result);
+                if (result.length > 1 && guess.fullMatch) {
+                    return { events: [], command: guess, sequences: this._sequences };
+                }
+                if (result.length > 1) {
+                    return { events: [...acc.events, event], command: result, sequences: result };
+                }
                 if (!match) {
                     return { events: [], sequences: this._sequences };
                 }
@@ -201,6 +221,22 @@ export class KeyboardShortcutsService implements OnDestroy {
             },
             { events: [], sequences: [] }
         ),
+        switchMap(({ command }) => {
+            if (Array.isArray(command)) {
+                /*
+                 * Add a timer to handle the case where for example:
+                 * a sequence "?" is registered and "? a" is registered as well
+                 * if the user does not hit any key for 500ms, the single sequence will trigger
+                 * if any keydown event occur, this timer will reset, given a chance to complete
+                 * the full sequence (? a) in this case.
+                 * This delay only occurs when single key sequence is the beginning of another sequence.
+                 */
+                return timer(500).pipe(
+                    map(() => ({ command: command.filter(command => command.fullMatch)[0] })),
+                );
+            }
+            return of({ command });
+        }),
         filter(({ command }) => command && command.fullMatch),
         map(({ command }) => command),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
@@ -246,7 +282,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @param event
      */
     private _characterFromEvent(event): [string, boolean] {
-        if (typeof event.which !== 'number') {
+        if (typeof event.which !== "number") {
             event.which = event.keyCode;
         }
         // for non keypress events the special maps are needed
@@ -272,7 +308,6 @@ export class KeyboardShortcutsService implements OnDestroy {
         }
         return [key, shiftKey];
     }
-
 
     /**
      * @ignore

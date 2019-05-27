@@ -146,10 +146,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
             preventDefault: true
         });
         this.directiveShortcuts.push({
-            key: "cmd + e",
+            key: "ctrl + a",
             label: "test",
-            description: "hello world",
-            command: () => console.log('directive cmd + e'),
+            description: "only works inside the element",
+            command: () => console.log('directive ctrl + a'),
             preventDefault: true
         });
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));

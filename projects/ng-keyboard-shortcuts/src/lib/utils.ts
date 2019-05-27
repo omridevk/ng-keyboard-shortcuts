@@ -1,4 +1,3 @@
-
 export function isFunction(x: any): x is Function {
     return typeof x === "function";
 }
@@ -38,7 +37,6 @@ export const groupBy = (xs, key) =>
         {}
     );
 
-
 /**
  * @ignore
  * @param first
@@ -64,12 +62,19 @@ export const allPass = preds => (...args) => {
     }
     return true;
 };
+export const prop = prop => object => object[prop];
 
-/**
- * @ignore
- * @returns string
- */
-export const guid = () =>
-    Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
+const minMaxArrayProp = type => (property, array) =>
+    Math[type].apply(Math, array.map(prop(property)));
+
+export const maxArrayProp = (property, array) => {
+    return array.reduce(
+        (acc, curr) => {
+            const propFn = prop(property);
+            const currentValue = propFn(curr);
+            const previousValue = propFn(acc);
+            return currentValue > previousValue ? curr : acc;
+        },
+        { [property]: 0 }
+    );
+};
