@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput, ShortcutDirectiveInput} from 'ng-keyboard-shortcuts';
+import {
+    AllowIn,
+    KeyboardShortcutsComponent,
+    ShortcutDirectiveInput,
+    ShortcutEventOutput,
+    ShortcutInput
+} from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +15,15 @@ import { AllowIn, KeyboardShortcutsComponent, ShortcutEventOutput, ShortcutInput
 export class HomeComponent implements OnInit, AfterViewInit {
 
     shortcuts: ShortcutInput[] = [];
+    secondShortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[] = [];
+    showSecondShortcuts = false;
     public directiveDisabled = false;
     handleClick() {
         this.directiveDisabled = !this.directiveDisabled;
+    }
+    toggleSecondShortcuts() {
+        this.showSecondShortcuts = !this.showSecondShortcuts;
     }
     @ViewChild('input') input: ElementRef;
 
@@ -27,7 +38,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked " , e.key)
             },
             {
-                key: "F1",
+                key: "~",
+                label: "help",
+                description: "~ sign",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked ~ sign" , e.key)
+            },
+            {
+                key: "?",
+                label: "help",
+                description: "Question mark",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked question mark" , e.key)
+            },
+            {
+                key: "ctrl + ?",
+                label: "help",
+                description: "Shift + Question mark",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
+                command: e => console.log("clicked ctrl + question mark" , e.key)
+            },
+            {
+                key: "f2",
                 preventDefault: true,
                 label: "help",
                 description: "Open Help menu",
@@ -47,6 +82,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
+                key: ["g e", "a b"],
+                label: "Sequences",
+                description: "Sequence g + e and a + b",
+                command: (output: ShortcutEventOutput) => console.log("g e / a b", output),
+                preventDefault: true
+            },
+            {
+                key: ["g t"],
+                label: "Sequences",
+                description: "Sequence g and t",
+                command: (output: ShortcutEventOutput) => console.log("g t", output),
+                preventDefault: true
+            },
+            {
+                key: ["f1 t"],
+                label: "Sequences",
+                description: "Sequence f1 and t",
+                command: (output: ShortcutEventOutput) => console.log("f1 t", output),
+                preventDefault: true
+            },
+            {
+                key: ["? a"],
+                label: "Sequences",
+                description: "Sequence ? and a",
+                command: (output: ShortcutEventOutput) => console.log("? a", output),
+                preventDefault: true
+            },
+            {
+                key: ["up up down down left right left right b a enter"],
+                label: "Sequences",
+                description: "Konami code!",
+                command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
+                preventDefault: true
+            },
+            {
+                key: "c b a",
+                label: "Sequences",
+                description: "Sequence c + b + a",
+                command: (output: ShortcutEventOutput) => console.log("c + b + a", output),
+                preventDefault: true
+            },
+            {
                 key: "cmd + =",
                 label: "help",
                 description: "zoom out",
@@ -60,11 +137,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             }
         );
+        this.secondShortcuts.push({
+            key: ["c + a "],
+            label: "Sequences",
+            description: "Sequence c + a",
+            allowIn: [AllowIn.Input],
+            command: (output: ShortcutEventOutput) => console.log("c + a", output),
+            preventDefault: true
+        });
         this.directiveShortcuts.push({
-            key: "cmd + e",
+            key: "ctrl + a",
             label: "test",
-            description: "hello world",
-            command: () => console.log('directive cmd + e'),
+            description: "only works inside the element",
+            command: () => console.log('directive ctrl + a'),
             preventDefault: true
         });
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));

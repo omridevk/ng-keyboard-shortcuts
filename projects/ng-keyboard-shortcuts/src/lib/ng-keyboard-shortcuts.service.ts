@@ -1,22 +1,32 @@
-import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { codes, modifiers } from "./keys";
+import { Injectable, OnDestroy } from "@angular/core";
+import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, modifiers } from "./keys";
 import {
+    BehaviorSubject,
     fromEvent,
-    Subscription,
-    timer,
-    Subject,
-    throwError,
     Observable,
-    ReplaySubject,
-    BehaviorSubject
+    Subject,
+    Subscription,
+    throwError,
+    timer,
+    of
 } from "rxjs";
 import {
-    ShortcutEventOutput,
     ParsedShortcut,
+    ShortcutEventOutput,
     ShortcutInput
 } from "./ng-keyboard-shortcuts.interfaces";
-import { map, filter, tap, throttle, catchError } from "rxjs/operators";
-import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
+import {
+    catchError,
+    filter,
+    map,
+    repeat,
+    scan,
+    switchMap,
+    takeUntil,
+    tap,
+    throttle
+} from "rxjs/operators";
+import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./utils";
 
 /**
  * @ignore
@@ -34,6 +44,8 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private _shortcuts: ParsedShortcut[] = [];
 
+    private _sequences: ParsedShortcut[] = [];
+
     /**
      * Throttle the keypress event.
      */
@@ -50,6 +62,12 @@ export class KeyboardShortcutsService implements OnDestroy {
      * Disable all keyboard shortcuts
      */
     private disabled = false;
+    /**
+     * @ignore
+     * 2000 ms window to allow between key sequences otherwise
+     * the sequence will reset.
+     */
+    private static readonly TIMEOUT_SEQUENCE = 1000;
 
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
     public shortcuts$ = this._shortcutsSub
@@ -59,10 +77,15 @@ export class KeyboardShortcutsService implements OnDestroy {
     private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
 
     /**
+     * @ignore
      * Subscription for on destroy.
      */
-    private readonly subscription: Subscription;
+    private readonly subscriptions: Subscription[] = [];
 
+    /**
+     * @ignore
+     * @param shortcut
+     */
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
         if (target === shortcut.target) {
@@ -74,6 +97,10 @@ export class KeyboardShortcutsService implements OnDestroy {
         return !this._ignored.includes(target.nodeName);
     };
 
+    /**
+     * @ignore
+     * @param event
+     */
     private mapEvent = event => {
         return this._shortcuts
             .map(shortcut =>
@@ -91,7 +118,15 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
     };
 
-    private keydown$ = fromEvent(document, "keydown").pipe(
+    /**
+     * @ignore
+     */
+    private keydown$ = fromEvent(document, "keydown");
+
+    /**
+     * @ignore
+     */
+    private keydownCombo$ = this.keydown$.pipe(
         filter(_ => !this.disabled),
         map(this.mapEvent),
         filter(
@@ -107,21 +142,187 @@ export class KeyboardShortcutsService implements OnDestroy {
         catchError(error => throwError(error))
     );
 
+    /**
+     * @ignore
+     */
+    private timer$ = new Subject();
+    /**
+     * @ignore
+     */
+    private resetCounter$ = this.timer$
+        .asObservable()
+        .pipe(switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)));
+    /**
+     * @ignore
+     */
+    private keydownSequence$ = this.shortcuts$.pipe(
+        map(shortcuts => shortcuts.filter(shortcut => shortcut.isSequence)),
+        switchMap(sequences =>
+            this.keydown$.pipe(
+                map(event => {
+                    return {
+                        event,
+                        sequences
+                    };
+                }),
+                tap(this.timer$)
+            )
+        ),
+        scan(
+            (acc: { events: any[]; command?: any; sequences: any[] }, arg: any) => {
+                let { event } = arg;
+                const currentLength = acc.events.length;
+                const sequences = currentLength ? acc.sequences : arg.sequences;
+                const [key] = this.characterFromEvent(event);
+                // TODO:
+                // calculate priority if there's a possibility for bigger match like:
+                // "? a" and "?", obviously only "? a" should fire.
+                const result = sequences
+                    .map(sequence => {
+                        const sequences = sequence.sequence.filter(
+                            seque => seque[currentLength] === key
+                        );
+                        const partialMatch = sequences.length > 0;
+                        if (sequence.fullMatch) {
+                            return sequence;
+                        }
+                        return {
+                            ...sequence,
+                            sequence: sequences,
+                            partialMatch,
+                            event: event,
+                            fullMatch:
+                                partialMatch &&
+                                this.isFullMatch({ command: sequence, events: acc.events })
+                        };
+                    })
+                    .filter(sequences => sequences.partialMatch || sequences.fullMatch);
+
+                let [match] = result;
+                /*
+                 * handle case of "?" sequence and "? a" sequence
+                 * need to determine which one to trigger.
+                 * if both match, we pick the longer one (? a) in this case.
+                 */
+                const guess = maxArrayProp('priority', result);
+                if (result.length > 1 && guess.fullMatch) {
+                    return { events: [], command: guess, sequences: this._sequences };
+                }
+                if (result.length > 1) {
+                    return { events: [...acc.events, event], command: result, sequences: result };
+                }
+                if (!match) {
+                    return { events: [], sequences: this._sequences };
+                }
+                if (match.fullMatch) {
+                    return { events: [], command: match, sequences: this._sequences };
+                }
+                return { events: [...acc.events, event], command: result, sequences: result };
+            },
+            { events: [], sequences: [] }
+        ),
+        switchMap(({ command }) => {
+            if (Array.isArray(command)) {
+                /*
+                 * Add a timer to handle the case where for example:
+                 * a sequence "?" is registered and "? a" is registered as well
+                 * if the user does not hit any key for 500ms, the single sequence will trigger
+                 * if any keydown event occur, this timer will reset, given a chance to complete
+                 * the full sequence (? a) in this case.
+                 * This delay only occurs when single key sequence is the beginning of another sequence.
+                 */
+                return timer(500).pipe(
+                    map(() => ({ command: command.filter(command => command.fullMatch)[0] })),
+                );
+            }
+            return of({ command });
+        }),
+        filter(({ command }) => command && command.fullMatch),
+        map(({ command }) => command),
+        filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
+        filter(this.isAllowed),
+        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
+        throttle(shortcut => timer(shortcut.throttleTime)),
+        tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
+        tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
+        takeUntil(this.resetCounter$),
+        repeat()
+    );
+
+    /**
+     * @ignore
+     * @param command
+     * @param events
+     */
+    private isFullMatch({ command, events }) {
+        if (!command) {
+            return false;
+        }
+        return command.sequence.some(sequence => {
+            return sequence.length === events.length + 1;
+        });
+    }
+
+    /**
+     * @ignore
+     */
     private get shortcuts() {
         return this._shortcuts;
     }
 
+    /**
+     * @ignore
+     */
     constructor() {
-        this.subscription = this.keydown$.subscribe();
+        this.subscriptions.push(this.keydownSequence$.subscribe(), this.keydownCombo$.subscribe());
     }
 
     /**
+     * @ignore
+     * @param event
+     */
+    private _characterFromEvent(event): [string, boolean] {
+        if (typeof event.which !== "number") {
+            event.which = event.keyCode;
+        }
+        // for non keypress events the special maps are needed
+        if (_MAP[event.which]) {
+            return [_MAP[event.which], event.shiftKey];
+        }
+
+        if (_KEYCODE_MAP[event.which]) {
+            return [_KEYCODE_MAP[event.which], event.shiftKey];
+        }
+        // if it is not in the special map
+
+        // with keydown and keyup events the character seems to always
+        // come in as an uppercase character whether you are pressing shift
+        // or not.  we should make sure it is always lowercase for comparisons
+        return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
+    }
+
+    private characterFromEvent(event) {
+        let [key, shiftKey] = this._characterFromEvent(event);
+        if (shiftKey && _SHIFT_MAP[key]) {
+            return [_SHIFT_MAP[key], shiftKey];
+        }
+        return [key, shiftKey];
+    }
+
+    /**
+     * @ignore
      * Remove subscription.
      */
     ngOnDestroy(): void {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+        this.subscriptions.forEach(sub => sub.unsubscribe());
+    }
+
+    /**
+     * @ignore
+     * @param shortcuts
+     */
+    private isSequence(shortcuts: string[]): boolean {
+        return !shortcuts.some(shortcut => shortcut.includes("+"));
     }
 
     /**
@@ -130,9 +331,15 @@ export class KeyboardShortcutsService implements OnDestroy {
     public add(shortcuts: ShortcutInput[] | ShortcutInput): string[] {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
         const commands = this.parseCommand(shortcuts);
-        this._shortcuts.push(...commands);
+        commands.forEach(command => {
+            if (command.isSequence) {
+                this._sequences.push(command);
+                return;
+            }
+            this._shortcuts.push(command);
+        });
         setTimeout(() => {
-            this._shortcutsSub.next(this._shortcuts);
+            this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
         return commands.map(command => command.id);
     }
@@ -145,11 +352,10 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     public remove(ids: string | string[]): KeyboardShortcutsService {
         ids = Array.isArray(ids) ? ids : [ids];
-        this._shortcuts = this._shortcuts.filter(shortcut => {
-            return !ids.includes(shortcut.id);
-        });
+        this._shortcuts = this._shortcuts.filter(shortcut => !ids.includes(shortcut.id));
+        this._sequences = this._sequences.filter(shortcut => !ids.includes(shortcut.id));
         setTimeout(() => {
-            this._shortcutsSub.next(this._shortcuts);
+            this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
         return this;
     }
@@ -168,11 +374,11 @@ export class KeyboardShortcutsService implements OnDestroy {
     }
 
     /**
+     * @ignore
      * transforms a shortcut to:
      * a predicate function
      */
     private getKeys = (keys: string[]) => {
-        const single = keys.length === 1;
         return keys
             .map(key => key.trim().toLowerCase())
             .filter(key => key !== "+")
@@ -185,30 +391,46 @@ export class KeyboardShortcutsService implements OnDestroy {
                 }
 
                 return event => {
-                    if (single && this.modifiersOn(event)) {
-                        return false;
+                    const [char, shiftKey] = this.characterFromEvent(event);
+                    if (char === key && shiftKey) {
+                        return true;
                     }
-                    return codes[key]
-                        ? event.keyCode === codes[key] || event.key === key
-                        : event.keyCode === key.toUpperCase().charCodeAt(0);
-                }
+                    return key === char;
+                };
             });
     };
+
+    /**
+     * @ignore
+     * @param event
+     */
     private modifiersOn(event) {
-        return ['metaKey', 'altKey', 'ctrlKey', 'shiftKey'].some(mod => event[mod])
+        return ["metaKey", "altKey", "ctrlKey", "shiftKey"].some(mod => event[mod]);
     }
 
     /**
+     * @ignore
      * Parse each command using getKeys function
      */
     private parseCommand(command: ShortcutInput | ShortcutInput[]): ParsedShortcut[] {
         const commands = Array.isArray(command) ? command : [command];
         return commands.map(command => {
             const keys = Array.isArray(command.key) ? command.key : [command.key];
-            const priority = Math.max(...keys.map(key => key.split(" ").length));
-            const predicates = keys.map(key => this.getKeys(key.split(" ")));
+            const priority = Math.max(...keys.map(key => key.split(" ").filter(identity).length));
+            const predicates = keys.map(key => this.getKeys(key.split(" ").filter(identity)));
+            const isSequence = this.isSequence(keys);
+            const sequence = isSequence
+                ? keys.map(key =>
+                      key
+                          .split(" ")
+                          .filter(identity)
+                          .map(key => key.trim())
+                  )
+                : [];
             return {
                 ...command,
+                isSequence,
+                sequence: isSequence ? sequence : [],
                 allowIn: command.allowIn || [],
                 key: keys,
                 id: `${guid++}`,

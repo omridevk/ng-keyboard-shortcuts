@@ -18,6 +18,7 @@ Compatible with Angular 5+
 * [Install](#install)  
 * [Setup](#setup)  
 * [Usage](#usage)  
+    * [Sequences](#sequences)
     * [Components](#components)  
         * [Keyboardshortcuts](#ng-keyboard-shortcuts-1)  
         * [HelpScreen](#ng-keyboard-shortcuts-help)  
@@ -64,7 +65,38 @@ export class AppModule {
   
   
 # Usage:  
-  
+## Sequences
+
+It is important to note that the library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
+This is because it can't tell if you are starting the sequence or if you are pressing that key on its own.
+
+To counter this, there is a __500ms__ delay(__only__ when single key is used in the beginning of another sequence, so it won't affect performance)
+. This gives the library time to wait for a more complete sequence, otherwise the single sequence will be triggered.
+
+for example: binding both "? a" and "?", then clicking "?" will trigger the "?" callback, but only after 500ms delay.
+However, in all other cases there's no delay in execution of the callback (unless debounceTime is provided)
+
+
+This library supports gmail style sequences:
+```typescript
+   [{
+        key: ["g a"],
+        command: (output: ShortcutEventOutput) => console.log("? a", output),
+    }]
+```
+konami code:
+```typescript
+    [{
+         key: ["up up down down left right left right b a enter"],
+         label: "Sequences",
+         description: "Konami code!",
+         command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
+    }]
+```
+
+Sequences can be used inside components or directives and are declared __without__ the plus(+) sign, for example:
+``` key: ["a b c"] ```
+will require clicking, a, then b, then c.
   
 ## Components:  
 ### ng-keyboard-shortcuts  
@@ -103,7 +135,20 @@ export class DemoComponent implements AfterViewInit {
                 preventDefault: true,  
                 allowIn: [AllowIn.Textarea, AllowIn.Input],  
                 command: e => console.log("clicked " , e.key)  
-            },  
+            },
+           {
+                key: ["? a"],
+                label: "Sequences",
+                description: "Sequence ? and a",
+                command: (output: ShortcutEventOutput) => console.log("? a", output),
+                preventDefault: true
+            },            
+            {
+                key: ["up up down down left right left right b a enter"],
+                label: "Sequences",
+                description: "Konami code!",
+                command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
+            },
             {  
                 key: "cmd + shift + f",  
                 command: (output: ShortcutEventOutput) => console.log(output),  

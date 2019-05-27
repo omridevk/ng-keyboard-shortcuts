@@ -12,6 +12,10 @@
       </mat-form-field>
       <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
       <button (click)="handleClick()">disable directive</button>
+      <button (click)="toggleSecondShortcuts()">Toggle Second shortcuts</button>
+      <div *ngIf="showSecondShortcuts">
+        <ng-keyboard-shortcuts [shortcuts]="secondShortcuts"></ng-keyboard-shortcuts>
+      </div>
     </mat-card-content>
     <mat-card-actions>
     </mat-card-actions>

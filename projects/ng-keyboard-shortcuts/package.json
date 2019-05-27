@@ -9,6 +9,7 @@
   "bugs": "https://github.com/omridevk/ng-keyboard-shortcuts/issues",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
+    "core-js": "^2.5.4",
     "rxjs": "^6.4.0",
     "@angular/core": "^7.0.0"
   }
