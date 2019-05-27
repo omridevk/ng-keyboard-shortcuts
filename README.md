@@ -69,8 +69,10 @@ export class AppModule {
 
 ## Combinations
 
-key combinations are similar to sequences, and can be used both with directive and components and are separated by plus sign.
-for example:
+key combinations are used with meta keys like control, shift, command, etc... and are defined using plus(+) sign as a separator.
+there can be multiple combinations for the same command, so either of the key combination will trigger the callback.
+
+#### Examples:
 
 ```typescript
    [
@@ -89,7 +91,10 @@ for example:
 
 ## Sequences
 
-It is important to note that the library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
+Sequences can be used to support gmail like actions where you click "g" then "a", or "g" then "o" to perform certain actions.
+
+##### __Important note__
+The library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
 This is because it can't tell if you are starting the sequence or if you are pressing that key on its own.
 
 To counter this, there is a __500ms__ delay(__only__ when single key is used in the beginning of another sequence, so it won't affect performance)
@@ -98,6 +103,8 @@ To counter this, there is a __500ms__ delay(__only__ when single key is used in 
 for example: binding both "? a" and "?", then clicking "?" will trigger the "?" callback, but only after 500ms delay.
 However, in all other cases there's no delay in execution of the callback (unless debounceTime is provided)
 
+
+#### Examples:
 
 This library supports gmail style sequences:
 ```typescript
