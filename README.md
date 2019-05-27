@@ -18,6 +18,7 @@ Compatible with Angular 5+
 * [Install](#install)  
 * [Setup](#setup)  
 * [Usage](#usage)  
+    * [Combinations](#combinations)
     * [Sequences](#sequences)
     * [Components](#components)  
         * [Keyboardshortcuts](#ng-keyboard-shortcuts-1)  
@@ -65,6 +66,27 @@ export class AppModule {
   
   
 # Usage:  
+
+## Combinations
+
+key combinations are similar to sequences, and can be used both with directive and components and are separated by plus sign.
+for example:
+
+```typescript
+   [
+       {
+            key: ["cmd + a"],
+            command: (output: ShortcutEventOutput) => console.log("command + a", output),
+        },
+        {
+            key: "ctrl + a",
+            preventDefault: true,
+            command: (output: ShortcutEventOutput) => console.log("control + a", output),
+            
+        }
+    ]
+```
+
 ## Sequences
 
 It is important to note that the library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
@@ -97,7 +119,7 @@ konami code:
 Sequences can be used inside components or directives and are declared __without__ the plus(+) sign, for example:
 ``` key: ["a b c"] ```
 will require clicking, a, then b, then c.
-  
+
 ## Components:  
 ### ng-keyboard-shortcuts  
 Component that can be used across the app to bind to various shortcuts  
