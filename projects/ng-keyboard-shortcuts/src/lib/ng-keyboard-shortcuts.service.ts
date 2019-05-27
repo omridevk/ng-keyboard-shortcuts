@@ -174,9 +174,6 @@ export class KeyboardShortcutsService implements OnDestroy {
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
                 const [key] = this.characterFromEvent(event);
-                // TODO:
-                // calculate priority if there's a possibility for bigger match like:
-                // "? a" and "?", obviously only "? a" should fire.
                 const result = sequences
                     .map(sequence => {
                         const sequences = sequence.sequence.filter(
