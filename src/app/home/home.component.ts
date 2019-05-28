@@ -70,11 +70,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked " , e.key)
             },
             {
-                key: "cmd + shift + f",
+                key: "cmd + ?",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
                 throttleTime: 250,
-                target: this.input.nativeElement
             },
             {
                 key: "f",
