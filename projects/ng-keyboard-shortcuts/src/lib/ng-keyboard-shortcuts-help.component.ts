@@ -13,7 +13,7 @@ import {
 import { DomPortalOutlet } from "./dom-portal-outlet";
 import { TemplatePortal } from "./portal";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { NgKeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
+import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { distinctUntilChanged } from "rxjs/operators";
 import { groupBy } from "./utils";
@@ -117,7 +117,7 @@ const enableScroll = () => {
         ])
     ]
 })
-export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
+export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Disable scrolling while modal is open
      */
@@ -202,7 +202,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         private appRef: ApplicationRef,
         private keyboard: KeyboardShortcutsService,
         private element: ElementRef,
-        private keyboardHelp: NgKeyboardShortcutsHelpService,
+        private keyboardHelp: KeyboardShortcutsHelpService,
         private viewContainer: ViewContainerRef,
         private injector: Injector
     ) {
@@ -217,7 +217,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Reveal the help screen manually.
      */
-    reveal(): NgKeyboardShortcutsHelpComponent {
+    reveal(): KeyboardShortcutsHelpComponent {
         this.hide();
         if (this.disableScrolling) {
             disableScroll(`.${this.className}`);
@@ -239,7 +239,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Hide the help screen manually.
      */
-    hide() : NgKeyboardShortcutsHelpComponent {
+    hide() : KeyboardShortcutsHelpComponent {
         if (this.disableScrolling) {
             enableScroll();
         }
@@ -273,7 +273,7 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Show/Hide the help screen manually.
      */
-    toggle() : NgKeyboardShortcutsHelpComponent {
+    toggle() : KeyboardShortcutsHelpComponent {
         this.visible() ? this.hide() : this.reveal();
         return this;
     }

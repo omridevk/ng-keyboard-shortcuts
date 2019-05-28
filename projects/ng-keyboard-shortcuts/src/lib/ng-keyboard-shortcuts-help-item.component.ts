@@ -11,7 +11,7 @@ import { identity } from './utils';
     templateUrl: "./ng-keyboard-shortcuts-help-item.component.html",
     styleUrls: ["./ng-keyboard-shortcuts-help-item.component.css"]
 })
-export class NgKeyboardShortcutsHelpItemComponent implements OnInit {
+export class KeyboardShortcutsHelpItemComponent implements OnInit {
     public parsedKeys: string[][];
 
     @Input() index: number;

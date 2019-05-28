@@ -9,7 +9,7 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 @Directive({
     selector: "[ngKeyboardShortcuts]"
 })
-export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
+export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
     /**
      * clearId to remove shortcuts.
      */

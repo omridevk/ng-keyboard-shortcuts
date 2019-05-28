@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
 @Injectable({
     providedIn: "root"
 })
-export class NgKeyboardShortcutsHelpService {
+export class KeyboardShortcutsHelpService {
     /**
      * @ignore
      * @param {KeyboardShortcutsService} keyboard

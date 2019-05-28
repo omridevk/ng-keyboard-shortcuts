@@ -19,7 +19,7 @@ import { Observable } from "rxjs";
     selector: "ng-keyboard-shortcuts",
     template: ""
 })
-export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class KeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     /**
      * A list of shortcuts.
      */
