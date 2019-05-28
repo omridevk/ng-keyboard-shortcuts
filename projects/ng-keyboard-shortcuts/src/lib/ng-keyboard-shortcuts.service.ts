@@ -173,11 +173,12 @@ export class KeyboardShortcutsService implements OnDestroy {
                 let { event } = arg;
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
-                const [key] = this.characterFromEvent(event);
+                let [characters] = this.characterFromEvent(event);
+                characters = Array.isArray(characters) ? characters : [characters];
                 const result = sequences
                     .map(sequence => {
                         const sequences = sequence.sequence.filter(
-                            seque => seque[currentLength] === key
+                            seque => characters.some((key) => seque[currentLength] === key)
                         );
                         const partialMatch = sequences.length > 0;
                         if (sequence.fullMatch) {
@@ -196,6 +197,9 @@ export class KeyboardShortcutsService implements OnDestroy {
                     .filter(sequences => sequences.partialMatch || sequences.fullMatch);
 
                 let [match] = result;
+                if (!match || this.modifiersOn(event)) {
+                    return { events: [], sequences: this._sequences };
+                }
                 /*
                  * handle case of "?" sequence and "? a" sequence
                  * need to determine which one to trigger.
@@ -207,9 +211,6 @@ export class KeyboardShortcutsService implements OnDestroy {
                 }
                 if (result.length > 1) {
                     return { events: [...acc.events, event], command: result, sequences: result };
-                }
-                if (!match) {
-                    return { events: [], sequences: this._sequences };
                 }
                 if (match.fullMatch) {
                     return { events: [], command: match, sequences: this._sequences };
@@ -388,11 +389,14 @@ export class KeyboardShortcutsService implements OnDestroy {
                 }
 
                 return event => {
-                    const [char, shiftKey] = this.characterFromEvent(event);
-                    if (char === key && shiftKey) {
-                        return true;
-                    }
-                    return key === char;
+                    let [characters, shiftKey] = this.characterFromEvent(event);
+                    characters = Array.isArray(characters) ? characters : [characters];
+                    return characters.some(char => {
+                        if (char === key && shiftKey) {
+                            return true;
+                        }
+                        return key === char;
+                    })
                 };
             });
     };
@@ -402,7 +406,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @param event
      */
     private modifiersOn(event) {
-        return ["metaKey", "altKey", "ctrlKey", "shiftKey"].some(mod => event[mod]);
+        return ["metaKey", "altKey", "ctrlKey"].some(mod => event[mod]);
     }
 
     /**
