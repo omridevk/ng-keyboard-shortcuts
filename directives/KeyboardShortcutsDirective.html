@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	      <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/readthedocs.css">
     </head>
     <body>
 
@@ -38,7 +37,7 @@
 
 <ol class="breadcrumb">
   <li>Directives</li>
-  <li>NgKeyboardShortcutsDirective</li>
+  <li>KeyboardShortcutsDirective</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -95,21 +94,6 @@ textarea, input, select.</p>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>Properties</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#clearIds">clearIds</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
 
 
                 <tr>
@@ -208,40 +192,6 @@ will only work when the element is in focus</p>
 
 
 
-            <section>
-    
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="clearIds"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            clearIds</b>
-                            <a href="#clearIds"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.directive.ts:16</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>clearId to remove shortcuts.</p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-</section>
 
             <section>
     <h3 id="accessors">
@@ -321,7 +271,7 @@ import { KeyboardShortcutsService } from &quot;./ng-keyboard-shortcuts.service&q
 @Directive({
     selector: &quot;[ngKeyboardShortcuts]&quot;
 })
-export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
+export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
     /**
      * clearId to remove shortcuts.
      */
@@ -433,7 +383,7 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
-            var COMPODOC_CURRENT_PAGE_URL = 'NgKeyboardShortcutsDirective.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'KeyboardShortcutsDirective.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

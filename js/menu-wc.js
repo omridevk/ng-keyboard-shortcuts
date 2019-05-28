@@ -60,35 +60,35 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/KeyboardShortcutsModule.html" data-type="entity-link">KeyboardShortcutsModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' : 'data-target="#xs-components-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' }>
+                                            'data-target="#components-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' : 'data-target="#xs-components-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' :
-                                            'id="xs-components-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' :
+                                            'id="xs-components-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' }>
                                             <li class="link">
-                                                <a href="components/NgKeyboardShortcutsComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">NgKeyboardShortcutsComponent</a>
+                                                <a href="components/KeyboardShortcutsComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">KeyboardShortcutsComponent</a>
                                             </li>
                                             <li class="link">
-                                                <a href="components/NgKeyboardShortcutsHelpComponent.html"
-                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">NgKeyboardShortcutsHelpComponent</a>
+                                                <a href="components/KeyboardShortcutsHelpComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">KeyboardShortcutsHelpComponent</a>
                                             </li>
                                         </ul>
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' : 'data-target="#xs-directives-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' }>
+                                        'data-target="#directives-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' : 'data-target="#xs-directives-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' :
-                                        'id="xs-directives-links-module-KeyboardShortcutsModule-2b5a24297d3a4fa35bfe7a24058b70d9"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' :
+                                        'id="xs-directives-links-module-KeyboardShortcutsModule-5fd8d067d35616dd45af02416a3091ad"' }>
                                         <li class="link">
-                                            <a href="directives/NgKeyboardShortcutsDirective.html"
-                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">NgKeyboardShortcutsDirective</a>
+                                            <a href="directives/KeyboardShortcutsDirective.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules">KeyboardShortcutsDirective</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -104,7 +104,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
-                                    <a href="injectables/NgKeyboardShortcutsHelpService.html" data-type="entity-link">NgKeyboardShortcutsHelpService</a>
+                                    <a href="injectables/KeyboardShortcutsHelpService.html" data-type="entity-link">KeyboardShortcutsHelpService</a>
                                 </li>
                             </ul>
                         </li>

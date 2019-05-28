@@ -9,7 +9,6 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	      <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/readthedocs.css">
     </head>
     <body>
 
@@ -258,9 +257,13 @@ export enum AllowIn {
  * @ignore
  */
 export interface ParsedShortcut extends ShortcutInput {
+    key: string[];
     predicates: Function[][];
     id: string;
     priority?: number;
+
+    isSequence: boolean;
+    sequence?: string[][];
     event?: KeyboardEvent;
 }
 
