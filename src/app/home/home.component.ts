@@ -38,6 +38,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked " , e.key)
             },
             {
+                key: "cmd + e",
+                label: "help",
+                description: "Controlling/Commanding + E",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea],
+                command: e => console.log("clicked command e another time " , e.key)
+            },
+            {
                 key: "~",
                 label: "help",
                 description: "~ sign",

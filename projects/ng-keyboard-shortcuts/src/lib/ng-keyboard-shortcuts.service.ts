@@ -11,6 +11,7 @@ import {
     of
 } from "rxjs";
 import {
+    AllowIn,
     ParsedShortcut,
     ShortcutEventOutput,
     ShortcutInput
@@ -26,7 +27,16 @@ import {
     tap,
     throttle
 } from "rxjs/operators";
-import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./utils";
+import {
+    allPass,
+    any,
+    difference,
+    identity,
+    isFunction,
+    isNill,
+    maxArrayProp,
+    prop
+} from "./utils";
 
 /**
  * @ignore
@@ -88,40 +98,66 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
-        if (target === shortcut.target) {
-            return true;
-        }
-        if (shortcut.allowIn.length) {
-            return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
-        }
-        return !this._ignored.includes(target.nodeName);
+        const ignored = difference(this._ignored, shortcut.allowIn);
+        return !ignored.includes(target.nodeName as AllowIn);
     };
 
     /**
      * @ignore
      * @param event
      */
-    private mapEvent = event => {
-        return this._shortcuts
-            .map(shortcut =>
-                Object.assign({}, shortcut, {
+    private mapEvent = event =>
+        this._shortcuts
+            .map(shortcut => {
+                return Object.assign({}, shortcut, {
                     predicates: any(
                         identity,
                         shortcut.predicates.map((predicates: any) => allPass(predicates)(event))
                     ),
                     event: event
-                })
-            )
+                });
+            })
             .filter(shortcut => shortcut.predicates)
-            .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), {
-                priority: 0
-            } as ParsedShortcut);
-    };
+            .reduce((shortcuts, shortcut) => {
+                const currentPriority = maxArrayProp("priority", shortcuts).priority;
+                if (shortcut.priority > currentPriority) {
+                    return [shortcut];
+                }
+                if (shortcut.priority === currentPriority) {
+                    shortcuts.push(shortcut);
+                }
+                return shortcuts;
+            }, []);
 
     /**
      * @ignore
      */
     private keydown$ = fromEvent(document, "keydown");
+
+    filterShortcuts = shortcuts =>
+        shortcuts.filter(
+            shortcut =>
+                (!shortcut.target || shortcut.event.target === shortcut.target) &&
+                isFunction(shortcut.command)
+        );
+
+    preventDefaults = shortcuts =>
+        shortcuts.forEach(
+            shortcut =>
+                !shortcut.preventDefault ||
+                shortcut.event.preventDefault() ||
+                shortcut.event.stopImmediatePropagation() ||
+                shortcut.event.stopPropagation()
+        );
+
+    fireCommands = shortcuts =>
+        shortcuts.forEach(shortcut =>
+            shortcut.command({ event: shortcut.event, key: shortcut.key })
+        );
+    emitCommands = shortcuts =>
+        shortcuts.forEach(shortcut =>
+            this._pressed.next({ event: shortcut.event, key: shortcut.key })
+        );
 
     /**
      * @ignore
@@ -129,16 +165,13 @@ export class KeyboardShortcutsService implements OnDestroy {
     private keydownCombo$ = this.keydown$.pipe(
         filter(_ => !this.disabled),
         map(this.mapEvent),
-        filter(
-            (shortcut: ParsedShortcut) =>
-                !shortcut.target || shortcut.event.target === shortcut.target
-        ),
-        filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
-        filter(this.isAllowed),
-        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
-        throttle(shortcut => timer(shortcut.throttleTime)),
-        tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
-        tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
+        map(this.filterShortcuts),
+        filter(shortcuts => shortcuts.length > 0),
+        tap(shortcuts => {
+            this.preventDefaults(shortcuts);
+            this.fireCommands(shortcuts);
+            this.emitCommands(shortcuts);
+        }),
         catchError(error => throwError(error))
     );
 
@@ -177,8 +210,8 @@ export class KeyboardShortcutsService implements OnDestroy {
                 characters = Array.isArray(characters) ? characters : [characters];
                 const result = sequences
                     .map(sequence => {
-                        const sequences = sequence.sequence.filter(
-                            seque => characters.some((key) => seque[currentLength] === key)
+                        const sequences = sequence.sequence.filter(seque =>
+                            characters.some(key => seque[currentLength] === key)
                         );
                         const partialMatch = sequences.length > 0;
                         if (sequence.fullMatch) {
@@ -205,7 +238,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                  * need to determine which one to trigger.
                  * if both match, we pick the longer one (? a) in this case.
                  */
-                const guess = maxArrayProp('priority', result);
+                const guess = maxArrayProp("priority", result);
                 if (result.length > 1 && guess.fullMatch) {
                     return { events: [], command: guess, sequences: this._sequences };
                 }
@@ -230,7 +263,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                  * This delay only occurs when single key sequence is the beginning of another sequence.
                  */
                 return timer(500).pipe(
-                    map(() => ({ command: command.filter(command => command.fullMatch)[0] })),
+                    map(() => ({ command: command.filter(command => command.fullMatch)[0] }))
                 );
             }
             return of({ command });
@@ -396,7 +429,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                             return true;
                         }
                         return key === char;
-                    })
+                    });
                 };
             });
     };
