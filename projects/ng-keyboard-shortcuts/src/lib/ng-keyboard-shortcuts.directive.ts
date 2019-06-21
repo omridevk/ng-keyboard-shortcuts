@@ -1,13 +1,13 @@
-import { Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
-import { AllowIn, Shortcut } from "./ng-keyboard-shortcuts.interfaces";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { AllowIn, Shortcut } from './ng-keyboard-shortcuts.interfaces';
+import { KeyboardShortcutsService } from './ng-keyboard-shortcuts.service';
 
 /**
  * A directive to be used with "focusable" elements, like:
  * textarea, input, select.
  */
 @Directive({
-    selector: "[ngKeyboardShortcuts]"
+    selector: '[ngKeyboardShortcuts]'
 })
 export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
     /**
@@ -39,7 +39,7 @@ export class NgKeyboardShortcutsDirective implements OnDestroy, OnChanges {
             if (value === false && this.ngKeyboardShortcuts) {
                 this.clearIds = this.keyboard.add(this.transformInput(this.ngKeyboardShortcuts));
             }
-        })
+        });
 
     }
 

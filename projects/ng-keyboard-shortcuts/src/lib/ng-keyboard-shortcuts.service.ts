@@ -1,13 +1,13 @@
-import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { codes, modifiers } from "./keys";
-import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject, BehaviorSubject } from "rxjs";
+import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { codes, modifiers } from './keys';
+import { fromEvent, Subscription, timer, Subject, throwError, Observable, ReplaySubject, BehaviorSubject } from 'rxjs';
 import {
     ShortcutEventOutput,
     ParsedShortcut,
     ShortcutInput
-} from "./ng-keyboard-shortcuts.interfaces";
-import { map, filter, tap, throttle, catchError } from "rxjs/operators";
-import { allPass, any, difference, identity, isFunction, isNill } from "./utils";
+} from './ng-keyboard-shortcuts.interfaces';
+import { map, filter, tap, throttle, catchError } from 'rxjs/operators';
+import { allPass, any, difference, identity, isFunction, isNill } from './utils';
 
 /**
  * @ignore
@@ -19,6 +19,14 @@ let guid = 0;
     providedIn: 'root',
 })
 export class KeyboardShortcutsService implements OnDestroy {
+
+    private get shortcuts() {
+        return this._shortcuts;
+    }
+
+    constructor() {
+        this.subscription = this.keydown$.subscribe();
+    }
     /**
      * Parsed shortcuts
      * for each key create a predicate function
@@ -45,12 +53,28 @@ export class KeyboardShortcutsService implements OnDestroy {
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
     public shortcuts$ = this._shortcutsSub.asObservable().pipe(filter(shortcuts => !!shortcuts.length));
 
-    private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
+    private _ignored = ['INPUT', 'TEXTAREA', 'SELECT'];
 
     /**
      * Subscription for on destroy.
      */
     private readonly subscription: Subscription;
+
+    private keydown$ = fromEvent(document, 'keydown').pipe(
+        filter(_ => !this.disabled),
+        map(this.mapEvent),
+        filter(
+            (shortcut: ParsedShortcut) =>
+                !shortcut.target || shortcut.event.target === shortcut.target
+        ),
+        filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
+        filter(this.isAllowed),
+        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
+        throttle(shortcut => timer(shortcut.throttleTime)),
+        tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
+        tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
+        catchError(error => throwError(error))
+    );
 
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
@@ -61,7 +85,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
         }
         return !this._ignored.includes(target.nodeName);
-    };
+    }
 
     private mapEvent = event => {
         return this._shortcuts
@@ -78,30 +102,6 @@ export class KeyboardShortcutsService implements OnDestroy {
             .reduce((acc, shortcut) => (acc.priority > shortcut.priority ? acc : shortcut), {
                 priority: 0
             } as ParsedShortcut);
-    }
-
-    private keydown$ = fromEvent(document, "keydown").pipe(
-        filter(_ => !this.disabled),
-        map(this.mapEvent),
-        filter(
-            (shortcut: ParsedShortcut) =>
-                !shortcut.target || shortcut.event.target === shortcut.target
-        ),
-        filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
-        filter(this.isAllowed),
-        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
-        throttle(shortcut => timer(shortcut.throttleTime)),
-        tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
-        tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
-        catchError(error => throwError(error))
-    );
-
-    private get shortcuts() {
-        return this._shortcuts;
-    }
-
-    constructor() {
-        this.subscription = this.keydown$.subscribe();
     }
 
     /**
@@ -139,7 +139,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         });
         setTimeout(() => {
             this._shortcutsSub.next(this._shortcuts);
-        })
+        });
         return this;
     }
 
@@ -151,9 +151,9 @@ export class KeyboardShortcutsService implements OnDestroy {
         return this.pressed$.pipe(
             filter(({event, key: eventKeys}) => {
                 eventKeys = Array.isArray(eventKeys) ? eventKeys : [eventKeys];
-                return !!eventKeys.find(eventKey => eventKey === key)
+                return !!eventKeys.find(eventKey => eventKey === key);
             })
-        )
+        );
     }
 
     /**
@@ -163,7 +163,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private getKeys = (command: string[]) =>
         command
             .map(key => key.trim().toLowerCase())
-            .filter(key => key !== "+")
+            .filter(key => key !== '+')
             .map(key => {
                 // for modifiers like control key
                 // look for event['ctrlKey']
@@ -175,7 +175,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                     codes[key]
                         ? event.keyCode === codes[key] || event.key === key
                         : event.keyCode === key.toUpperCase().charCodeAt(0);
-            });
+            })
 
     /**
      * Parse each command using getKeys function
@@ -184,8 +184,8 @@ export class KeyboardShortcutsService implements OnDestroy {
         const commands = Array.isArray(command) ? command : [command];
         return commands.map(command => {
             const keys = Array.isArray(command.key) ? command.key : [command.key];
-            const priority = Math.max(...keys.map(key => key.split(" ").length));
-            const predicates = keys.map(key => this.getKeys(key.split(" ")));
+            const priority = Math.max(...keys.map(key => key.split(' ').length));
+            const predicates = keys.map(key => this.getKeys(key.split(' ')));
             return {
                 ...command,
                 allowIn: command.allowIn || [],

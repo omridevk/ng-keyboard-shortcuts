@@ -6,18 +6,18 @@ import {
     OnDestroy,
     OnInit,
     SimpleChanges
-} from "@angular/core";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { ShortcutInput, ShortcutEventOutput } from "./ng-keyboard-shortcuts.interfaces";
-import { Observable } from "rxjs";
+} from '@angular/core';
+import { KeyboardShortcutsService } from './ng-keyboard-shortcuts.service';
+import { ShortcutInput, ShortcutEventOutput } from './ng-keyboard-shortcuts.interfaces';
+import { Observable } from 'rxjs';
 
 /**
  * A component to bind global shortcuts, can be used multiple times across the app
  * will remove registered shortcuts when element is removed from DOM.
  */
 @Component({
-    selector: "ng-keyboard-shortcuts",
-    template: ""
+    selector: 'ng-keyboard-shortcuts',
+    template: ''
 })
 export class NgKeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     /**

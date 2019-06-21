@@ -12,29 +12,29 @@ import {
     TemplateRef,
     ViewChild,
     ViewContainerRef
-} from "@angular/core";
-import { DomPortalOutlet } from "./dom-portal-outlet";
-import { TemplatePortal } from "./portal";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { NgKeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
-import { animate, style, transition, trigger } from "@angular/animations";
-import { distinctUntilChanged } from "rxjs/operators";
-import { groupBy } from "./utils";
-import { map } from "rxjs/internal/operators";
-import { SubscriptionLike } from "rxjs";
+} from '@angular/core';
+import { DomPortalOutlet } from './dom-portal-outlet';
+import { TemplatePortal } from './portal';
+import { KeyboardShortcutsService } from './ng-keyboard-shortcuts.service';
+import { NgKeyboardShortcutsHelpService } from './ng-keyboard-shortcuts-help.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { groupBy } from './utils';
+import { map } from 'rxjs/internal/operators';
+import { SubscriptionLike } from 'rxjs';
 
 /**
  * @ignore
  * @type {Map}
  */
-const scrollAbleKeys = new Map([[31, 1], [38,1], [39, 1], [40, 1]]);
+const scrollAbleKeys = new Map([[31, 1], [38, 1], [39, 1], [40, 1]]);
 /**
  * @ignore
  * @param e
  */
 const preventDefault = e => {
     e = e || window.event;
-    if (e.preventDefault) e.preventDefault();
+    if (e.preventDefault) { e.preventDefault(); }
     e.returnValue = false;
 };
 /**
@@ -75,48 +75,39 @@ const enableScroll = () => {
  * it is shown as a modal
  */
 @Component({
-    selector: "ng-keyboard-shortcuts-help",
-    templateUrl: "./ng-keyboard-shortcuts-help.component.html",
-    styleUrls: ["./ng-keyboard-shortcuts-help.component.css"],
+    selector: 'ng-keyboard-shortcuts-help',
+    templateUrl: './ng-keyboard-shortcuts-help.component.html',
+    styleUrls: ['./ng-keyboard-shortcuts-help.component.css'],
     animations: [
-        trigger("enterAnimation", [
-            transition(":enter", [
-                style({ transform: "translateX(-100%)", opacity: 0 }),
+        trigger('enterAnimation', [
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)', opacity: 0 }),
                 animate(
-                    "0.33s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(0)", opacity: 1 })
+                    '0.33s cubic-bezier(0,0,0.3,1)',
+                    style({ transform: 'translateX(0)', opacity: 1 })
                 )
             ]),
-            transition(":leave", [
-                style({ transform: "translateX(0)", opacity: 1 }),
+            transition(':leave', [
+                style({ transform: 'translateX(0)', opacity: 1 }),
                 animate(
-                    "0.23s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(-100%)", opacity: 0 })
+                    '0.23s cubic-bezier(0,0,0.3,1)',
+                    style({ transform: 'translateX(-100%)', opacity: 0 })
                 )
             ])
         ]),
-        trigger("overlayAnimation", [
-            transition(":enter", [
+        trigger('overlayAnimation', [
+            transition(':enter', [
                 style({ opacity: 0 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 1 }))
+                animate('1s cubic-bezier(0,0,0.3,1)', style({ opacity: 1 }))
             ]),
-            transition(":leave", [
+            transition(':leave', [
                 style({ opacity: 1 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 0 }))
+                animate('1s cubic-bezier(0,0,0.3,1)', style({ opacity: 0 }))
             ])
         ])
     ]
 })
 export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
-    /**
-     * Disable scrolling while modal is open
-     * @type {boolean}
-     */
-    @Input() disableScrolling = true;
-    /**
-     * @ignore
-     */
-    private _key: string;
     /**
      * The shortcut to show/hide the help screen
      * @param {string} value
@@ -133,19 +124,46 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             command: () => this.toggle()
         });
     }
+    /**
+     * @ignore
+     */
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private appRef: ApplicationRef,
+        private keyboard: KeyboardShortcutsService,
+        private keyboardHelp: NgKeyboardShortcutsHelpService,
+        private viewContainer: ViewContainerRef,
+        private injector: Injector
+    ) {
+        this.bodyPortalHost = new DomPortalOutlet(
+            document.body,
+            this.componentFactoryResolver,
+            this.appRef,
+            this.injector
+        );
+    }
+    /**
+     * Disable scrolling while modal is open
+     * @type {boolean}
+     */
+    @Input() disableScrolling = true;
+    /**
+     * @ignore
+     */
+    private _key: string;
 
     /**
      * The title of the help screen
      * @default: "Keyboard shortcuts"
      * @type {string}
      */
-    @Input() title = "Keyboard shortcuts";
+    @Input() title = 'Keyboard shortcuts';
     /**
      * What message to show when no shortcuts are available on the page.
      * @default "No shortcuts available"
      * @type {string}
      */
-    @Input() emptyMessage = "No shortcuts available";
+    @Input() emptyMessage = 'No shortcuts available';
     /**
      * @ignore
      */
@@ -166,24 +184,19 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private bodyPortalHost: DomPortalOutlet;
+
     /**
      * @ignore
      */
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private appRef: ApplicationRef,
-        private keyboard: KeyboardShortcutsService,
-        private keyboardHelp: NgKeyboardShortcutsHelpService,
-        private viewContainer: ViewContainerRef,
-        private injector: Injector
-    ) {
-        this.bodyPortalHost = new DomPortalOutlet(
-            document.body,
-            this.componentFactoryResolver,
-            this.appRef,
-            this.injector
-        );
-    }
+    private subscription: SubscriptionLike;
+    /**
+     * @ignore
+     */
+    private clearIds;
+    /**
+     * @ignore
+     */
+    private timeoutId;
 
     /**
      * Reveal the help screen manually.
@@ -242,25 +255,12 @@ export class NgKeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     toggle() {
         this.visible() ? this.hide() : this.reveal();
     }
-
-    /**
-     * @ignore
-     */
-    private subscription: SubscriptionLike;
-    /**
-     * @ignore
-     */
-    private clearIds;
-    /**
-     * @ignore
-     */
-    private timeoutId;
     /**
      * @ignore
      */
     ngOnInit() {
         this.subscription = this.keyboardHelp.shortcuts$
-            .pipe(distinctUntilChanged(), map(shortcuts => groupBy(shortcuts, "label")))
+            .pipe(distinctUntilChanged(), map(shortcuts => groupBy(shortcuts, 'label')))
             .subscribe(shortcuts => {
                 this.shortcuts = shortcuts;
                 this.labels = Object.keys(shortcuts);

@@ -4,7 +4,7 @@
  * @returns {x is Function}
  */
 export function isFunction(x: any): x is Function {
-    return typeof x === "function";
+    return typeof x === 'function';
 }
 
 /**

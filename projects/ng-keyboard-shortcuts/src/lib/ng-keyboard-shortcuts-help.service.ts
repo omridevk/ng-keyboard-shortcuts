@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { map } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { KeyboardShortcutsService } from './ng-keyboard-shortcuts.service';
+import { map } from 'rxjs/operators';
 
 /**
  * Service to assist showing custom help screen
  */
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class NgKeyboardShortcutsHelpService {
     /**

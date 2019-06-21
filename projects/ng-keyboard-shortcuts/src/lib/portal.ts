@@ -12,9 +12,7 @@ import {
  * @ignore
  * Interface that can be used to generically type a class.
  */
-export interface ComponentType<T> {
-    new (...args: any[]): T;
-}
+export type ComponentType<T> = new (...args: any[]) => T;
 
 /**
  * @ignore
@@ -28,11 +26,11 @@ export abstract class Portal<T> {
     attach(host: PortalOutlet): T {
         if (host == null) {
             // TODO: add error
-            console.error("null portal error");
+            console.error('null portal error');
         }
 
         if (host.hasAttached()) {
-            console.error("portal already attached");
+            console.error('portal already attached');
             // throwPortalAlreadyAttachedError();
         }
 
@@ -42,10 +40,10 @@ export abstract class Portal<T> {
 
     /** Detach this portal from its host */
     detach(): void {
-        let host = this._attachedHost;
+        const host = this._attachedHost;
 
         if (host == null) {
-            console.error("no portal attached!");
+            console.error('no portal attached!');
             // throwNoPortalAttachedError();
         } else {
             this._attachedHost = null;
@@ -179,7 +177,7 @@ export abstract class BasePortalOutlet implements PortalOutlet {
     private _disposeFn: (() => void) | null;
 
     /** Whether this host has already been permanently disposed. */
-    private _isDisposed: boolean = false;
+    private _isDisposed = false;
 
     /** Whether this host has an attached portal. */
     hasAttached(): boolean {

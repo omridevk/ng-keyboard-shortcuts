@@ -9,12 +9,6 @@ export interface Shortcut {
     key: string | string[];
 
     /**
-     * callback to be called when shortcut is pressed.
-     * @param event - the event out
-     */
-    command(event: ShortcutEventOutput): any;
-
-    /**
      * Description for the command can be used for rendering help menu.
      */
     description?: string;
@@ -33,6 +27,12 @@ export interface Shortcut {
      * Prevent browser default, default: false
      */
     preventDefault?: boolean;
+
+    /**
+     * callback to be called when shortcut is pressed.
+     * @param event - the event out
+     */
+    command(event: ShortcutEventOutput): any;
 }
 
 /**
@@ -54,7 +54,7 @@ export interface ShortcutInput extends Shortcut {
 export enum AllowIn {
     Textarea = 'TEXTAREA',
     Input = 'INPUT',
-    Select = "SELECT"
+    Select = 'SELECT'
 }
 
 /**

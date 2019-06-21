@@ -65,8 +65,8 @@ export class DomPortalOutlet extends BasePortalOutlet {
    * @returns Reference to the created embedded view.
    */
   attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
-    let viewContainer = portal.viewContainerRef;
-    let viewRef = viewContainer.createEmbeddedView(portal.templateRef, portal.context);
+    const viewContainer = portal.viewContainerRef;
+    const viewRef = viewContainer.createEmbeddedView(portal.templateRef, portal.context);
     viewRef.detectChanges();
 
     // The method `createEmbeddedView` will add the view as a child of the viewContainer.
@@ -76,7 +76,7 @@ export class DomPortalOutlet extends BasePortalOutlet {
     viewRef.rootNodes.forEach(rootNode => this.outletElement.appendChild(rootNode));
 
     this.setDisposeFn((() => {
-      let index = viewContainer.indexOf(viewRef);
+      const index = viewContainer.indexOf(viewRef);
       if (index !== -1) {
         viewContainer.remove(index);
       }
