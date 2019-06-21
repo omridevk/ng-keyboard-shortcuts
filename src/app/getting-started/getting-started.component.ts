@@ -20,7 +20,7 @@ export class GettingStartedComponent implements OnInit, AfterViewInit, OnDestroy
 
     shortcutsDisabled = false;
 
-    @ViewChild(KeyboardShortcutsComponent) keyboard: KeyboardShortcutsComponent;
+    @ViewChild(KeyboardShortcutsComponent, { static: true }) keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
 
