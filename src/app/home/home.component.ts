@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     toggleSecondShortcuts() {
         this.showSecondShortcuts = !this.showSecondShortcuts;
     }
-    @ViewChild('input') input: ElementRef;
+    @ViewChild('input', { static: true }) input: ElementRef;
 
     ngAfterViewInit(): void {
         this.shortcuts.push(
@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
 
-    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
+    @ViewChild(KeyboardShortcutsComponent, { static: false }) private keyboard: KeyboardShortcutsComponent;
 
     constructor() {
     }
