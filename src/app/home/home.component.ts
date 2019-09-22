@@ -134,6 +134,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 allowIn: [AllowIn.Input],
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
+            },
+            {
+                key: ['alt + a b'],
+                label: "Sequences",
+                description: 'Modifier sequence alt + a b',
+                command: (output: ShortcutEventOutput) => console.log('alt + a b', output),
+                preventDefault: true
+            },
+            {
+                key: ['alt + a alt + c'],
+                label: "Sequences",
+                description: 'Modifier sequence alt + a alt + c',
+                command: (output: ShortcutEventOutput) => console.log('alt + a alt + c', output),
+                preventDefault: true
             }
         );
         this.secondShortcuts.push({

@@ -197,7 +197,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                     .filter(sequences => sequences.partialMatch || sequences.fullMatch);
 
                 let [match] = result;
-                if (!match || this.modifiersOn(event)) {
+                if (!match) {
                     return { events: [], sequences: this._sequences };
                 }
                 /*
@@ -239,7 +239,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         map(({ command }) => command),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
         filter(this.isAllowed),
-        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
+        tap(shortcut => !shortcut.preventDefault || (shortcut.event.preventDefault && shortcut.event.preventDefault())),
         throttle(shortcut => timer(shortcut.throttleTime)),
         tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
@@ -320,7 +320,14 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @param shortcuts
      */
     private isSequence(shortcuts: string[]): boolean {
-        return !shortcuts.some(shortcut => shortcut.includes("+"));
+        return shortcuts.some(shortcut => {
+            for (let i = 1; i < shortcut.length - 1; i++) {
+                if (shortcut[i - 1] !== '+' && shortcut[i] === ' ' && shortcut[i + 1] !== '+') {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /**
@@ -331,6 +338,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         const commands = this.parseCommand(shortcuts);
         commands.forEach(command => {
             if (command.isSequence) {
+                command.sequence = command.sequence.map(seq => seq.filter(s => s !== '+'));
                 this._sequences.push(command);
                 return;
             }
@@ -422,11 +430,11 @@ export class KeyboardShortcutsService implements OnDestroy {
             const isSequence = this.isSequence(keys);
             const sequence = isSequence
                 ? keys.map(key =>
-                      key
-                          .split(" ")
-                          .filter(identity)
-                          .map(key => key.trim())
-                  )
+                    key
+                        .split(" ")
+                        .filter(identity)
+                        .map(key => key.trim())
+                )
                 : [];
             return {
                 ...command,
