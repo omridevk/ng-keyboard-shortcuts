@@ -320,14 +320,11 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @param shortcuts
      */
     private isSequence(shortcuts: string[]): boolean {
-        return shortcuts.some(shortcut => {
-            for (let i = 1; i < shortcut.length - 1; i++) {
-                if (shortcut[i - 1] !== '+' && shortcut[i] === ' ' && shortcut[i + 1] !== '+') {
-                    return true;
-                }
-            }
-            return false;
-        });
+        return shortcuts.some(shortcut =>
+            shortcut
+                .split('')
+                .filter((val, index, src) => src[index - 1] !== '+' && val === ' ' && src[index + 1] !== '+')
+                .length > 0);
     }
 
     /**
