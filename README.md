@@ -17,6 +17,7 @@ Compatible with Angular 5+
   
 * [Install](#install)  
 * [Setup](#setup)  
+* [Demo](https://codesandbox.io/s/yvyovny43v)
 * [Usage](#usage)  
     * [Combinations](#combinations)
     * [Sequences](#sequences)
