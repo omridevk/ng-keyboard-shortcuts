@@ -7,8 +7,10 @@ import {
     Subject,
     Subscription,
     throwError,
+    merge,
     timer,
-    of
+    of,
+    combineLatest
 } from "rxjs";
 import {
     ParsedShortcut,
@@ -120,9 +122,26 @@ export class KeyboardShortcutsService implements OnDestroy {
     };
 
     /**
+     * fixes for firefox prevent default
+     * on click event on button focus:
+     * see issue:
+     * https://github.com/omridevk/ng-keyboard-shortcuts/pull/45
+     */
+    private ignore$ = this.pressed$.pipe(
+        filter(e => e.event.defaultPrevented),
+        switchMap(() => this.clicks$),
+        tap(e => {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+    );
+    /**
      * @ignore
      */
-    private keydown$ = fromEvent(document, "keydown");
+    private clicks$ = fromEvent(document, "click", { capture: true });
+    private keydown$ = fromEvent(document, "keydown", { capture: true });
+
+    private keyup$ = fromEvent(document, "keyup", { capture: true });
 
     /**
      * @ignore
@@ -136,10 +155,18 @@ export class KeyboardShortcutsService implements OnDestroy {
         ),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
         filter(this.isAllowed),
-        tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
+        tap(shortcut => {
+            if (!shortcut.preventDefault) {
+                return;
+            }
+            shortcut.event.preventDefault();
+            shortcut.event.stopPropagation();
+        }),
         throttle(shortcut => timer(shortcut.throttleTime)),
         tap(shortcut => shortcut.command({ event: shortcut.event, key: shortcut.key })),
         tap(shortcut => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
+        takeUntil(this.keyup$),
+        repeat(),
         catchError(error => throwError(error))
     );
 
@@ -278,7 +305,11 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @ignore
      */
     constructor() {
-        this.subscriptions.push(this.keydownSequence$.subscribe(), this.keydownCombo$.subscribe());
+        this.subscriptions.push(
+            this.keydownSequence$.subscribe(),
+            this.keydownCombo$.subscribe(),
+            this.ignore$.subscribe(),
+        );
     }
 
     /**
