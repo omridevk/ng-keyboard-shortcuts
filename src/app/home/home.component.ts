@@ -19,11 +19,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     directiveShortcuts: ShortcutDirectiveInput[] = [];
     showSecondShortcuts = false;
     public directiveDisabled = false;
-    handleClick() {
+    handleClick(e) {
+        console.log('button clicked', {e});
         this.directiveDisabled = !this.directiveDisabled;
     }
     toggleSecondShortcuts() {
         this.showSecondShortcuts = !this.showSecondShortcuts;
+    }
+    justForFun() {
+        console.log('clicks works');
     }
     @ViewChild('input', { static: true }) input: ElementRef;
 
@@ -44,6 +48,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
             //     preventDefault: true,
             //     command: e => console.log("clicked BIG N" , e.key)
             // },
+            {
+                key: 'space',
+                label: 'label',
+                description: 'play/pause',
+                preventDefault: true,
+                command: () => console.log('shortcut space'),
+            },
             {
                 key: "plus",
                 label: "help",

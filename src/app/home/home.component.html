@@ -11,8 +11,9 @@
         <input matInput placeholder="Only on focus" #input>
       </mat-form-field>
       <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
-      <button (click)="handleClick()">disable directive</button>
+      <button (click)="handleClick($event)">disable directive</button>
       <button (click)="toggleSecondShortcuts()">Toggle Second shortcuts</button>
+      <button (click)="justForFun()">Just for Fun to make sure clicks works</button>
       <div *ngIf="showSecondShortcuts">
         <ng-keyboard-shortcuts [shortcuts]="secondShortcuts"></ng-keyboard-shortcuts>
       </div>
