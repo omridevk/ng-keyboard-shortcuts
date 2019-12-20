@@ -29,13 +29,55 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.shortcuts.push(
+            // {
+            //     key: "cmd + e",
+            //     label: "help",
+            //     description: "Controlling/Commanding + E",
+            //     preventDefault: true,
+            //     allowIn: [AllowIn.Textarea],
+            //     command: e => console.log("clicked " , e.key)
+            // },
+            // {
+            //     key: "N",
+            //     label: "help",
+            //     description: "n character",
+            //     preventDefault: true,
+            //     command: e => console.log("clicked BIG N" , e.key)
+            // },
             {
-                key: "cmd + e",
+                key: "plus",
                 label: "help",
-                description: "Controlling/Commanding + E",
+                description: "clicking plus character",
                 preventDefault: true,
-                allowIn: [AllowIn.Textarea],
-                command: e => console.log("clicked " , e.key)
+                command: e => console.log("clicked plus" , e.key)
+            },
+            {
+                key: "control + plus",
+                label: "help",
+                description: "clicking control with plus character",
+                preventDefault: true,
+                command: e => console.log("clicked plus with control" , e.key)
+            },
+            {
+                key: "=",
+                label: "help",
+                description: "clicking = character",
+                preventDefault: true,
+                command: e => console.log("clicked: " , e.key)
+            },
+            {
+                key: "n",
+                label: "help",
+                description: "n character",
+                preventDefault: true,
+                command: e => console.log("clicked small n " , e.key)
+            },
+            {
+                key: "N",
+                label: "help",
+                description: "big N",
+                preventDefault: true,
+                command: e => console.log("clicked" , e.key)
             },
             {
                 key: "~",
@@ -123,7 +165,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 preventDefault: true
             },
             {
-                key: "cmd + =",
+                key: "cmd + plus",
                 label: "help",
                 description: "zoom out",
                 command: (output: ShortcutEventOutput) => console.log(output),
