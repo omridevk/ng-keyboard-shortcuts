@@ -14,6 +14,9 @@ export const modifiers = {
     'ctl': 'ctrlKey',
     'control': 'ctrlKey',
 };
+export const _SPECIAL_CASES = {
+    "plus": "+"
+};
 
 export const symbols = {
     'cmd': isMac ? '⌘' : 'Ctrl',
@@ -21,6 +24,7 @@ export const symbols = {
     'left command': isMac ? '⌘' : 'Ctrl',
     'right command': isMac ? '⌘' : 'Ctrl',
     'option': isMac ? '⌥' : 'Alt',
+    'plus': "+",
     'left': '←',
     'right': '→',
     'up': '↑',
@@ -57,13 +61,12 @@ export const _MAP = {
 };
 
 
-/**
+/*
  * mapping for special characters so they can support
  *
  * this dictionary is only used incase you want to bind a
  * keyup or keydown event to one of these keys
  *
- * @type
  */
 export const _KEYCODE_MAP = {
     106: '*',

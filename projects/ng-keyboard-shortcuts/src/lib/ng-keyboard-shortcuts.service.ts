@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, modifiers } from "./keys";
+import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, _SPECIAL_CASES, modifiers } from "./keys";
 import {
     BehaviorSubject,
     fromEvent,
@@ -103,6 +103,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private mapEvent = event => {
         return this._shortcuts
+            .filter(shortcut => !shortcut.isSequence)
             .map(shortcut =>
                 Object.assign({}, shortcut, {
                     predicates: any(
@@ -177,8 +178,12 @@ export class KeyboardShortcutsService implements OnDestroy {
                 characters = Array.isArray(characters) ? characters : [characters];
                 const result = sequences
                     .map(sequence => {
-                        const sequences = sequence.sequence.filter(
-                            seque => characters.some((key) => seque[currentLength] === key)
+                        const sequences = sequence.sequence.filter(seque =>
+                            characters.some(
+                                key =>
+                                    (_SPECIAL_CASES[seque[currentLength]] ||
+                                        seque[currentLength]) === key
+                            )
                         );
                         const partialMatch = sequences.length > 0;
                         if (sequence.fullMatch) {
@@ -205,7 +210,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                  * need to determine which one to trigger.
                  * if both match, we pick the longer one (? a) in this case.
                  */
-                const guess = maxArrayProp('priority', result);
+                const guess = maxArrayProp("priority", result);
                 if (result.length > 1 && guess.fullMatch) {
                     return { events: [], command: guess, sequences: this._sequences };
                 }
@@ -230,11 +235,12 @@ export class KeyboardShortcutsService implements OnDestroy {
                  * This delay only occurs when single key sequence is the beginning of another sequence.
                  */
                 return timer(500).pipe(
-                    map(() => ({ command: command.filter(command => command.fullMatch)[0] })),
+                    map(() => ({ command: command.filter(command => command.fullMatch)[0] }))
                 );
             }
             return of({ command });
         }),
+        takeUntil(this.pressed$),
         filter(({ command }) => command && command.fullMatch),
         map(({ command }) => command),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
@@ -283,20 +289,25 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (typeof event.which !== "number") {
             event.which = event.keyCode;
         }
-        // for non keypress events the special maps are needed
+        if (_SPECIAL_CASES[event.which]) {
+            return [_SPECIAL_CASES[event.which], event.shiftKey];
+        }
         if (_MAP[event.which]) {
+            // for non keypress events the special maps are needed
             return [_MAP[event.which], event.shiftKey];
         }
 
         if (_KEYCODE_MAP[event.which]) {
             return [_KEYCODE_MAP[event.which], event.shiftKey];
         }
+        return [event.key, event.shiftKey];
         // if it is not in the special map
-
+        // keep this commented out for now, in case there are regression issues, it will
+        // probably be caused by this change!!!!!!!!
         // with keydown and keyup events the character seems to always
         // come in as an uppercase character whether you are pressing shift
         // or not.  we should make sure it is always lowercase for comparisons
-        return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
+        // return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
     }
 
     private characterFromEvent(event) {
@@ -384,8 +395,11 @@ export class KeyboardShortcutsService implements OnDestroy {
                 // for modifiers like control key
                 // look for event['ctrlKey']
                 // otherwise use the keyCode
+                key = _SPECIAL_CASES[key] || key;
                 if (modifiers.hasOwnProperty(key)) {
-                    return event => !!event[modifiers[key]];
+                    return event => {
+                        return !!event[modifiers[key]];
+                    };
                 }
 
                 return event => {
@@ -396,7 +410,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                             return true;
                         }
                         return key === char;
-                    })
+                    });
                 };
             });
     };

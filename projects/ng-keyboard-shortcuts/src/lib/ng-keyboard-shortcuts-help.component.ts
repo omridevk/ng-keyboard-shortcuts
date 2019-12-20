@@ -15,9 +15,8 @@ import { TemplatePortal } from "./portal";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from "@angular/animations";
-import { distinctUntilChanged } from "rxjs/operators";
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { groupBy } from "./utils";
-import { map } from "rxjs/internal/operators";
 import { SubscriptionLike } from "rxjs";
 
 /**
