@@ -121,16 +121,20 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
     };
 
-    private ignore$ = this.pressed$
-        .pipe(
-            filter(e => e.event.defaultPrevented),
-            switchMap(() => this.clicks$),
-            tap(e => {
-                e.preventDefault();
-                e.stopPropagation();
-            })
-        )
-        .subscribe();
+    /**
+     * fixes for firefox prevent default
+     * on click event on button focus:
+     * see issue:
+     * https://github.com/omridevk/ng-keyboard-shortcuts/pull/45
+     */
+    private ignore$ = this.pressed$.pipe(
+        filter(e => e.event.defaultPrevented),
+        switchMap(() => this.clicks$),
+        tap(e => {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+    );
     /**
      * @ignore
      */
@@ -301,7 +305,11 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @ignore
      */
     constructor() {
-        this.subscriptions.push(this.keydownSequence$.subscribe(), this.keydownCombo$.subscribe());
+        this.subscriptions.push(
+            this.keydownSequence$.subscribe(),
+            this.keydownCombo$.subscribe(),
+            this.ignore$.subscribe(),
+        );
     }
 
     /**
