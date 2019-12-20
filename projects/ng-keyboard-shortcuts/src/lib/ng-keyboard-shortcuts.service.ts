@@ -20,10 +20,12 @@ import {
 import {
     catchError,
     filter,
+    first,
     map,
     repeat,
     scan,
     switchMap,
+    take,
     takeUntil,
     tap,
     throttle
@@ -121,6 +123,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
     };
 
+    private keydown$ = fromEvent(document, "keydown", { capture: true });
     /**
      * fixes for firefox prevent default
      * on click event on button focus:
@@ -129,17 +132,17 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private ignore$ = this.pressed$.pipe(
         filter(e => e.event.defaultPrevented),
-        switchMap(() => this.clicks$),
+        switchMap(() => this.clicks$.pipe(first())),
         tap(e => {
             e.preventDefault();
             e.stopPropagation();
-        })
+        }),
+        repeat()
     );
     /**
      * @ignore
      */
     private clicks$ = fromEvent(document, "click", { capture: true });
-    private keydown$ = fromEvent(document, "keydown", { capture: true });
 
     private keyup$ = fromEvent(document, "keyup", { capture: true });
 
@@ -308,7 +311,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         this.subscriptions.push(
             this.keydownSequence$.subscribe(),
             this.keydownCombo$.subscribe(),
-            this.ignore$.subscribe(),
+            this.ignore$.subscribe()
         );
     }
 

@@ -234,7 +234,6 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     visible() : boolean {
         return this.bodyPortalHost.hasAttached();
     }
-
     /**
      * Hide the help screen manually.
      */

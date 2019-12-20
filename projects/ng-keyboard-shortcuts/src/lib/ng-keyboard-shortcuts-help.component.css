@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 10000;
+    z-index: 500;
     left: 0;
     bottom: 0;
     display: flex;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 .help-modal {
-    z-index: 1000;
+    z-index: 2000;
     min-width: 420px;
     max-height: calc(100% - 100px);
     overflow: auto;
@@ -39,7 +39,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 500;
+    z-index: 1000;
     pointer-events: auto;
     -webkit-tap-highlight-color: transparent;
     opacity: 1;

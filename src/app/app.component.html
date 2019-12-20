@@ -16,7 +16,7 @@
 
     <mat-sidenav-content>
       <router-outlet></router-outlet>
-      <ng-keyboard-shortcuts-help [key]="'cmd + g'" [closeKey]="'cmd'" [title]="'Help Screen'"></ng-keyboard-shortcuts-help>
+      <ng-keyboard-shortcuts-help [key]="'cmd + g'" [closeKey]="'escape'" [clickOutsideToClose]="true" [title]="'Help Screen'"></ng-keyboard-shortcuts-help>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

@@ -1,8 +1,8 @@
 <ng-template>
-    <div class="help-modal__container">
+    <div class="help-modal__container" [attr.aria-labelledby]="'modal-' + title" role="dialog">
         <div class="{{className}}" [@enterAnimation] *ngIf="showing">
             <div class="title">
-                <h3 class="title__text">{{title}}</h3>
+                <h3 id="modal-{{title}}" class="title__text">{{title}}</h3>
             </div>
             <div class="help-modal__body">
                 <span *ngIf="!labels.length">
@@ -20,6 +20,6 @@
                 </div>
             </div>
         </div>
-        <div class="help-modal__backdrop" [@overlayAnimation] (click)="hide()" *ngIf="showing"></div>
+        <div class="help-modal__backdrop" [@overlayAnimation] (mousedown)="hide()" *ngIf="showing"></div>
     </div>
 </ng-template>
