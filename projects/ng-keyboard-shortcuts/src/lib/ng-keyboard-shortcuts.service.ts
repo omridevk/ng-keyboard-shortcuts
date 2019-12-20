@@ -123,7 +123,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
     };
 
-    private keydown$ = fromEvent(document, "keydown", { capture: true });
+    private keydown$ = fromEvent(document, "keydown");
     /**
      * fixes for firefox prevent default
      * on click event on button focus:
@@ -144,7 +144,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private clicks$ = fromEvent(document, "click", { capture: true });
 
-    private keyup$ = fromEvent(document, "keyup", { capture: true });
+    private keyup$ = fromEvent(document, "keyup");
 
     /**
      * @ignore
@@ -205,7 +205,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
                 let [characters] = this.characterFromEvent(event);
-                characters = Array.isArray(characters) ? characters : [characters];
+                characters = Array.isArray(characters) ? [...characters, event.key] : [characters, event.key];
                 const result = sequences
                     .map(sequence => {
                         const sequences = sequence.sequence.filter(seque =>
@@ -334,14 +334,12 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (_KEYCODE_MAP[event.which]) {
             return [_KEYCODE_MAP[event.which], event.shiftKey];
         }
-        return [event.key, event.shiftKey];
-        // if it is not in the special map
-        // keep this commented out for now, in case there are regression issues, it will
-        // probably be caused by this change!!!!!!!!
-        // with keydown and keyup events the character seems to always
-        // come in as an uppercase character whether you are pressing shift
-        // or not.  we should make sure it is always lowercase for comparisons
-        // return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
+        // in case event key is lower case but regisered key is upper case
+        // return it in the lower case
+        if (String.fromCharCode(event.which).toLowerCase() !== event.key) {
+            return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
+        }
+        return [event.key, true];
     }
 
     private characterFromEvent(event) {
@@ -365,7 +363,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @param shortcuts
      */
     private isSequence(shortcuts: string[]): boolean {
-        return !shortcuts.some(shortcut => shortcut.includes("+"));
+        return !shortcuts.some(shortcut => shortcut.includes("+") || shortcut.length === 1);
     }
 
     /**
@@ -423,7 +421,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private getKeys = (keys: string[]) => {
         return keys
-            .map(key => key.trim().toLowerCase())
+            .map(key => key.trim())
             .filter(key => key !== "+")
             .map(key => {
                 // for modifiers like control key
@@ -438,7 +436,7 @@ export class KeyboardShortcutsService implements OnDestroy {
 
                 return event => {
                     let [characters, shiftKey] = this.characterFromEvent(event);
-                    characters = Array.isArray(characters) ? characters : [characters];
+                    characters = Array.isArray(characters) ? [...characters, event.key] : [characters, event.key];
                     return characters.some(char => {
                         if (char === key && shiftKey) {
                             return true;

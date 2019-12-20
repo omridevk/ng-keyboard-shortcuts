@@ -77,6 +77,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked: " , e.key)
             },
             {
+                key: "ctrl + ע",
+                label: "help",
+                description: "Hebrew letters",
+                preventDefault: true,
+                command: e => console.log("clicked: " , e.key)
+            },
+            {
                 key: "n",
                 label: "help",
                 description: "n character",
@@ -84,11 +91,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: e => console.log("clicked small n " , e.key)
             },
             {
+                key: "ctrl + shift + n",
+                label: "help",
+                description: "shift + n",
+                preventDefault: true,
+                command: e => console.log("clicked shift + n" , e.key)
+            },
+            {
                 key: "N",
                 label: "help",
                 description: "big N",
                 preventDefault: true,
-                command: e => console.log("clicked" , e.key)
+                command: e => console.log("clicked big N" , e.key)
             },
             {
                 key: "~",
@@ -129,8 +143,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 throttleTime: 250,
             },
             {
-                key: "f",
-                command: (output: ShortcutEventOutput) => console.log("f", output),
+                key: "shift + f",
+                command: (output: ShortcutEventOutput) => console.log("shift + f", output),
                 preventDefault: true
             },
             {
@@ -181,6 +195,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "zoom out",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true
+            },
+            {
+                key: "cmd + shift + f",
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true,
+                throttleTime: 250,
             },
             {
                 key: "cmd + f",
