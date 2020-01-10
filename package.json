@@ -1,7 +1,7 @@
 {
   "name": "ng-keyboard-shortcuts-app",
-  "version": "8.2.3",
-  "description": "Dead Simple Keyboard Shortcuts Management for Angular 2-7",
+  "version": "8.2.4",
+  "description": "Dead Simple Keyboard Shortcuts Management for Angular 2+",
   "keywords": [
     "angular",
     "keyboard",
@@ -32,10 +32,10 @@
     "e2e": "ng e2e"
   },
   "dependencies": {
+    "@angular/core": "^7.0.0 || ^8.0.0 || ^9.0.0",
+    "@angular/common": "^7.0.0 || ^8.0.0 || ^9.0.0",
     "@angular/animations": "~8.2.14",
-    "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
-    "@angular/core": "~8.2.14",
     "@angular/forms": "~8.2.14",
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
