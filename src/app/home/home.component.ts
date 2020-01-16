@@ -49,6 +49,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
             //     command: e => console.log("clicked BIG N" , e.key)
             // },
             {
+                key: 'left',
+                label: 'label',
+                description: 'up clicked',
+                preventDefault: true,
+                target: this.input.nativeElement,
+                command: () => console.log('up clicked'),
+            },
+            {
                 key: 'space',
                 label: 'label',
                 description: 'play/pause',

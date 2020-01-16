@@ -205,7 +205,9 @@ export class KeyboardShortcutsService implements OnDestroy {
                 const currentLength = acc.events.length;
                 const sequences = currentLength ? acc.sequences : arg.sequences;
                 let [characters] = this.characterFromEvent(event);
-                characters = Array.isArray(characters) ? [...characters, event.key] : [characters, event.key];
+                characters = Array.isArray(characters)
+                    ? [...characters, event.key]
+                    : [characters, event.key];
                 const result = sequences
                     .map(sequence => {
                         const sequences = sequence.sequence.filter(seque =>
@@ -274,6 +276,10 @@ export class KeyboardShortcutsService implements OnDestroy {
         filter(({ command }) => command && command.fullMatch),
         map(({ command }) => command),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
+        filter(
+            (shortcut: ParsedShortcut) =>
+                !shortcut.target || shortcut.event.target === shortcut.target
+        ),
         filter(this.isAllowed),
         tap(shortcut => !shortcut.preventDefault || shortcut.event.preventDefault()),
         throttle(shortcut => timer(shortcut.throttleTime)),
@@ -436,7 +442,9 @@ export class KeyboardShortcutsService implements OnDestroy {
 
                 return event => {
                     let [characters, shiftKey] = this.characterFromEvent(event);
-                    characters = Array.isArray(characters) ? [...characters, event.key] : [characters, event.key];
+                    characters = Array.isArray(characters)
+                        ? [...characters, event.key]
+                        : [characters, event.key];
                     return characters.some(char => {
                         if (char === key && shiftKey) {
                             return true;
