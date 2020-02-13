@@ -45,7 +45,7 @@
     "@angular/material": "^8.2.3",
     "core-js": "^3.6.0",
     "prettier": "^1.19.1",
-    "rxjs": "^6.5.3",
+    "rxjs": "^6.5.4",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
