@@ -1,35 +1,38 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
     AllowIn,
     KeyboardShortcutsComponent,
     ShortcutDirectiveInput,
     ShortcutEventOutput,
     ShortcutInput
-} from 'ng-keyboard-shortcuts';
+} from "ng-keyboard-shortcuts";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-
     shortcuts: ShortcutInput[] = [];
     secondShortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[] = [];
     showSecondShortcuts = false;
     public directiveDisabled = false;
     handleClick(e) {
-        console.log('button clicked', {e});
+        console.log("button clicked", { e });
         this.directiveDisabled = !this.directiveDisabled;
     }
     toggleSecondShortcuts() {
         this.showSecondShortcuts = !this.showSecondShortcuts;
     }
-    justForFun() {
-        console.log('clicks works');
+    testClick(event: any) {
+        console.log('clicked me')
     }
-    @ViewChild('input', { static: true }) input: ElementRef;
+
+    justForFun() {
+        console.log("clicks works");
+    }
+    @ViewChild("input", { static: true }) input: ElementRef;
 
     ngAfterViewInit(): void {
         this.shortcuts.push(
@@ -49,68 +52,68 @@ export class HomeComponent implements OnInit, AfterViewInit {
             //     command: e => console.log("clicked BIG N" , e.key)
             // },
             {
-                key: 'left',
-                label: 'label',
-                description: 'up clicked',
+                key: "left",
+                label: "label",
+                description: "up clicked",
                 preventDefault: true,
                 target: this.input.nativeElement,
-                command: () => console.log('up clicked'),
+                command: () => console.log("up clicked")
             },
             {
-                key: 'space',
-                label: 'label',
-                description: 'play/pause',
+                key: "space",
+                label: "label",
+                description: "play/pause",
                 preventDefault: true,
-                command: () => console.log('shortcut space'),
+                command: () => console.log("shortcut space")
             },
             {
                 key: "plus",
                 label: "help",
                 description: "clicking plus character",
                 preventDefault: true,
-                command: e => console.log("clicked plus" , e.key)
+                command: e => console.log("clicked plus", e.key)
             },
             {
                 key: "control + plus",
                 label: "help",
                 description: "clicking control with plus character",
                 preventDefault: true,
-                command: e => console.log("clicked plus with control" , e.key)
+                command: e => console.log("clicked plus with control", e.key)
             },
             {
                 key: "=",
                 label: "help",
                 description: "clicking = character",
                 preventDefault: true,
-                command: e => console.log("clicked: " , e.key)
+                command: e => console.log("clicked: ", e.key)
             },
             {
                 key: "ctrl + ע",
                 label: "help",
                 description: "Hebrew letters",
                 preventDefault: true,
-                command: e => console.log("clicked: " , e.key)
+                command: e => console.log("clicked: ", e.key)
             },
             {
                 key: "n",
                 label: "help",
                 description: "n character",
                 preventDefault: true,
-                command: e => console.log("clicked small n " , e.key)
+                command: e => console.log("clicked small n ", e.key)
             },
             {
                 key: "ctrl + shift + n",
                 label: "help",
                 description: "shift + n",
                 preventDefault: true,
-                command: e => console.log("clicked shift + n" , e.key)
+                command: e => console.log("clicked shift + n", e.key)
             },
             {
                 key: "N",
                 label: "help",
                 description: "big N",
                 preventDefault: true,
-                command: e => console.log("clicked big N" , e.key)
+                command: e => console.log("clicked big N", e.key)
             },
             {
                 key: "~",
@@ -118,7 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "~ sign",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked ~ sign" , e.key)
+                command: e => console.log("clicked ~ sign", e.key)
             },
             {
                 key: "?",
@@ -126,7 +129,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "Question mark",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked question mark" , e.key)
+                command: e => console.log("clicked question mark", e.key)
             },
             {
                 key: "ctrl + ?",
@@ -134,7 +137,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "Shift + Question mark",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked ctrl + question mark" , e.key)
+                command: e => console.log("clicked ctrl + question mark", e.key)
             },
             {
                 key: "f2",
@@ -142,13 +145,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 label: "help",
                 description: "Open Help menu",
                 allowIn: [AllowIn.Textarea],
-                command: e => console.log("clicked " , e.key)
+                command: e => console.log("clicked ", e.key)
             },
             {
                 key: "cmd + ?",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
-                throttleTime: 250,
+                throttleTime: 250
             },
             {
                 key: "shift + f",
@@ -208,7 +211,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 key: "cmd + shift + f",
                 command: (output: ShortcutEventOutput) => console.log(output),
                 preventDefault: true,
-                throttleTime: 250,
+                throttleTime: 250
             },
             {
                 key: "cmd + f",
@@ -229,19 +232,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
             key: "ctrl + a",
             label: "test",
             description: "only works inside the element",
-            command: () => console.log('directive ctrl + a'),
+            command: () => console.log("directive ctrl + a"),
             preventDefault: true
         });
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
 
-    @ViewChild(KeyboardShortcutsComponent, { static: false }) private keyboard: KeyboardShortcutsComponent;
+    @ViewChild(KeyboardShortcutsComponent, { static: false })
+    private keyboard: KeyboardShortcutsComponent;
 
-    constructor() {
-    }
+    constructor() {}
 
-    ngOnInit(): void {
-
-    }
-
+    ngOnInit(): void {}
 }

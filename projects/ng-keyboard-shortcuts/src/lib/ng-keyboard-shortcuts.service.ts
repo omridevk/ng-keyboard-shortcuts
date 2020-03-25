@@ -128,7 +128,12 @@ export class KeyboardShortcutsService implements OnDestroy {
      * fixes for firefox prevent default
      * on click event on button focus:
      * see issue:
-     * https://github.com/omridevk/ng-keyboard-shortcuts/pull/45
+     * keeping this here for now, but it is commented out
+     * Firefox reference bug:
+     * https://bugzilla.mozilla.org/show_bug.cgi?id=1487102
+     * and my repo:
+     *
+     * https://github.com/omridevk/ng-keyboard-shortcuts/issues/35
      */
     private ignore$ = this.pressed$.pipe(
         filter(e => e.event.defaultPrevented),
@@ -316,8 +321,8 @@ export class KeyboardShortcutsService implements OnDestroy {
     constructor() {
         this.subscriptions.push(
             this.keydownSequence$.subscribe(),
-            this.keydownCombo$.subscribe(),
-            this.ignore$.subscribe()
+            this.keydownCombo$.subscribe()
+            // this.ignore$.subscribe()
         );
     }
 
