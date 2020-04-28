@@ -2,7 +2,8 @@
 [![npm version](https://badge.fury.io/js/ng-keyboard-shortcuts.svg)](https://badge.fury.io/js/ng-keyboard-shortcuts) 
 ![npm](https://img.shields.io/npm/dw/ng-keyboard-shortcuts)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/ng-keyboard-shortcuts)
-[![Join the chat at https://gitter.im/ng-keyboard-shortcuts/community](https://badges.gitter.im/ng-keyboard-shortcuts/community.svg)](https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+[![Join the chat at https://gitter.im/ng-keyboard-shortcuts/community](https://badges.gitter.im/ng-keyboard-shortcuts/community.svg)](https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![NPM](https://img.shields.io/npm/l/ng-keyboard-shortcuts)
   
   
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.  
