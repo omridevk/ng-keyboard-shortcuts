@@ -1,5 +1,5 @@
 # ng-keyboard-shortcuts
-<p align="center">
+<p>
       <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm version">
         <img src="https://badge.fury.io/js/ng-keyboard-shortcuts.svg" />
       </a>
