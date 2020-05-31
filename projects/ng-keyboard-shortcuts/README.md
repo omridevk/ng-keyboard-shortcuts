@@ -1,6 +1,21 @@
 # ng-keyboard-shortcuts
-[![npm version](https://badge.fury.io/js/ng-keyboard-shortcuts.svg)](https://badge.fury.io/js/ng-keyboard-shortcuts) [![Join the chat at https://gitter.im/ng-keyboard-shortcuts/community](https://badges.gitter.im/ng-keyboard-shortcuts/community.svg)](https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
-  
+<p>
+      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm version" target="_blank">
+        <img src="https://badge.fury.io/js/ng-keyboard-shortcuts.svg" />
+      </a>
+      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm downloads per month" target="_blank">
+        <img src="https://img.shields.io/npm/dw/ng-keyboard-shortcuts" />
+      </a>
+      <a href="https://bundlephobia.com/result?p=ng-keyboard-shortcuts" alt="Bundle size" target="_blank" >
+        <img src="https://img.shields.io/bundlephobia/minzip/ng-keyboard-shortcuts" />
+      </a>
+      <a href="https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" alt="Join the chat at our community" target="_blank">
+        <img src="https://badges.gitter.im/ng-keyboard-shortcuts/community.svg" />
+      </a>
+       <a href="https://img.shields.io/npm/l/ng-keyboard-shortcuts" target="_blank" alt="MIT License">
+        <img src="https://img.shields.io/npm/l/ng-keyboard-shortcuts" />
+      </a>
+</p>  
   
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.  
   
