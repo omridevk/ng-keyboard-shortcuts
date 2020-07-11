@@ -339,10 +339,10 @@ Since shortcuts can be added or removed during the lifecycle of the app, an obse
  
 ## KeyboardShortcutsSelectService
 
-A singleton service that expose one method:
-| method   |  input   | description |  
-|----------|:---------:|:-------------:|  
-| select | ```string ``` the shortcut to listen to | listen to shortcut by the string |
+A singleton service that can be used globally to listen to any registered shortcut:
+| Name  | Input | Return  | Description |  
+|----------|:------|:------:|:-------------:|  
+| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
  
  
 # API:  
