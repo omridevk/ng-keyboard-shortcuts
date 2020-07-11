@@ -1,7 +1,8 @@
 import {
     ApplicationRef,
     Component,
-    ComponentFactoryResolver, ElementRef, HostBinding,
+    ComponentFactoryResolver,
+    ElementRef,
     Injector,
     Input,
     OnDestroy,
@@ -15,14 +16,19 @@ import { TemplatePortal } from "./portal";
 import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from "@angular/animations";
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from "rxjs/operators";
 import { groupBy } from "./utils";
 import { SubscriptionLike } from "rxjs";
 
 /**
  * @ignore
  */
-const scrollAbleKeys = new Map([[31, 1], [38,1], [39, 1], [40, 1]]);
+const scrollAbleKeys = new Map([
+    [31, 1],
+    [38, 1],
+    [39, 1],
+    [40, 1]
+]);
 /**
  * @ignore
  */
@@ -48,8 +54,11 @@ const preventDefaultForScrollKeys = e => {
 /**
  * @ignore
  */
-let scrollEvents = [{name: 'wheel', callback: null}, {name: 'touchmove', callback: null}, {name: 'DOMMouseScroll', callback: null} ];
-
+let scrollEvents = [
+    { name: "wheel", callback: null },
+    { name: "touchmove", callback: null },
+    { name: "DOMMouseScroll", callback: null }
+];
 
 /**
  * @ignore
@@ -57,13 +66,13 @@ let scrollEvents = [{name: 'wheel', callback: null}, {name: 'touchmove', callbac
 const disableScroll = (ignore: string) => {
     scrollEvents = scrollEvents.map(event => {
         const callback = preventDefault(ignore);
-        window.addEventListener(event.name, callback, {passive: false});
+        window.addEventListener(event.name, callback, { passive: false });
         return {
             ...event,
             callback
-        }
+        };
     });
-    window.addEventListener('keydown', preventDefaultForScrollKeys);
+    window.addEventListener("keydown", preventDefaultForScrollKeys);
 };
 /**
  * @ignore
@@ -74,9 +83,9 @@ const enableScroll = () => {
         return {
             ...event,
             callback: null
-        }
+        };
     });
-    window.removeEventListener('keydown', preventDefaultForScrollKeys);
+    window.removeEventListener("keydown", preventDefaultForScrollKeys);
 };
 
 /**
@@ -126,7 +135,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     private _key: string;
 
-    public className = 'help-modal';
+    public className = "help-modal";
 
     /**
      * The shortcut to show/hide the help screen
@@ -137,7 +146,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         if (!value) {
             return;
         }
-        if(this.clearIds) {
+        if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
         this.clearIds = this.keyboard.add({
@@ -231,13 +240,13 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * Check if help screen is visible.
      * @returns boolean
      */
-    visible() : boolean {
+    visible(): boolean {
         return this.bodyPortalHost.hasAttached();
     }
     /**
      * Hide the help screen manually.
      */
-    hide() : KeyboardShortcutsHelpComponent {
+    hide(): KeyboardShortcutsHelpComponent {
         if (this.disableScrolling) {
             enableScroll();
         }
@@ -271,7 +280,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Show/Hide the help screen manually.
      */
-    toggle() : KeyboardShortcutsHelpComponent {
+    toggle(): KeyboardShortcutsHelpComponent {
         this.visible() ? this.hide() : this.reveal();
         return this;
     }
@@ -298,7 +307,10 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.subscription = this.keyboardHelp.shortcuts$
-            .pipe(distinctUntilChanged(), map(shortcuts => groupBy(shortcuts, "label")))
+            .pipe(
+                distinctUntilChanged(),
+                map(shortcuts => groupBy(shortcuts, "label"))
+            )
             .subscribe(shortcuts => {
                 this.shortcuts = shortcuts;
                 this.labels = Object.keys(shortcuts);
