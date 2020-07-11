@@ -1,7 +1,7 @@
 import {
     ApplicationRef,
     Component,
-    ComponentFactoryResolver, ElementRef, HostBinding,
+    ComponentFactoryResolver, ElementRef,
     Injector,
     Input,
     OnDestroy,
@@ -16,8 +16,10 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { groupBy } from "./utils";
+import { groupBy } from './utils';
 import { SubscriptionLike } from "rxjs";
+import { Shortcut } from './ng-keyboard-shortcuts.interfaces';
+
 
 /**
  * @ignore
@@ -129,6 +131,20 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     public className = 'help-modal';
 
     /**
+     * A description that will be shown in the help menu.
+     * MUST almost provide a label for the key to be shown
+     * in the help menu
+     */
+    @Input() keyDescription: string;
+
+    /**
+     * The label to group by the help menu toggle shortcut.
+     * must provide a description for the key to show
+     * in the help menu
+     */
+    @Input() keyLabel: string;
+
+    /**
      * The shortcut to show/hide the help screen
      */
     @Input()
@@ -140,11 +156,22 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         if(this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+        this.clearIds = this.addShortcut({
+            key: value,
+            preventDefault: true,
+            command: () => this.toggle(),
+            description: this.keyDescription,
+            label: this.keyLabel
+        })
         this.clearIds = this.keyboard.add({
             key: value,
             preventDefault: true,
             command: () => this.toggle()
         });
+    }
+
+    private addShortcut(shortcut: Shortcut) {
+        return this.keyboard.add(shortcut);
     }
     private _closeKey;
     @Input()
