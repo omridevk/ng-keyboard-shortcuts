@@ -42,7 +42,8 @@ Compatible with Angular 5+
     * [Directive](#directive)  
         * [ngKeyboardShortcut](#ngKeyboardShortcut)  
     * [Service](#service)  
-        * [KeyboardShortcutsHelpService](#KeyboardShortcutsHelpService)  
+        * [KeyboardShortcutsHelpService](#KeyboardShortcutsHelpService)
+        * [KeyboardShortcutsSelectService](#KeyboardShortcutsSelectService)  
 * [API](#api)  
     * [Types](#types)  
         * [AllowIn](#AllowIn)  
@@ -334,7 +335,16 @@ Since shortcuts can be added or removed during the lifecycle of the app, an obse
 | properties   |  type   | description |  
 |----------|:---------:|:-------------:|  
 | shortcuts$ | ```Observable<{ key: string, label: string, description: string }[]>```| Array of registered shortcuts across the whole app |  
-  
+ 
+ 
+## KeyboardShortcutsSelectService
+
+A singleton service that expose one method:
+| method   |  input   | description |  
+|----------|:---------:|:-------------:|  
+| select | ```string ``` the shortcut to listen to | listen to shortcut by the string |
+ 
+ 
 # API:  
   
 ## Types:  
