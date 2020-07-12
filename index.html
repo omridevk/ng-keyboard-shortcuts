@@ -31,21 +31,39 @@
                    <div class="content-data">
 
 <h1 id="ng-keyboard-shortcuts">ng-keyboard-shortcuts</h1>
-<p><a href="https://badge.fury.io/js/ng-keyboard-shortcuts"><img src="https://badge.fury.io/js/ng-keyboard-shortcuts.svg" alt="npm version" class="img-responsive"></a> <a href="https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/ng-keyboard-shortcuts/community.svg" alt="Join the chat at https://gitter.im/ng-keyboard-shortcuts/community" class="img-responsive"></a>  </p>
+<p>
+      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm version" target="_blank">
+        <img src="https://badge.fury.io/js/ng-keyboard-shortcuts.svg" />
+      </a>
+      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm downloads per month" target="_blank">
+        <img src="https://img.shields.io/npm/dw/ng-keyboard-shortcuts" />
+      </a>
+      <a href="https://bundlephobia.com/result?p=ng-keyboard-shortcuts" alt="Bundle size" target="_blank" >
+        <img src="https://img.shields.io/bundlephobia/minzip/ng-keyboard-shortcuts" />
+      </a>
+      <a href="https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" alt="Join the chat at our community" target="_blank">
+        <img src="https://badges.gitter.im/ng-keyboard-shortcuts/community.svg" />
+      </a>
+       <a href="https://img.shields.io/npm/l/ng-keyboard-shortcuts" target="_blank" alt="MIT License">
+        <img src="https://img.shields.io/npm/l/ng-keyboard-shortcuts" />
+      </a>
+</p>  
+
 <p>An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.  </p>
-<p>This documentation is for version <strong>^7.0.0</strong>.  For older versions (<strong>2.0.0/6.0.0</strong>) please <a href="https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0">click here</a>  </p>
+<p>This documentation is for version <strong>7.0.0+ (8,9) and any future versions</strong>.  For older versions (<strong>2.0.0/6.0.0</strong>) please <a href="https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0">click here</a>  </p>
 <p>See demo here:<br><a href="https://codesandbox.io/s/yvyovny43v">demo</a>  </p>
 <h4 id="important-note">important note</h4>
-<p>We recommend to update to version <strong>7.0.0</strong> and use the new component API which has a better memory management than previous version.  </p>
+<p>We recommend to update to version <strong>7.0.0 and above</strong> and use the new component API which has a better memory management than previous version.  </p>
 <p>Compatible with Angular 5+  </p>
 <ul>
 <li><a href="#install">Install</a>  </li>
 <li><a href="#setup">Setup</a>  </li>
+<li><a href="https://codesandbox.io/s/yvyovny43v">Demo</a></li>
 <li><a href="#usage">Usage</a>  <ul>
 <li><a href="#combinations">Combinations</a></li>
 <li><a href="#sequences">Sequences</a></li>
 <li><a href="#components">Components</a>  <ul>
-<li><a href="#ng-keyboard-shortcuts-1">Keyboardshortcuts</a>  </li>
+<li><a href="#ng-keyboard-shortcuts">Keyboardshortcuts</a>  </li>
 <li><a href="#ng-keyboard-shortcuts-help">HelpScreen</a>  </li>
 </ul>
 </li>
@@ -54,7 +72,8 @@
 </ul>
 </li>
 <li><a href="#service">Service</a>  <ul>
-<li><a href="#KeyboardShortcutsHelpService">KeyboardShortcutsHelpService</a>  </li>
+<li><a href="#KeyboardShortcutsHelpService">KeyboardShortcutsHelpService</a></li>
+<li><a href="#KeyboardShortcutsSelectService">KeyboardShortcutsSelectService</a>  </li>
 </ul>
 </li>
 </ul>
@@ -73,11 +92,11 @@
 <li><a href="#publishing">Publishing</a>  </li>
 <li><a href="#License">License</a>  </li>
 </ul>
-<h1 id="install-">Install:</h1>
+<h1 id="install">Install:</h1>
 <p><code>npm install --save ng-keyboard-shortcuts</code>  </p>
 <h5 id="or-yarn">or yarn</h5>
 <p><code>yarn add ng-keyboard-shortcuts</code>  </p>
-<h1 id="setup-">Setup:</h1>
+<h1 id="setup">Setup:</h1>
 <div><pre class="line-numbers"><code class="language-typescript">import { KeyboardShortcutsModule }     from &#39;ng-keyboard-shortcuts&#39;;  
 
 &#64;NgModule({  
@@ -90,11 +109,13 @@
     bootstrap: [AppComponent]  
 })  
 export class AppModule {  
-}  </code></pre></div><h1 id="usage-">Usage:</h1>
+}  </code></pre></div><h1 id="usage">Usage:</h1>
 <h2 id="combinations">Combinations</h2>
 <p>key combinations are used with meta keys like control, shift, command, etc... and are defined using plus(+) sign as a separator.
-there can be multiple combinations for the same command, so either of the key combination will trigger the callback.</p>
-<h4 id="examples-">Examples:</h4>
+there can be multiple combinations for the same command, so either of the key combination will trigger the callback.
+Since combinations uses the plus sign as a seperator, if you want to bind to the actual + charachater,
+you will need to use &quot;plus&quot; instead.</p>
+<h4 id="examples">Examples:</h4>
 <div><pre class="line-numbers"><code class="language-typescript">   [
        {
             key: [&quot;cmd + a&quot;],
@@ -105,17 +126,22 @@ there can be multiple combinations for the same command, so either of the key co
             preventDefault: true,
             command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + a&quot;, output),
 
+        },
+        {
+            key: &quot;ctrl + plus&quot;,
+            preventDefault: true,
+            command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + plus key&quot;, output),
         }
     ]</code></pre></div><h2 id="sequences">Sequences</h2>
 <p>Sequences can be used to support gmail like actions where you click &quot;g&quot; then &quot;a&quot;, or &quot;g&quot; then &quot;o&quot; to perform certain actions.</p>
-<h5 id="important-note"><strong>Important note</strong></h5>
+<h5 id="important-note-1"><strong>Important note</strong></h5>
 <p>The library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
 This is because it can&#39;t tell if you are starting the sequence or if you are pressing that key on its own.</p>
 <p>To counter this, there is a <strong>500ms</strong> delay(<strong>only</strong> when single key is used in the beginning of another sequence, so it won&#39;t affect performance)
 . This gives the library time to wait for a more complete sequence, otherwise the single sequence will be triggered.</p>
 <p>for example: binding both &quot;? a&quot; and &quot;?&quot;, then clicking &quot;?&quot; will trigger the &quot;?&quot; callback, but only after 500ms delay.
 However, in all other cases there&#39;s no delay in execution of the callback (unless debounceTime is provided)</p>
-<h4 id="examples-">Examples:</h4>
+<h4 id="examples-1">Examples:</h4>
 <p>This library supports gmail style sequences:</p>
 <div><pre class="line-numbers"><code class="language-typescript">   [{
         key: [&quot;g a&quot;],
@@ -129,10 +155,10 @@ However, in all other cases there&#39;s no delay in execution of the callback (u
     }]</code></pre></div><p>Sequences can be used inside components or directives and are declared <strong>without</strong> the plus(+) sign, for example:
 <code>key: [&quot;a b c&quot;]</code>
 will require clicking, a, then b, then c.</p>
-<h2 id="components-">Components:</h2>
-<h3 id="ng-keyboard-shortcuts">ng-keyboard-shortcuts</h3>
+<h2 id="components">Components:</h2>
+<h3 id="ng-keyboard-shortcuts-1">ng-keyboard-shortcuts</h3>
 <p>Component that can be used across the app to bind to various shortcuts  </p>
-<h4 id="inputs-">Inputs:</h4>
+<h4 id="inputs">Inputs:</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -157,7 +183,7 @@ will require clicking, a, then b, then c.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="methods-">Methods:</h4>
+<h4 id="methods">Methods:</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -241,7 +267,7 @@ export class DemoComponent implements AfterViewInit {
 </ol>
 <p>Can be used to show an help screen ( will be attached to body and be shown as a modal)  </p>
 <p>Should be placed in the root of your app, preferably in app.component.html  </p>
-<h4 id="inputs">Inputs</h4>
+<h4 id="inputs-1">Inputs</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -259,10 +285,34 @@ export class DemoComponent implements AfterViewInit {
 <td align="center">The key to show/hide the help modal</td>
 </tr>
 <tr>
+<td>keyDescription</td>
+<td align="center"><code>string</code></td>
+<td align="right">none</td>
+<td align="center">Description to show in the menu shortcut list for the toggle shortcut</td>
+</tr>
+<tr>
+<td>keyLabel</td>
+<td align="center"><code>string</code></td>
+<td align="right">none</td>
+<td align="center">Label that can be used to group shortcuts together in the help menu</td>
+</tr>
+<tr>
 <td>closeKey</td>
 <td align="center"><code>string</code></td>
 <td align="right">none</td>
 <td align="center">Close key to be used to close the modal</td>
+</tr>
+<tr>
+<td>closeKeyDescription</td>
+<td align="center"><code>string</code></td>
+<td align="right">none</td>
+<td align="center">Description to show in the menu shortcut list for closing the modal shortcut</td>
+</tr>
+<tr>
+<td>closeKeyLabel</td>
+<td align="center"><code>string</code></td>
+<td align="right">none</td>
+<td align="center">Label that can be used to group shortcuts together in the help menu</td>
 </tr>
 <tr>
 <td>title</td>
@@ -284,7 +334,7 @@ export class DemoComponent implements AfterViewInit {
 </tr>
 </tbody>
 </table>
-<h4 id="methods-">Methods:</h4>
+<h4 id="methods-1">Methods:</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -321,7 +371,7 @@ export class DemoComponent implements AfterViewInit {
 </tr>
 </tbody>
 </table>
-<h4 id="methods-">Methods:</h4>
+<h4 id="methods-2">Methods:</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -361,7 +411,7 @@ export class AppComponent {
 </code></pre></div><h2 id="directive">Directive</h2>
 <h3 id="ngkeyboardshortcut">ngKeyboardShortcut</h3>
 <p>Directive that can only be used for focusable elements, such as textarea, select, input, etc...  </p>
-<h4 id="inputs">Inputs</h4>
+<h4 id="inputs-2">Inputs</h4>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -421,7 +471,8 @@ export class DemoComponent implements AfterViewInit {
 
 }  </code></pre></div><h1 id="service">Service</h1>
 <h2 id="keyboardshortcutshelpservice">KeyboardShortcutsHelpService</h2>
-<p>Singleton service that can be used to render a custom help screen. (used to build the <a href="#ng-keyboard-shortcuts-help">Built in help component</a>)<br>Provides access to all registered shortcuts in the app using Observable that updates on shortcuts changes.<br>Since shortcuts can be added or removed during the lifecycle of the app, an observable data structure needed to be used.  </p>
+<p>Singleton service that can be used to render a custom help screen. (used to build the <a href="#ng-keyboard-shortcuts-help">Built in help component</a>)  
+Provides access to all registered shortcuts in the app using Observable that updates on shortcuts changes.<br>Since shortcuts can be added or removed during the lifecycle of the app, an observable data structure needed to be used.  </p>
 <table class="table table-bordered compodoc-table">
 <thead>
 <tr>
@@ -438,8 +489,11 @@ export class DemoComponent implements AfterViewInit {
 </tr>
 </tbody>
 </table>
-<h1 id="api-">API:</h1>
-<h2 id="types-">Types:</h2>
+<h2 id="keyboardshortcutsselectservice">KeyboardShortcutsSelectService</h2>
+<p>A singleton service that can be used globally to listen to any registered shortcut:
+| Name  | Input | Return  | Description |<br>|----------|:------|:------:|:-------------:|<br>| select | <code>string</code> - key to listen to events (example: <code>&#39;cmd + e&#39;</code>) | <code>Observable&lt;ShortcutEventOutput&gt;</code> |Listen to specific key events (<strong>will only work for registered keys</strong>) |</p>
+<h1 id="api">API:</h1>
+<h2 id="types">Types:</h2>
 <h3 id="allowin">AllowIn</h3>
 <div><pre class="line-numbers"><code class="language-typescript">export enum AllowIn {  
     Textarea = &#39;TEXTAREA&#39;,  
@@ -517,6 +571,7 @@ export class DemoComponent implements AfterViewInit {
 
 
 
+                   
 
 
 
@@ -539,6 +594,7 @@ export class DemoComponent implements AfterViewInit {
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
             var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>

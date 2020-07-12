@@ -233,51 +233,51 @@
 
         <section>
     
-        <h3 id="methods">
-            Methods
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="forRoot"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Static</span>
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="forRoot"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
                             forRoot
-                            </b>
-                            <a href="#forRoot"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>forRoot()</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#forRoot"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>forRoot()</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.module.ts:19</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.module.ts:27</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://angular.io/api/core/ModuleWithProviders" target="_blank" >ModuleWithProviders</a></code>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/Shortcut.html" target="_self" >ModuleWithProviders&lt;KeyboardShortcutsModule&gt;</a></code>
 
-                            </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
-
     </div>
 
 
@@ -285,27 +285,36 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ModuleWithProviders, NgModule } from &quot;@angular/core&quot;;
 import { KeyboardShortcutsComponent } from &quot;./ng-keyboard-shortcuts.component&quot;;
 import { KeyboardShortcutsService } from &quot;./ng-keyboard-shortcuts.service&quot;;
-import { KeyboardShortcutsHelpService } from &#x27;./ng-keyboard-shortcuts-help.service&#x27;;
-import { KeyboardShortcutsDirective } from &#x27;./ng-keyboard-shortcuts.directive&#x27;;
-import { KeyboardShortcutsHelpComponent } from &#x27;./ng-keyboard-shortcuts-help.component&#x27;;
-import { KeyboardShortcutsHelpItemComponent } from &#x27;./ng-keyboard-shortcuts-help-item.component&#x27;;
+import { KeyboardShortcutsHelpService } from &quot;./ng-keyboard-shortcuts-help.service&quot;;
+import { KeyboardShortcutsSelectService } from &quot;./ng-keyboard-shortcuts-select.service&quot;;
+import { KeyboardShortcutsDirective } from &quot;./ng-keyboard-shortcuts.directive&quot;;
+import { KeyboardShortcutsHelpComponent } from &quot;./ng-keyboard-shortcuts-help.component&quot;;
+import { KeyboardShortcutsHelpItemComponent } from &quot;./ng-keyboard-shortcuts-help-item.component&quot;;
 import { CommonModule } from &quot;@angular/common&quot;;
-
-
 
 @NgModule({
     imports: [CommonModule],
     entryComponents: [KeyboardShortcutsHelpComponent],
-    declarations: [KeyboardShortcutsComponent, KeyboardShortcutsDirective, KeyboardShortcutsHelpComponent, KeyboardShortcutsHelpItemComponent],
-    exports: [KeyboardShortcutsComponent, KeyboardShortcutsDirective, KeyboardShortcutsHelpComponent]
+    declarations: [
+        KeyboardShortcutsComponent,
+        KeyboardShortcutsDirective,
+        KeyboardShortcutsHelpComponent,
+        KeyboardShortcutsHelpItemComponent
+    ],
+    exports: [
+        KeyboardShortcutsComponent,
+        KeyboardShortcutsDirective,
+        KeyboardShortcutsHelpComponent
+    ]
 })
 export class KeyboardShortcutsModule {
-    public static forRoot(): ModuleWithProviders {
+    public static forRoot(): ModuleWithProviders&lt;KeyboardShortcutsModule&gt; {
         return {
             ngModule: KeyboardShortcutsModule,
             providers: [
                 KeyboardShortcutsService,
-                KeyboardShortcutsHelpService
+                KeyboardShortcutsHelpService,
+                KeyboardShortcutsSelectService
             ]
         };
     }
@@ -323,6 +332,7 @@ export class KeyboardShortcutsModule {
 
 
 
+                   
 
 
 
@@ -345,6 +355,7 @@ export class KeyboardShortcutsModule {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
             var COMPODOC_CURRENT_PAGE_URL = 'KeyboardShortcutsModule.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
