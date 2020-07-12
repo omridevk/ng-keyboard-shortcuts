@@ -154,6 +154,20 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     @Input() keyLabel: string;
 
     /**
+     * The label to group by the help menu close shortcut.
+     * must provide a description for the key to show
+     * in the help menu
+     */
+    @Input() closeKeyLabel: string;
+
+    /**
+     * A description that will be shown in the help menu.
+     * MUST almost provide a label for the key to be shown
+     * in the help menu
+     */
+    @Input() closeKeyDescription: string;
+
+    /**
      * The shortcut to show/hide the help screen
      */
     @Input()
@@ -171,11 +185,6 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             command: () => this.toggle(),
             description: this.keyDescription,
             label: this.keyLabel
-        })
-        this.clearIds = this.keyboard.add({
-            key: value,
-            preventDefault: true,
-            command: () => this.toggle()
         });
     }
 
@@ -192,11 +201,13 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         if (this.closeKeyIds) {
             this.keyboard.remove(this.closeKeyIds);
         }
-        this.closeKeyIds = this.keyboard.add({
+        this.closeKeyIds = this.addShortcut({
             key: value,
             preventDefault: true,
-            command: () => this.hide()
-        });
+            command: () => this.hide(),
+            description: this.closeKeyDescription,
+            label: this.closeKeyDescription
+        })
     }
 
     /**
