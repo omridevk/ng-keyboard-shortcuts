@@ -212,7 +212,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * @ignore
      */
-    @ViewChild(TemplateRef, { static: false }) template: TemplateRef<any>;
+    @ViewChild(TemplateRef) template: TemplateRef<any>;
     /**
      * @ignore
      */

@@ -1,31 +1,26 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "module": "esnext",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "esnext",
-      "dom"
-    ],
-    "paths": {
-      "ng-keyboard-shortcuts": [
-        "dist/ng-keyboard-shortcuts"
-      ],
-      "ng-keyboard-shortcuts/*": [
-        "dist/ng-keyboard-shortcuts/*"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./src/tsconfig.spec.json"
+    },
+    {
+      "path": "./e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./projects/ng-keyboard-shortcuts/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ng-keyboard-shortcuts/tsconfig.spec.json"
     }
-  }
+  ]
 }
