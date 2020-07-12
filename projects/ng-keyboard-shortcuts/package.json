@@ -1,6 +1,7 @@
 {
   "name": "ng-keyboard-shortcuts",
   "version": "7.1.5",
+  "description": "Dead Simple Keyboard Shortcuts Management for Angular 2+",
   "keywords": [
     "angular",
     "keyboard",
