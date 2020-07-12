@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ng-keyboard-shortcuts-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,6 +30,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -136,7 +143,8 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/ng-keyboard-shortcuts/ng-package.prod.json"
+              "project": "projects/ng-keyboard-shortcuts/ng-package.prod.json",
+              "tsConfig": "projects/ng-keyboard-shortcuts/tsconfig.lib.prod.json"
             }
           }
         },
@@ -163,5 +171,8 @@
       }
     }
   },
-  "defaultProject": "ng-keyboard-shortcuts-app"
+  "defaultProject": "ng-keyboard-shortcuts-app",
+  "cli": {
+    "analytics": false
+  }
 }

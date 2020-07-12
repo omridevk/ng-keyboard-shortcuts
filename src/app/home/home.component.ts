@@ -238,7 +238,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.keyboard.select("cmd + f").subscribe(e => console.log(e));
     }
 
-    @ViewChild(KeyboardShortcutsComponent, { static: false })
+    @ViewChild(KeyboardShortcutsComponent)
     private keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
