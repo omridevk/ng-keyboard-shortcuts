@@ -37,7 +37,7 @@ Compatible with Angular 5+
     * [Combinations](#combinations)
     * [Sequences](#sequences)
     * [Components](#components)  
-        * [Keyboardshortcuts](#ng-keyboard-shortcuts-1)  
+        * [Keyboardshortcuts](#ng-keyboard-shortcuts)  
         * [HelpScreen](#ng-keyboard-shortcuts-help)  
     * [Directive](#directive)  
         * [ngKeyboardShortcut](#ngKeyboardShortcut)  
@@ -240,7 +240,11 @@ Should be placed in the root of your app, preferably in app.component.html
 | Name   |      Type      |  default         | description |  
 |----------|:-------------:|-----------------:  |:-------------:|  
 | key |  ```string``` | none | The key to show/hide the help modal
+| keyDescription |  ```string``` | none | Description to show in the menu shortcut list for the toggle shortcut
+| keyLabel |  ```string``` | none | Label that can be used to group shortcuts together in the help menu
 | closeKey |  ```string``` | none | Close key to be used to close the modal
+| closeKeyDescription |  ```string``` | none | Description to show in the menu shortcut list for closing the modal shortcut
+| closeKeyLabel |  ```string``` | none | Label that can be used to group shortcuts together in the help menu
 | title |  ```string``` | "Keyboard shortcuts" | The title of the help screen
 | emptyMessage |  ```string``` | "No shortcuts available" | What message to show when no commands are registered when help modal is opened.
 | disableScrolling |  ```boolean``` | true | Whether to disable body scrolling when modal help screen is opened.
