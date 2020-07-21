@@ -56,13 +56,23 @@ Compatible with Angular 5+
   
   
 # Install:  
-  
-```npm install --save ng-keyboard-shortcuts```  
-  
-##### or yarn  
-  
-``` yarn add ng-keyboard-shortcuts```  
-  
+##### NPM
+###### Angular latest
+```npm install --save ng-keyboard-shortcuts```
+###### Angular 8/9
+```npm install --save ng-keyboard-shortcuts@^9.0.0```  
+###### Angular 7
+```npm install --save ng-keyboard-shortcuts@^7.0.0```
+
+##### Yarn  
+
+###### Angular latest
+```yarn add ng-keyboard-shortcuts```
+###### Angular 8/9
+```npm add ng-keyboard-shortcuts@^9.0.0```  
+###### Angular 7
+```yarn add ng-keyboard-shortcuts@^7.0.0```
+
 # Setup:  
 ```typescript  
 import { KeyboardShortcutsModule }     from 'ng-keyboard-shortcuts';  
