@@ -40,7 +40,7 @@ Compatible with Angular 5+
         * [Keyboardshortcuts](#ng-keyboard-shortcuts)  
         * [HelpScreen](#ng-keyboard-shortcuts-help)  
     * [Directive](#directive)  
-        * [ngKeyboardShortcut](#ngKeyboardShortcut)  
+        * [ngKeyboardShortcuts](#ngKeyboardShortcuts)  
     * [Service](#service)  
         * [KeyboardShortcutsHelpService](#KeyboardShortcutsHelpService)
         * [KeyboardShortcutsSelectService](#KeyboardShortcutsSelectService)  
@@ -288,13 +288,13 @@ export class AppComponent {
 ```  
   
 ## Directive  
-### ngKeyboardShortcut  
+### ngKeyboardShortcuts 
 Directive that can only be used for focusable elements, such as textarea, select, input, etc...  
   
 #### Inputs  
 | Name   |      Type      |  default         | description |  
 |----------|:-------------:|-----------------:  |:-------------:|  
-| ngKeyboardShortcut |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |  
+| ngKeyboardShortcuts |  ```Shortcut``` / ```Shortcut``` | [] | List of shortcuts see [types](#shortcut) |  
 | disabled |    `boolean`  |   `false`   | disable the shortcuts for the directive |  
 | disableScrolling | `boolean` | `true` | disable body scrolling while modal is open |  
   
@@ -306,7 +306,7 @@ import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "
   
 @Component({  
     selector: 'demo-component',  
-    template: "<input [ngKeyboardShortcut]="shortcuts" />"  
+    template: "<input [ngKeyboardShortcuts]="shortcuts" />"  
 })  
 export class DemoComponent implements AfterViewInit {  
   
