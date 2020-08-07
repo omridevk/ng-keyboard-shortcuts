@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, _SPECIAL_CASES, modifiers } from "./keys";
 import {
     BehaviorSubject,
@@ -31,6 +31,7 @@ import {
     throttle
 } from "rxjs/operators";
 import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./utils";
+import { DOCUMENT } from "@angular/common";
 
 /**
  * @ignore
@@ -123,7 +124,7 @@ export class KeyboardShortcutsService implements OnDestroy {
             } as ParsedShortcut);
     };
 
-    private keydown$ = fromEvent(document, "keydown");
+    private keydown$ = fromEvent(this.document, "keydown");
     /**
      * fixes for firefox prevent default
      * on click event on button focus:
@@ -147,9 +148,9 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * @ignore
      */
-    private clicks$ = fromEvent(document, "click", { capture: true });
+    private clicks$ = fromEvent(this.document, "click", { capture: true });
 
-    private keyup$ = fromEvent(document, "keyup");
+    private keyup$ = fromEvent(this.document, "keyup");
 
     /**
      * @ignore
@@ -318,7 +319,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * @ignore
      */
-    constructor() {
+    constructor(@Inject(DOCUMENT) private document: Document) {
         this.subscriptions.push(
             this.keydownSequence$.subscribe(),
             this.keydownCombo$.subscribe()
