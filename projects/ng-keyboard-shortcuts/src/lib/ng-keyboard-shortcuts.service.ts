@@ -139,7 +139,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private ignore$ = this.pressed$.pipe(
         filter(e => e.event.defaultPrevented),
         switchMap(() => this.clicks$.pipe(first())),
-        tap(e => {
+        tap((e: any) => {
             e.preventDefault();
             e.stopPropagation();
         }),
@@ -319,7 +319,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     /**
      * @ignore
      */
-    constructor(@Inject(DOCUMENT) private document: Document) {
+    constructor(@Inject(DOCUMENT) private document: any) {
         this.subscriptions.push(
             this.keydownSequence$.subscribe(),
             this.keydownCombo$.subscribe()
