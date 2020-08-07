@@ -139,7 +139,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private ignore$ = this.pressed$.pipe(
         filter(e => e.event.defaultPrevented),
         switchMap(() => this.clicks$.pipe(first())),
-        tap(e => {
+        tap((e: any) => {
             e.preventDefault();
             e.stopPropagation();
         }),
