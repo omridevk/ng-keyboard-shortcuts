@@ -24,7 +24,7 @@ import { CommonModule } from "@angular/common";
     ]
 })
 export class KeyboardShortcutsModule {
-    public static forRoot(): ModuleWithProviders {
+    public static forRoot(): ModuleWithProviders<any> {
         return {
             ngModule: KeyboardShortcutsModule,
             providers: [
