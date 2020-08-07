@@ -1,6 +1,6 @@
 let isMac = false;
 if (typeof navigator !== 'undefined') {
-    (navigator.userAgent.indexOf('Mac OS') !== -1);
+const  isMac = typeof navigator !== 'undefined' ? (navigator.userAgent.includes("Mac OS") : false;
 }
 
 export const modifiers = {
