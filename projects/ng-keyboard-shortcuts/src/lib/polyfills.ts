@@ -1,7 +1,10 @@
-if (typeof Element !== 'undefined') {
+(function() {
+    if (typeof Element === "undefined") {
+        return;
+    }
     if (!Element.prototype.matches) {
-        Element.prototype.matches = (Element.prototype as any).msMatchesSelector ||
-            Element.prototype.webkitMatchesSelector;
+        Element.prototype.matches =
+            (Element.prototype as any).msMatchesSelector || Element.prototype.webkitMatchesSelector;
     }
 
     if (!Element.prototype.closest) {
@@ -15,7 +18,7 @@ if (typeof Element !== 'undefined') {
             return null;
         };
     }
-}
+})();
 
 if (!(Array.prototype as any).flat) {
     (Array.prototype as any).flat = function(depth) {
@@ -38,3 +41,4 @@ if (!(Array.prototype as any).flatMap) {
         return Array.prototype.map.apply(this, arguments).flat(1);
     };
 }
+
