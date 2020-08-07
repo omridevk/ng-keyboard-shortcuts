@@ -1,4 +1,7 @@
-const isMac = (navigator.userAgent.indexOf('Mac OS') !== -1);
+let isMac = false;
+if (typeof navigator !== 'undefined') {
+const  isMac = typeof navigator !== 'undefined' ? (navigator.userAgent.includes("Mac OS") : false;
+}
 
 export const modifiers = {
     'shift': 'shiftKey',
