@@ -7,10 +7,8 @@ import {
     Subject,
     Subscription,
     throwError,
-    merge,
     timer,
-    of,
-    combineLatest
+    of
 } from "rxjs";
 import {
     ParsedShortcut,
@@ -25,7 +23,6 @@ import {
     repeat,
     scan,
     switchMap,
-    take,
     takeUntil,
     tap,
     throttle
@@ -139,7 +136,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private ignore$ = this.pressed$.pipe(
         filter(e => e.event.defaultPrevented),
         switchMap(() => this.clicks$.pipe(first())),
-        tap(e => {
+        tap((e: any) => {
             e.preventDefault();
             e.stopPropagation();
         }),
