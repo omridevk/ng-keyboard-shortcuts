@@ -292,15 +292,18 @@ export class AppComponent {
    <h1>  
       Welcome to {{ title }}!  
    </h1>  
-   <ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="Help"></ng-keyboard-shortcut-help>  
+   <ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="'Help'"></ng-keyboard-shortcut-help>  
 </div>  
   
 ```  
   
 ## Directive  
 ### ngKeyboardShortcuts 
-Directive that can only be used for focusable elements, such as textarea, select, input, etc...  
+Directive can only be used for focusable elements, such as textarea, select, input, etc...  
+##### Important: 
+The shortcut then will only be active while the element is in __focus__.
   
+
 #### Inputs  
 | Name   |      Type      |  default         | description |  
 |----------|:-------------:|-----------------:  |:-------------:|  
