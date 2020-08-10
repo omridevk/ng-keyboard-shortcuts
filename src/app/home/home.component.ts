@@ -60,6 +60,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: () => console.log("up clicked")
             },
             {
+                key: 'e',
+                label: 'Global shortcuts',
+                description: 'Open my custom page',
+                preventDefault: true,
+                command: () => console.log("e clicked")
+            },
+            {
+                key: 'cmd + e',
+                label: 'Global shortcuts',
+                description: 'Open my custom page',
+                command: () => console.log("cmd + e clicked")
+            },
+            {
                 key: "space",
                 label: "label",
                 description: "play/pause",

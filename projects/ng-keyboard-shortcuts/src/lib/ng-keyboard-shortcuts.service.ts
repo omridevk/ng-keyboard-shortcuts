@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { _KEYCODE_MAP, _MAP, _SHIFT_MAP, _SPECIAL_CASES, modifiers } from "./keys";
 import {
     BehaviorSubject,
@@ -448,10 +448,16 @@ export class KeyboardShortcutsService implements OnDestroy {
 
                 return event => {
                     let [characters, shiftKey] = this.characterFromEvent(event);
+                    const hasModifiers = Object.keys(modifiers).some(key => {
+                        return Boolean(event[modifiers[key]]);
+                    });
                     characters = Array.isArray(characters)
                         ? [...characters, event.key]
                         : [characters, event.key];
                     return characters.some(char => {
+                        if (hasModifiers && keys.length === 1) {
+                            return false;
+                        }
                         if (char === key && shiftKey) {
                             return true;
                         }
