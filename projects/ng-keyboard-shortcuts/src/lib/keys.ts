@@ -1,4 +1,6 @@
-const isMac = (navigator.userAgent.indexOf('Mac OS') !== -1);
+import { invert } from './utils';
+
+const isMac = typeof navigator !== "undefined" ? navigator.userAgent.includes("Mac OS") : false;
 
 export const modifiers = {
     'shift': 'shiftKey',
@@ -117,6 +119,7 @@ export const _SHIFT_MAP = {
     '/': '?',
     '\\': '|'
 };
+export const _INVERTED_SHIFT_MAP = invert(_SHIFT_MAP);
 
 /**
  * loop through the f keys, f1 to f19 and add them to the map
