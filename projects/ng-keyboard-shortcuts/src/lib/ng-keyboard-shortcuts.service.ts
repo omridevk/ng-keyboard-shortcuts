@@ -455,7 +455,7 @@ export class KeyboardShortcutsService implements OnDestroy {
 
                 return event => {
                     const isUpper = key === key.toUpperCase();
-                    const isNonAlpha = key.match(/[^a-zA-Z\d\s:]/)?.length;
+                    const isNonAlpha = (/[^a-zA-Z\d\s:]/).test(key);
                     const inShiftMap = _INVERTED_SHIFT_MAP[key];
                     let [characters, shiftKey] = this.characterFromEvent(event);
                     const allModifiers = Object.keys(modifiers).map((key) => {
