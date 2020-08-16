@@ -57,76 +57,82 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "up clicked",
                 preventDefault: true,
                 target: this.input.nativeElement,
-                command: () => console.log("up clicked")
+                command: ({ key }) => console.log(`${key} clicked`)
             },
             {
-                key: 'e',
-                label: 'Global shortcuts',
-                description: 'Open my custom page',
+                key: "e",
+                label: "Global shortcuts",
+                description: "Open my custom page",
                 preventDefault: true,
-                command: () => console.log("e clicked")
+                command: ({ key }) => console.log(`${key} clicked`)
             },
             {
-                key: 'cmd + e',
-                label: 'Global shortcuts',
-                description: 'Open my custom page',
-                command: () => console.log("cmd + e clicked")
+                key: "cmd + e",
+                label: "Global shortcuts",
+                description: "Open my custom page",
+                command: ({ key, event }) => console.log(`${key} clicked.`, event)
+            },
+            {
+                key: "ctrl + e",
+                label: "Global shortcuts",
+                description: "Open my custom page",
+                command: ({ key }) => console.log(`${key} clicked `)
             },
             {
                 key: "space",
                 label: "label",
                 description: "play/pause",
                 preventDefault: true,
-                command: () => console.log("shortcut space")
+                command: ({ key }) => console.log(`${key} clicked`)
             },
             {
                 key: "plus",
                 label: "help",
                 description: "clicking plus character",
                 preventDefault: true,
-                command: e => console.log("clicked plus", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "control + plus",
                 label: "help",
                 description: "clicking control with plus character",
                 preventDefault: true,
-                command: e => console.log("clicked plus with control", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "=",
                 label: "help",
                 description: "clicking = character",
                 preventDefault: true,
-                command: e => console.log("clicked: ", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "ctrl + ע",
                 label: "help",
                 description: "Hebrew letters",
                 preventDefault: true,
-                command: e => console.log("clicked: ", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "n",
                 label: "help",
                 description: "n character",
                 preventDefault: true,
-                command: e => console.log("clicked small n ", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "ctrl + shift + n",
                 label: "help",
                 description: "shift + n",
                 preventDefault: true,
-                command: e => console.log("clicked shift + n", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "N",
                 label: "help",
                 description: "big N",
                 preventDefault: true,
-                command: e => console.log("clicked big N", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "~",
@@ -134,15 +140,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "~ sign",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked ~ sign", e.key)
+                command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
                 key: "?",
                 label: "help",
                 description: "Question mark",
                 preventDefault: true,
-                allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked question mark", e.key)
+                command: ({ key, event }) => console.log(`${key} allow in all fields clicked`, event)
             },
             {
                 key: "ctrl + ?",
@@ -150,7 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "Shift + Question mark",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: e => console.log("clicked ctrl + question mark", e.key)
+                command: ({ key, event }) => console.log(`${key} allow in all fields clicked`, event)
             },
             {
                 key: "f2",
@@ -158,78 +163,78 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 label: "help",
                 description: "Open Help menu",
                 allowIn: [AllowIn.Textarea],
-                command: e => console.log("clicked ", e.key)
+                command: ({ key, event }) => console.log(`${key} allowed in text area clicked`, event)
             },
             {
                 key: "cmd + ?",
-                command: (output: ShortcutEventOutput) => console.log(output),
+                command: ({ key, event }) => console.log(`${key} clicked with 250 throttle time`, event),
                 preventDefault: true,
                 throttleTime: 250
             },
             {
                 key: "shift + f",
-                command: (output: ShortcutEventOutput) => console.log("shift + f", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: ["g e", "a b"],
                 label: "Sequences",
                 description: "Sequence g + e and a + b",
-                command: (output: ShortcutEventOutput) => console.log("g e / a b", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: ["g t"],
                 label: "Sequences",
                 description: "Sequence g and t",
-                command: (output: ShortcutEventOutput) => console.log("g t", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: ["f1 t"],
                 label: "Sequences",
                 description: "Sequence f1 and t",
-                command: (output: ShortcutEventOutput) => console.log("f1 t", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: ["? a"],
                 label: "Sequences",
                 description: "Sequence ? and a",
-                command: (output: ShortcutEventOutput) => console.log("? a", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: ["up up down down left right left right b a enter"],
                 label: "Sequences",
                 description: "Konami code!",
-                command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: "c b a",
                 label: "Sequences",
                 description: "Sequence c + b + a",
-                command: (output: ShortcutEventOutput) => console.log("c + b + a", output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: "cmd + plus",
                 label: "help",
                 description: "zoom out",
-                command: (output: ShortcutEventOutput) => console.log(output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true
             },
             {
                 key: "cmd + shift + f",
-                command: (output: ShortcutEventOutput) => console.log(output),
+                command: ({ key, event }) => console.log(`${key} clicked`, event),
                 preventDefault: true,
                 throttleTime: 250
             },
             {
                 key: "cmd + f",
                 allowIn: [AllowIn.Input],
-                command: (output: ShortcutEventOutput) => console.log(output),
+                command: ({ key, event }) => console.log(`${key} allow in input clicked`, event),
                 preventDefault: true
             }
         );
