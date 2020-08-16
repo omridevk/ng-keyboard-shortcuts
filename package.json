@@ -10,6 +10,7 @@
     "keyboard-shortcuts",
     "rxjs"
   ],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "license": "MIT",
   "author": "Omri Katz <omrikatz12@gmail.com> (https://github.com/omridevk)",
   "homepage": "https://omridevk.github.io/ng-keyboard-shortcuts/",
