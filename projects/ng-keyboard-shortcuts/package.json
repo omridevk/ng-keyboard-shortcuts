@@ -1,8 +1,15 @@
 {
   "name": "ng-keyboard-shortcuts",
-  "version": "9.1.13",
+  "version": "9.1.14",
   "description": "Dead Simple Keyboard Shortcuts Management for Angular 2+",
   "license": "MIT",
+  "keywords": [
+    "angular",
+    "keyboard",
+    "shortcuts",
+    "keyboard-shortcuts",
+    "rxjs"
+  ],
   "author": "Omri Katz <omrikatz12@gmail.com> (https://github.com/omridevk)",
   "homepage": "https://omridevk.github.io/ng-keyboard-shortcuts",
   "repository": "github.com/omridevk/ng-keyboard-shortcuts",
