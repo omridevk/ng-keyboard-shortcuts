@@ -2,6 +2,17 @@ export function isFunction(x: any): x is Function {
     return typeof x === "function";
 }
 
+export const invert = obj => {
+    const new_obj = {};
+
+    for (const prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            new_obj[obj[prop]] = prop;
+        }
+    }
+    return new_obj;
+};
+
 export const any = (fn: Function, list: any[]) => {
     let idx = 0;
     while (idx < list.length) {
