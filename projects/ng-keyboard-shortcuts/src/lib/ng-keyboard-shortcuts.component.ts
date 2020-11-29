@@ -84,7 +84,9 @@ export class KeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChan
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
-        setTimeout(() => this.clearIds = this.keyboard.add(changes.shortcuts.currentValue));
+        if (!this._disabled) {
+            setTimeout(() => (this.clearIds = this.keyboard.add(changes.shortcuts.currentValue)));
+        }
     }
 
     /**
