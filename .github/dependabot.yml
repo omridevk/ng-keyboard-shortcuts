@@ -1,0 +1,8 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/projects/ng-keyboard-shortcuts"
+  schedule:
+    interval: daily
+    time: "03:00"
+  open-pull-requests-limit: 99
