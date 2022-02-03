@@ -206,7 +206,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                         sequences
                     };
                 }),
-                tap(this.timer$)
+                tap(value => this.timer$.next(value)),
             )
         ),
         scan(
