@@ -32,9 +32,11 @@ export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
      */
     @Input() set disabled(value) {
         this._disabled = value;
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+
         setTimeout(() => {
             if (value === false && this.ngKeyboardShortcuts) {
                 this.clearIds = this.keyboard.add(this.transformInput(this.ngKeyboardShortcuts));
@@ -69,6 +71,7 @@ export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
         if (!this.clearIds) {
             return;
         }
+
         this.keyboard.remove(this.clearIds);
     }
 
@@ -78,12 +81,15 @@ export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
      */
     ngOnChanges(changes: SimpleChanges) {
         const { ngKeyboardShortcuts } = changes;
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+
         if (!ngKeyboardShortcuts || !ngKeyboardShortcuts.currentValue) {
             return;
         }
+        
         this.clearIds = this.keyboard.add(this.transformInput(ngKeyboardShortcuts.currentValue));
     }
 }

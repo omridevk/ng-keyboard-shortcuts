@@ -30,18 +30,26 @@ const scrollAbleKeys = new Map([
     [39, 1],
     [40, 1]
 ]);
+
 /**
  * @ignore
  */
 const preventDefault = (ignore: string) => e => {
     const modal = e.target.closest(ignore);
+
     if (modal) {
         return;
     }
+
     e = e || window.event;
-    if (e.preventDefault) e.preventDefault();
+    
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+
     e.returnValue = false;
 };
+
 /**
  * @ignore
  */
@@ -49,9 +57,12 @@ const preventDefaultForScrollKeys = e => {
     if (!scrollAbleKeys.has(e.keyCode)) {
         return;
     }
+
     preventDefault(e);
+
     return false;
 };
+
 /**
  * @ignore
  */
@@ -67,25 +78,31 @@ let scrollEvents = [
 const disableScroll = (ignore: string) => {
     scrollEvents = scrollEvents.map(event => {
         const callback = preventDefault(ignore);
+
         window.addEventListener(event.name, callback, { passive: false });
+
         return {
             ...event,
             callback
         };
     });
+
     window.addEventListener("keydown", preventDefaultForScrollKeys);
 };
+
 /**
  * @ignore
  */
 const enableScroll = () => {
     scrollEvents = scrollEvents.map(event => {
         window.removeEventListener(event.name, event.callback);
+        
         return {
             ...event,
             callback: null
         };
     });
+
     window.removeEventListener("keydown", preventDefaultForScrollKeys);
 };
 
@@ -126,6 +143,7 @@ const enableScroll = () => {
         ])
     ]
 })
+
 export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Disable scrolling while modal is open
@@ -172,12 +190,15 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     @Input()
     set key(value: string) {
         this._key = value;
+
         if (!value) {
             return;
         }
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+
         this.clearIds = this.addShortcut({
             key: value,
             preventDefault: true,
@@ -190,16 +211,21 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     private addShortcut(shortcut: Shortcut) {
         return this.keyboard.add(shortcut);
     }
+
     private _closeKey;
+
     @Input()
     set closeKey(value: string) {
         this._closeKey = value;
+
         if (!value) {
             return;
         }
+
         if (this.closeKeyIds) {
             this.keyboard.remove(this.closeKeyIds);
         }
+
         this.closeKeyIds = this.addShortcut({
             key: value,
             preventDefault: true,
@@ -214,31 +240,38 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @default: "Keyboard shortcuts"
      */
     @Input() title = "Keyboard shortcuts";
+
     /**
      * What message to show when no shortcuts are available on the page.
      * @default "No shortcuts available"
      */
     @Input() emptyMessage = "No shortcuts available";
+
     /**
      * @ignore
      */
     @ViewChild(TemplateRef) template: TemplateRef<any>;
+
     /**
      * @ignore
      */
     shortcuts: { label: string; key: string | string[]; description: string }[];
+
     /**
      * @ignore
      */
     showing = false;
+
     /**
      * @ignore
      */
     labels: string[];
+
     /**
      * @ignore
      */
     private bodyPortalHost: DomPortalOutlet;
+
     /**
      * @ignore
      */
@@ -264,12 +297,15 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     reveal(): KeyboardShortcutsHelpComponent {
         this.hide();
+
         if (this.disableScrolling) {
             disableScroll(`.${this.className}`);
         }
+
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
         this.showing = true;
+        
         return this;
     }
 
@@ -280,6 +316,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     visible(): boolean {
         return this.bodyPortalHost.hasAttached();
     }
+
     /**
      * Hide the help screen manually.
      */
@@ -287,11 +324,14 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         if (this.disableScrolling) {
             enableScroll();
         }
+
         if (!this.bodyPortalHost.hasAttached()) {
             return this;
         }
+
         this.bodyPortalHost.detach();
         this.showing = false;
+
         return this;
     }
 
@@ -300,15 +340,19 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy(): void {
         this.hide();
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+
         if (this.closeKeyIds) {
             this.keyboard.remove(this.closeKeyIds);
         }
+
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+
         if (this.timeoutId) {
             clearTimeout(this.timeoutId);
         }
@@ -319,6 +363,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     toggle(): KeyboardShortcutsHelpComponent {
         this.visible() ? this.hide() : this.reveal();
+
         return this;
     }
 
@@ -326,6 +371,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private subscription: SubscriptionLike;
+
     /**
      * @ignore
      */
@@ -335,10 +381,12 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private closeKeyIds;
+
     /**
      * @ignore
      */
     private timeoutId;
+    
     /**
      * @ignore
      */

@@ -47,6 +47,7 @@ export class DomPortalOutlet extends BasePortalOutlet {
             this.setDisposeFn(() => componentRef.destroy());
         } else {
             componentRef = componentFactory.create(portal.injector || this._defaultInjector);
+
             this._appRef.attachView(componentRef.hostView);
             this.setDisposeFn(() => {
                 this._appRef.detachView(componentRef.hostView);
@@ -68,6 +69,7 @@ export class DomPortalOutlet extends BasePortalOutlet {
     attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
         let viewContainer = portal.viewContainerRef;
         let viewRef = viewContainer.createEmbeddedView(portal.templateRef, portal.context);
+
         viewRef.detectChanges();
 
         // The method `createEmbeddedView` will add the view as a child of the viewContainer.
@@ -78,6 +80,7 @@ export class DomPortalOutlet extends BasePortalOutlet {
 
         this.setDisposeFn(() => {
             let index = viewContainer.indexOf(viewRef);
+
             if (index !== -1) {
                 viewContainer.remove(index);
             }
@@ -91,6 +94,7 @@ export class DomPortalOutlet extends BasePortalOutlet {
      */
     dispose(): void {
         super.dispose();
+        
         if (this.outletElement.parentNode != null) {
             this.outletElement.parentNode.removeChild(this.outletElement);
         }

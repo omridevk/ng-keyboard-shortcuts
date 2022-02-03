@@ -44,6 +44,7 @@ export interface ShortcutInput extends Shortcut {
      * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
      */
     allowIn?: AllowIn[];
+
     /**
      * Only trigger the command when the target is in focus.
      */
@@ -78,6 +79,7 @@ export interface ShortcutEventOutput {
      * The browser keyboard event
      */
     event: KeyboardEvent;
+    
     /**
      * The registered key that was triggered
      */

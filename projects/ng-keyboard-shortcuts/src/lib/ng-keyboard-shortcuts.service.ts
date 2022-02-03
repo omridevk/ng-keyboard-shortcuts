@@ -79,6 +79,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     private static readonly TIMEOUT_SEQUENCE = 1000;
 
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
+
     public shortcuts$ = this._shortcutsSub
         .asObservable()
         .pipe(filter(shortcuts => !!shortcuts.length));
@@ -97,12 +98,15 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
+
         if (target === shortcut.target) {
             return true;
         }
+
         if (shortcut.allowIn.length) {
             return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
         }
+
         return !this._ignored.includes(target.nodeName);
     };
 
@@ -129,6 +133,7 @@ export class KeyboardShortcutsService implements OnDestroy {
     };
 
     private keydown$ = fromEvent(this.document, "keydown");
+
     /**
      * fixes for firefox prevent default
      * on click event on button focus:
@@ -149,6 +154,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         }),
         repeat()
     );
+
     /**
      * @ignore
      */
@@ -187,12 +193,14 @@ export class KeyboardShortcutsService implements OnDestroy {
      * @ignore
      */
     private timer$ = new Subject();
+
     /**
      * @ignore
      */
     private resetCounter$ = this.timer$
         .asObservable()
         .pipe(switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)));
+
     /**
      * @ignore
      */
@@ -308,6 +316,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (!command) {
             return false;
         }
+
         return command.sequence.some(sequence => {
             return sequence.length === events.length + 1;
         });
@@ -339,9 +348,11 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (typeof event.which !== "number") {
             event.which = event.keyCode;
         }
+
         if (_SPECIAL_CASES[event.which]) {
             return [_SPECIAL_CASES[event.which], event.shiftKey];
         }
+
         if (_MAP[event.which]) {
             // for non keypress events the special maps are needed
             return [_MAP[event.which], event.shiftKey];
@@ -350,19 +361,23 @@ export class KeyboardShortcutsService implements OnDestroy {
         if (_KEYCODE_MAP[event.which]) {
             return [_KEYCODE_MAP[event.which], event.shiftKey];
         }
+
         // in case event key is lower case but registered key is upper case
         // return it in the lower case
         if (String.fromCharCode(event.which).toLowerCase() !== event.key) {
             return [String.fromCharCode(event.which).toLowerCase(), event.shiftKey];
         }
+
         return [event.key, event.shiftKey];
     }
 
     private characterFromEvent(event) {
         let [key, shiftKey] = this._characterFromEvent(event);
+
         if (shiftKey && _SHIFT_MAP[key]) {
             return [_SHIFT_MAP[key], shiftKey];
         }
+
         return [key, shiftKey];
     }
 
@@ -387,7 +402,9 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     public add(shortcuts: ShortcutInput[] | ShortcutInput): string[] {
         shortcuts = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
+
         const commands = this.parseCommand(shortcuts);
+
         commands.forEach(command => {
             if (command.isSequence) {
                 this._sequences.push(command);
@@ -395,9 +412,11 @@ export class KeyboardShortcutsService implements OnDestroy {
             }
             this._shortcuts.push(command);
         });
+
         setTimeout(() => {
             this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
+
         return commands.map(command => command.id);
     }
 
@@ -409,11 +428,14 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     public remove(ids: string | string[]): KeyboardShortcutsService {
         ids = Array.isArray(ids) ? ids : [ids];
+
         this._shortcuts = this._shortcuts.filter(shortcut => !ids.includes(shortcut.id));
         this._sequences = this._sequences.filter(shortcut => !ids.includes(shortcut.id));
+
         setTimeout(() => {
             this._shortcutsSub.next([...this._shortcuts, ...this._sequences]);
         });
+
         return this;
     }
 
@@ -484,10 +506,12 @@ export class KeyboardShortcutsService implements OnDestroy {
                     ) {
                         return false;
                     }
+
                     return characters.some(char => {
                         if (char === key && isUpper) {
                             return true;
                         }
+
                         return key === char;
                     });
                 };
@@ -508,11 +532,13 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private parseCommand(command: ShortcutInput | ShortcutInput[]): ParsedShortcut[] {
         const commands = Array.isArray(command) ? command : [command];
+
         return commands.map(command => {
             const keys = Array.isArray(command.key) ? command.key : [command.key];
             const priority = Math.max(...keys.map(key => key.split(" ").filter(identity).length));
             const predicates = keys.map(key => this.getKeys(key.split(" ").filter(identity)));
             const isSequence = this.isSequence(keys);
+
             const sequence = isSequence
                 ? keys.map(key =>
                       key

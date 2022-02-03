@@ -36,18 +36,22 @@ export class KeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChan
      * @ignore
      */
     private _disabled = false;
+    
     /**
      * Disable all shortcuts for this component.
      */
-    @Input() set disabled(value) {
+    @Input() set disabled(value: boolean) {
         this._disabled = value;
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
             this.clearIds = [];
         }
+
         if (value) {
             return;
         }
+
         this.clearIds = this.keyboard.add(this.shortcuts);
     }
 
@@ -81,9 +85,11 @@ export class KeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChan
         if (!changes.shortcuts || !changes.shortcuts.currentValue) {
             return;
         }
+
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
+
         if (!this._disabled) {
             setTimeout(() => (this.clearIds = this.keyboard.add(changes.shortcuts.currentValue)));
         }
