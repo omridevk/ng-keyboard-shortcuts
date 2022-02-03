@@ -15,7 +15,9 @@
        <a href="https://img.shields.io/npm/l/ng-keyboard-shortcuts" target="_blank" alt="MIT License">
         <img src="https://img.shields.io/npm/l/ng-keyboard-shortcuts" />
       </a>
-</p>  
+</p>
+
+## ⚠️ This project forked from **[omridevk/ng-keyboard-shortcuts](https://github.com/omridevk/ng-keyboard-shortcuts)** to support new angular versions and fix known bugs.
   
 An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.  
   
@@ -59,16 +61,20 @@ Compatible with Angular 5+
 # Install:  
 ##### NPM
 ###### Angular latest
-```npm install --save ng-keyboard-shortcuts```
+```npm install --save ng-keyboard-shortcuts@latest```
+###### Angular 11, 12, 13
+```npm install --save ng-keyboard-shortcuts@^13.0.0```
 ###### Angular 8/9
 ```npm install --save ng-keyboard-shortcuts@^9.0.0```  
 ###### Angular 7
 ```npm install --save ng-keyboard-shortcuts@^7.0.0```
 
-##### Yarn  
+##### Yarn
+
+*(current version is still not published on yarn)*
 
 ###### Angular latest
-```yarn add ng-keyboard-shortcuts```
+```yarn add ng-keyboard-shortcuts@^10.0.0```
 ###### Angular 8/9
 ```npm add ng-keyboard-shortcuts@^9.0.0```  
 ###### Angular 7
