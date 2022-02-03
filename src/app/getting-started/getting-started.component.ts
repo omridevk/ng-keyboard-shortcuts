@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import { ShortcutInput } from "ng-keyboard-shortcuts";
 import { KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
 import { Subscription } from "rxjs";
@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
     templateUrl: "./getting-started.component.html",
     styleUrls: ["./getting-started.component.css"]
 })
-export class GettingStartedComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GettingStartedComponent implements  AfterViewInit, OnDestroy {
     shortcuts: ShortcutInput[] = [
         {
             key: "ctrl + t",
@@ -20,15 +20,11 @@ export class GettingStartedComponent implements OnInit, AfterViewInit, OnDestroy
 
     shortcutsDisabled = false;
 
+    subscriptions: Subscription[] = [];
+
     @ViewChild(KeyboardShortcutsComponent, { static: true }) keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
-
-
-    ngOnInit() {
-
-    }
-    subscriptions: Subscription[] = [];
 
     ngAfterViewInit(): void {
         this.subscriptions.push(this.keyboard.select('ctrl + t').subscribe(e => console.log(e)));

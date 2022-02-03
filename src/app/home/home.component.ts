@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.showSecondShortcuts = !this.showSecondShortcuts;
     }
     testClick(event: any) {
-        console.log('clicked me')
+        console.log("clicked me");
     }
 
     justForFun() {
@@ -147,7 +147,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 label: "help",
                 description: "Question mark",
                 preventDefault: true,
-                command: ({ key, event }) => console.log(`${key} allow in all fields clicked`, event)
+                command: ({ key, event }) =>
+                    console.log(`${key} allow in all fields clicked`, event)
             },
             {
                 key: "ctrl + ?",
@@ -155,7 +156,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 description: "Shift + Question mark",
                 preventDefault: true,
                 allowIn: [AllowIn.Textarea, AllowIn.Input, AllowIn.Select],
-                command: ({ key, event }) => console.log(`${key} allow in all fields clicked`, event)
+                command: ({ key, event }) =>
+                    console.log(`${key} allow in all fields clicked`, event)
             },
             {
                 key: "f2",
@@ -163,11 +165,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 label: "help",
                 description: "Open Help menu",
                 allowIn: [AllowIn.Textarea],
-                command: ({ key, event }) => console.log(`${key} allowed in text area clicked`, event)
+                command: ({ key, event }) =>
+                    console.log(`${key} allowed in text area clicked`, event)
             },
             {
                 key: "cmd + ?",
-                command: ({ key, event }) => console.log(`${key} clicked with 250 throttle time`, event),
+                command: ({ key, event }) =>
+                    console.log(`${key} clicked with 250 throttle time`, event),
                 preventDefault: true,
                 throttleTime: 250
             },
@@ -260,6 +264,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private keyboard: KeyboardShortcutsComponent;
 
     constructor() {}
-
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log("ngOnInit home component");
+    }
 }

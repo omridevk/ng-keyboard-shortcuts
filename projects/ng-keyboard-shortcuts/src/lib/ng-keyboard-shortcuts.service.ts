@@ -206,7 +206,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                         sequences
                     };
                 }),
-                tap(value => this.timer$.next(value)),
+                tap(value => this.timer$.next(value))
             )
         ),
         scan(
@@ -452,12 +452,12 @@ export class KeyboardShortcutsService implements OnDestroy {
 
                 return event => {
                     const isUpper = key === key.toUpperCase();
-                    const isNonAlpha = (/[^a-zA-Z\d\s:]/).test(key);
+                    const isNonAlpha = /[^a-zA-Z\d\s:]/.test(key);
                     const inShiftMap = _INVERTED_SHIFT_MAP[key];
                     let [characters, shiftKey] = this.characterFromEvent(event);
-                    const allModifiers = Object.keys(modifiers).map((key) => {
+                    const allModifiers = Object.keys(modifiers).map(key => {
                         return modifiers[key];
-                    })
+                    });
                     const hasModifiers = allModifiers.some(modifier => event[modifier]);
                     characters = Array.isArray(characters)
                         ? [...characters, event.key]
@@ -476,10 +476,12 @@ export class KeyboardShortcutsService implements OnDestroy {
                     // thus all these edge cases.
                     // hopefully this would cover all cases
                     // TODO:: find a way simplify this
-                    if (hasModifiers
-                        && (!isUpper || isNonAlpha)
-                        && !inShiftMap
-                        && keys.length === 1) {
+                    if (
+                        hasModifiers &&
+                        (!isUpper || isNonAlpha) &&
+                        !inShiftMap &&
+                        keys.length === 1
+                    ) {
                         return false;
                     }
                     return characters.some(char => {
@@ -491,7 +493,6 @@ export class KeyboardShortcutsService implements OnDestroy {
                 };
             });
     };
-
 
     /**
      * @ignore

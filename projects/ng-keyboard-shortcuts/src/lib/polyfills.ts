@@ -41,4 +41,3 @@ if (!(Array.prototype as any).flatMap) {
         return Array.prototype.map.apply(this, arguments).flat(1);
     };
 }
-

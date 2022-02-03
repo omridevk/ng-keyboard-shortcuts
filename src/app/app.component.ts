@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
+import {  ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import { KeyboardShortcutsHelpService, KeyboardShortcutsSelectService } from "ng-keyboard-shortcuts";
 @Component({
@@ -6,10 +6,11 @@ import { KeyboardShortcutsHelpService, KeyboardShortcutsSelectService } from "ng
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements  OnDestroy {
     mobileQuery: MediaQueryList;
 
     private _mobileQueryListener: () => void;
+    public showHelp = false;
 
     constructor(
         changeDetectorRef: ChangeDetectorRef,
@@ -26,7 +27,4 @@ export class AppComponent implements AfterViewInit {
     ngOnDestroy(): void {
         this.mobileQuery.removeListener(this._mobileQueryListener);
     }
-
-    public showHelp = false;
-    ngAfterViewInit(): void {}
 }

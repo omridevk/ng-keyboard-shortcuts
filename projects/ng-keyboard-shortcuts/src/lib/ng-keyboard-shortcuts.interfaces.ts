@@ -2,7 +2,6 @@
  * The shortcut input for the Directive
  */
 export interface Shortcut {
-
     /**
      * A key or list of keys to listen to and fire the command.
      */
@@ -52,8 +51,8 @@ export interface ShortcutInput extends Shortcut {
 }
 
 export enum AllowIn {
-    Textarea = 'TEXTAREA',
-    Input = 'INPUT',
+    Textarea = "TEXTAREA",
+    Input = "INPUT",
     Select = "SELECT"
 }
 

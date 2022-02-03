@@ -39,8 +39,7 @@ export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
             if (value === false && this.ngKeyboardShortcuts) {
                 this.clearIds = this.keyboard.add(this.transformInput(this.ngKeyboardShortcuts));
             }
-        })
-
+        });
     }
 
     /**

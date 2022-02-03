@@ -17,10 +17,9 @@ import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
 import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { distinctUntilChanged, map } from "rxjs/operators";
-import { groupBy } from './utils';
+import { groupBy } from "./utils";
 import { SubscriptionLike } from "rxjs";
-import { Shortcut } from './ng-keyboard-shortcuts.interfaces';
-
+import { Shortcut } from "./ng-keyboard-shortcuts.interfaces";
 
 /**
  * @ignore
@@ -207,7 +206,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             command: () => this.hide(),
             description: this.closeKeyDescription,
             label: this.closeKeyDescription
-        })
+        });
     }
 
     /**

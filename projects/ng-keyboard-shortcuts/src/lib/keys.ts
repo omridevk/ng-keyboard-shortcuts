@@ -1,4 +1,4 @@
-import { invert } from './utils';
+import { invert } from "./utils";
 
 const isMac = typeof navigator !== "undefined" ? navigator.userAgent.includes("Mac OS") : false;
 

@@ -5,8 +5,8 @@ import {
     ComponentRef,
     EmbeddedViewRef,
     Injector,
-    ComponentFactoryResolver,
-} from '@angular/core';
+    ComponentFactoryResolver
+} from "@angular/core";
 
 /**
  * @ignore
@@ -37,7 +37,7 @@ export abstract class Portal<T> {
         }
 
         this._attachedHost = host;
-        return <T> host.attach(this);
+        return <T>host.attach(this);
     }
 
     /** Detach this portal from its host */
@@ -67,7 +67,6 @@ export abstract class Portal<T> {
     }
 }
 
-
 /**
  * @ignore
  * A `ComponentPortal` is a portal that instantiates some Component upon attachment.
@@ -96,7 +95,8 @@ export class ComponentPortal<T> extends Portal<ComponentRef<T>> {
         component: ComponentType<T>,
         viewContainerRef?: ViewContainerRef | null,
         injector?: Injector | null,
-        componentFactoryResolver?: ComponentFactoryResolver | null) {
+        componentFactoryResolver?: ComponentFactoryResolver | null
+    ) {
         super();
         this.component = component;
         this.viewContainerRef = viewContainerRef;
@@ -146,7 +146,6 @@ export class TemplatePortal<C = any> extends Portal<C> {
     }
 }
 
-
 /**
  * @ignore
  * A `PortalOutlet` is an space that can contain a single `Portal`.
@@ -164,7 +163,6 @@ export interface PortalOutlet {
     /** Whether there is currently a portal attached to this outlet. */
     hasAttached(): boolean;
 }
-
 
 /**
  * @ignore
@@ -193,17 +191,17 @@ export abstract class BasePortalOutlet implements PortalOutlet {
     /** Attaches a portal. */
     attach(portal: Portal<any>): any {
         if (!portal) {
-            console.error('null portal!');
+            console.error("null portal!");
             // throwNullPortalError();
         }
 
         if (this.hasAttached()) {
-            console.error('portal already attached');
+            console.error("portal already attached");
             // throwPortalAlreadyAttachedError();
         }
 
         if (this._isDisposed) {
-            console.error('portal out already disposed');
+            console.error("portal out already disposed");
             // throwPortalOutletAlreadyDisposedError();
         }
 
@@ -214,7 +212,7 @@ export abstract class BasePortalOutlet implements PortalOutlet {
             this._attachedPortal = portal;
             return this.attachTemplatePortal(portal);
         }
-        console.error('unknown portal type');
+        console.error("unknown portal type");
         // throwUnknownPortalTypeError();
     }
 

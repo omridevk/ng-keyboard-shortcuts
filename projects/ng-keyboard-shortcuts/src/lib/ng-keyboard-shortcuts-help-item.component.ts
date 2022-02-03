@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Shortcut } from "./ng-keyboard-shortcuts.interfaces";
 import { symbols } from "./keys";
-import { identity } from './utils';
+import { identity } from "./utils";
 
 /**
  * @ignore
