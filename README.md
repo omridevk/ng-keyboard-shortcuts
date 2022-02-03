@@ -61,13 +61,13 @@ Compatible with Angular 5+
 # Install:  
 ##### NPM
 ###### Angular latest
-```npm install --save ng-keyboard-shortcuts@latest```
+```npm i @egoistdeveloper/ng-keyboard-shortcuts@latest --save```
 ###### Angular 11, 12, 13
-```npm install --save ng-keyboard-shortcuts@^13.0.0```
+```npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save```
 ###### Angular 8/9
-```npm install --save ng-keyboard-shortcuts@^9.0.0```  
+```npm i @egoistdeveloper/ng-keyboard-shortcuts@^9.0.0 --save```
 ###### Angular 7
-```npm install --save ng-keyboard-shortcuts@^7.0.0```
+```npm i @egoistdeveloper/ng-keyboard-shortcuts@^7.0.0 --save```
 
 ##### Yarn
 
