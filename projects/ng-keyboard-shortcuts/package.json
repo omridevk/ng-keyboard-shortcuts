@@ -1,6 +1,6 @@
 {
   "name": "ng-keyboard-shortcuts",
-  "version": "10.1.17",
+  "version": "13.1.18",
   "description": "Dead Simple Keyboard Shortcuts Management for Angular 2+",
   "keywords": [
     "angular",
@@ -11,10 +11,10 @@
     "rxjs"
   ],
   "license": "MIT",
-  "author": "Omri Katz <omrikatz12@gmail.com> (https://github.com/omridevk)",
-  "homepage": "https://omridevk.github.io/ng-keyboard-shortcuts",
-  "repository": "github.com/omridevk/ng-keyboard-shortcuts",
-  "bugs": "https://github.com/omridevk/ng-keyboard-shortcuts/issues",
+  "author": "EgoistDeveloper",
+  "homepage": "https://EgoistDeveloper.github.io/ng-keyboard-shortcuts",
+  "repository": "github.com/EgoistDeveloper/ng-keyboard-shortcuts",
+  "bugs": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts/issues",
   "peerDependencies": {
     "@angular/core": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0",
     "@angular/common": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0",
