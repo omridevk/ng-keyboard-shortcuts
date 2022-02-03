@@ -8,8 +8,10 @@ const project = path.join(__dirname, "../", config.projects["ng-keyboard-shortcu
 const root = path.join(__dirname, "../");
 const originalReadme = path.join(root, readmeFileName);
 const destReadme = path.join(project, readmeFileName);
+
 // destination.txt will be created or overwritten by default.
 fs.copyFile(originalReadme, destReadme, (err) => {
     if (err) throw err;
+    
     console.log(`${originalReadme} was copied to ${destReadme}`);
 });

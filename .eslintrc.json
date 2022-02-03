@@ -1,5 +1,6 @@
 {
   "root": true,
+  "es6": true,
   "ignorePatterns": [
     "projects/**/*"
   ],
