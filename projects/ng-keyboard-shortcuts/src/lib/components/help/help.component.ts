@@ -11,15 +11,18 @@ import {
     ViewChild,
     ViewContainerRef
 } from "@angular/core";
-import { DomPortalOutlet } from "./dom-portal-outlet";
-import { TemplatePortal } from "./portal";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
+
 import { animate, style, transition, trigger } from "@angular/animations";
 import { distinctUntilChanged, map } from "rxjs/operators";
-import { groupBy } from "./utils";
 import { SubscriptionLike } from "rxjs";
-import { Shortcut } from "./ng-keyboard-shortcuts.interfaces";
+
+import { KeyboardShortcutsService } from "../../shared/services/shortcut.service";
+import { KeyboardShortcutsHelpService } from "../../shared/services/shortcut-help.service";
+
+import { DomPortalOutlet } from "../../shared/utils/dom-portal-outlet";
+import { TemplatePortal } from "../../shared/models/portal";
+import { Shortcut } from "../../shared/models/shortcut";
+import { groupBy } from "../../shared/utils/common";
 
 /**
  * @ignore
@@ -42,7 +45,7 @@ const preventDefault = (ignore: string) => e => {
     }
 
     e = e || window.event;
-    
+
     if (e.preventDefault) {
         e.preventDefault();
     }
@@ -67,9 +70,18 @@ const preventDefaultForScrollKeys = e => {
  * @ignore
  */
 let scrollEvents = [
-    { name: "wheel", callback: null },
-    { name: "touchmove", callback: null },
-    { name: "DOMMouseScroll", callback: null }
+    {
+        name: "wheel",
+        callback: null
+    },
+    {
+        name: "touchmove",
+        callback: null
+    },
+    {
+        name: "DOMMouseScroll",
+        callback: null
+    }
 ];
 
 /**
@@ -79,7 +91,9 @@ const disableScroll = (ignore: string) => {
     scrollEvents = scrollEvents.map(event => {
         const callback = preventDefault(ignore);
 
-        window.addEventListener(event.name, callback, { passive: false });
+        window.addEventListener(event.name, callback, {
+            passive: false
+        });
 
         return {
             ...event,
@@ -96,7 +110,7 @@ const disableScroll = (ignore: string) => {
 const enableScroll = () => {
     scrollEvents = scrollEvents.map(event => {
         window.removeEventListener(event.name, event.callback);
-        
+
         return {
             ...event,
             callback: null
@@ -112,38 +126,63 @@ const enableScroll = () => {
  */
 @Component({
     selector: "ng-keyboard-shortcuts-help",
-    templateUrl: "./ng-keyboard-shortcuts-help.component.html",
-    styleUrls: ["./ng-keyboard-shortcuts-help.component.css"],
+    templateUrl: "./help.component.html",
+    styleUrls: ["./help.component.css"],
     animations: [
         trigger("enterAnimation", [
             transition(":enter", [
-                style({ transform: "translateX(-100%)", opacity: 0 }),
+                style({
+                    transform: "translateX(-100%)",
+                    opacity: 0
+                }),
                 animate(
                     "0.33s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(0)", opacity: 1 })
+                    style({
+                        transform: "translateX(0)",
+                        opacity: 1
+                    })
                 )
             ]),
             transition(":leave", [
-                style({ transform: "translateX(0)", opacity: 1 }),
+                style({
+                    transform: "translateX(0)",
+                    opacity: 1
+                }),
                 animate(
                     "0.23s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(-100%)", opacity: 0 })
+                    style({
+                        transform: "translateX(-100%)",
+                        opacity: 0
+                    })
                 )
             ])
         ]),
         trigger("overlayAnimation", [
             transition(":enter", [
-                style({ opacity: 0 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 1 }))
+                style({
+                    opacity: 0
+                }),
+                animate(
+                    "1s cubic-bezier(0,0,0.3,1)",
+                    style({
+                        opacity: 1
+                    })
+                )
             ]),
             transition(":leave", [
-                style({ opacity: 1 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 0 }))
+                style({
+                    opacity: 1
+                }),
+                animate(
+                    "1s cubic-bezier(0,0,0.3,1)",
+                    style({
+                        opacity: 0
+                    })
+                )
             ])
         ])
     ]
 })
-
 export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * Disable scrolling while modal is open
@@ -255,7 +294,11 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * @ignore
      */
-    shortcuts: { label: string; key: string | string[]; description: string }[];
+    shortcuts: {
+        label: string;
+        key: string | string[];
+        description: string;
+    }[];
 
     /**
      * @ignore
@@ -305,7 +348,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
         this.showing = true;
-        
+
         return this;
     }
 
@@ -386,7 +429,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private timeoutId;
-    
+
     /**
      * @ignore
      */

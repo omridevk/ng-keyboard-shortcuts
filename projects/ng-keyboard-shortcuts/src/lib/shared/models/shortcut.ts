@@ -79,7 +79,7 @@ export interface ShortcutEventOutput {
      * The browser keyboard event
      */
     event: KeyboardEvent;
-    
+
     /**
      * The registered key that was triggered
      */

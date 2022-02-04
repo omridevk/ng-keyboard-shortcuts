@@ -10,17 +10,20 @@ export const invert = obj => {
             new_obj[obj[prop]] = prop;
         }
     }
+
     return new_obj;
 };
 
 export const any = (fn: Function, list: any[]) => {
     let idx = 0;
+
     while (idx < list.length) {
         if (fn(list[idx])) {
             return true;
         }
         idx += 1;
     }
+
     return false;
 };
 
@@ -64,13 +67,16 @@ export const difference = (first: any[], second: any[]) =>
  */
 export const allPass = preds => (...args) => {
     let idx = 0;
+
     const len = preds.length;
+
     while (idx < len) {
         if (!preds[idx].apply(this, args)) {
             return false;
         }
         idx += 1;
     }
+    
     return true;
 };
 export const prop = prop => object => object[prop];

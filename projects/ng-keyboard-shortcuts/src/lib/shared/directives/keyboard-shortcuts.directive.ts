@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
-import { AllowIn, Shortcut } from "./ng-keyboard-shortcuts.interfaces";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
+
+import { AllowIn, Shortcut } from "./../models/shortcut";
+import { KeyboardShortcutsService } from "./../services/shortcut.service";
 
 /**
  * A directive to be used with "focusable" elements, like:
@@ -89,7 +90,7 @@ export class KeyboardShortcutsDirective implements OnDestroy, OnChanges {
         if (!ngKeyboardShortcuts || !ngKeyboardShortcuts.currentValue) {
             return;
         }
-        
+
         this.clearIds = this.keyboard.add(this.transformInput(ngKeyboardShortcuts.currentValue));
     }
 }

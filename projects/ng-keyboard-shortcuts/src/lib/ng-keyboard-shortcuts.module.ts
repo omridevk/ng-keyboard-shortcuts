@@ -1,12 +1,14 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
-import { KeyboardShortcutsComponent } from "./ng-keyboard-shortcuts.component";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
-import { KeyboardShortcutsSelectService } from "./ng-keyboard-shortcuts-select.service";
-import { KeyboardShortcutsDirective } from "./ng-keyboard-shortcuts.directive";
-import { KeyboardShortcutsHelpComponent } from "./ng-keyboard-shortcuts-help.component";
-import { KeyboardShortcutsHelpItemComponent } from "./ng-keyboard-shortcuts-help-item.component";
 import { CommonModule } from "@angular/common";
+
+import { KeyboardShortcutsService } from "./shared/services/shortcut.service";
+import { KeyboardShortcutsHelpService } from "./shared/services/shortcut-help.service";
+import { KeyboardShortcutsSelectService } from "./shared/services/shortcut-select.service";
+import { KeyboardShortcutsDirective } from "./shared/directives/keyboard-shortcuts.directive";
+
+import { KeyboardShortcutsComponent } from "./components/keyboard-shortcuts/keyboard-shortcuts.component";
+import { KeyboardShortcutsHelpComponent } from './components/help/help.component';
+import { KeyboardShortcutsHelpItemComponent } from "./components/help/item/item.component";
 
 @NgModule({
     imports: [CommonModule],

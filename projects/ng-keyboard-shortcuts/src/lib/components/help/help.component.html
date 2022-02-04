@@ -13,6 +13,7 @@
                 <div>
                     <ul *ngFor="let label of labels" class="help-modal__list">
                         <h4 class="item-group-label">{{label}}</h4>
+                        
                         <ng-keyboard-shortcuts-help-item *ngFor="let shortcut of shortcuts[label]; let i = index"
                             [shortcut]="shortcut" [index]="i"></ng-keyboard-shortcuts-help-item>
                     </ul>

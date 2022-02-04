@@ -5,7 +5,7 @@ import {
     ApplicationRef,
     Injector
 } from "@angular/core";
-import { BasePortalOutlet, ComponentPortal, TemplatePortal } from "./portal";
+import { BasePortalOutlet, ComponentPortal, TemplatePortal } from "./../models/portal";
 
 /**
  * @ignore

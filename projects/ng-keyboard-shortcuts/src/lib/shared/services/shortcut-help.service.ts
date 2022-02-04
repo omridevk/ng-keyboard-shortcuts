@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
+import { KeyboardShortcutsService } from "./shortcut.service";
 import { map } from "rxjs/operators";
 
 /**

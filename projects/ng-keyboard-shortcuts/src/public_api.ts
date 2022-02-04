@@ -9,9 +9,11 @@ export {
     ShortcutEventOutput,
     AllowIn,
     Shortcut as ShortcutDirectiveInput
-} from "./lib/ng-keyboard-shortcuts.interfaces";
-export { KeyboardShortcutsHelpService } from "./lib/ng-keyboard-shortcuts-help.service";
-export { KeyboardShortcutsSelectService } from "./lib/ng-keyboard-shortcuts-select.service";
-export { KeyboardShortcutsComponent } from "./lib/ng-keyboard-shortcuts.component";
-export { KeyboardShortcutsDirective } from "./lib/ng-keyboard-shortcuts.directive";
-export { KeyboardShortcutsHelpComponent } from "./lib/ng-keyboard-shortcuts-help.component";
+} from "./lib/shared/models/shortcut";
+
+export { KeyboardShortcutsHelpService } from "./lib/shared/services/shortcut-help.service";
+export { KeyboardShortcutsSelectService } from "./lib/shared/services/shortcut-select.service";
+export { KeyboardShortcutsDirective } from "./lib/shared/directives/keyboard-shortcuts.directive";
+
+export { KeyboardShortcutsComponent } from "./lib/components/keyboard-shortcuts/keyboard-shortcuts.component";
+export { KeyboardShortcutsHelpComponent } from "./lib/components/help/help.component";

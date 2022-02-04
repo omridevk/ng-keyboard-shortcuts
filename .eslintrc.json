@@ -1,6 +1,5 @@
 {
   "root": true,
-  "es6": true,
   "ignorePatterns": [
     "projects/**/*"
   ],
@@ -14,7 +13,8 @@
           "tsconfig.json",
           "e2e/tsconfig.json"
         ],
-        "createDefaultProgram": true
+        "createDefaultProgram": true,
+        "ecmaVersion": 6
       },
       "extends": [
         "plugin:@angular-eslint/recommended",

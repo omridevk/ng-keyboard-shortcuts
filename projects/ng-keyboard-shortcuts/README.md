@@ -1,13 +1,13 @@
 # ng-keyboard-shortcuts
 <p>
-      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm version" target="_blank">
-        <img src="https://badge.fury.io/js/ng-keyboard-shortcuts.svg" />
+      <a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="npm version" target="_blank">
+        <img src="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts.svg" />
       </a>
-      <a href="https://badge.fury.io/js/ng-keyboard-shortcuts" alt="npm downloads per month" target="_blank">
-        <img src="https://img.shields.io/npm/dw/ng-keyboard-shortcuts" />
+      <a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="npm downloads per month" target="_blank">
+        <img src="https://img.shields.io/npm/dw/@egoistdeveloper%2Fng-keyboard-shortcuts" />
       </a>
-      <a href="https://bundlephobia.com/result?p=ng-keyboard-shortcuts" alt="Bundle size" target="_blank" >
-        <img src="https://img.shields.io/bundlephobia/minzip/ng-keyboard-shortcuts" />
+      <a href="https://bundlephobia.com/result?p=@egoistdeveloper%2Fng-keyboard-shortcuts" alt="Bundle size" target="_blank" >
+        <img src="https://img.shields.io/bundlephobia/minzip/@egoistdeveloper%2Fng-keyboard-shortcuts" />
       </a>
       <a href="https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" alt="Join the chat at our community" target="_blank">
         <img src="https://badges.gitter.im/ng-keyboard-shortcuts/community.svg" />

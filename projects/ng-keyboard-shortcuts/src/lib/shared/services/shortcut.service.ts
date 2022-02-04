@@ -6,7 +6,7 @@ import {
     _SHIFT_MAP,
     _SPECIAL_CASES,
     modifiers
-} from "./keys";
+} from "./../models/key";
 import {
     BehaviorSubject,
     fromEvent,
@@ -21,7 +21,7 @@ import {
     ParsedShortcut,
     ShortcutEventOutput,
     ShortcutInput
-} from "./ng-keyboard-shortcuts.interfaces";
+} from "./../models/shortcut";
 import {
     catchError,
     filter,
@@ -34,7 +34,7 @@ import {
     tap,
     throttle
 } from "rxjs/operators";
-import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./utils";
+import { allPass, any, difference, identity, isFunction, isNill, maxArrayProp } from "./../utils/common";
 import { DOCUMENT } from "@angular/common";
 
 /**
