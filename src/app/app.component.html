@@ -10,8 +10,13 @@
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav opened="true" [mode]="'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item routerLink="/home" routerLinkActive="active">Home</a>
-        <a mat-list-item routerLink="/getting-started" routerLinkActive="active">Getting Started</a>
+        <a mat-list-item routerLink="/home" routerLinkActive="active">
+          Home
+        </a>
+
+        <a mat-list-item routerLink="/getting-started" routerLinkActive="active">
+          Getting Started
+        </a>
       </mat-nav-list>
     </mat-sidenav>
 
