@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "EgoistDeveloper",
   "homepage": "https://EgoistDeveloper.github.io/ng-keyboard-shortcuts",
-  "repository": "github.com/EgoistDeveloper/ng-keyboard-shortcuts",
+  "repository": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts",
   "bugs": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts/issues",
   "peerDependencies": {
     "@angular/core": "^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0",
