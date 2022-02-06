@@ -23,8 +23,9 @@ An Angular module that provides a declarative API using components/directive to 
 
 ## Important notes
 
--  This project forked from **[omridevk/ng-keyboard-shortcuts](https://github.com/omridevk/ng-keyboard-shortcuts)** to support new angular versions and fix known bugs.
+- This project forked from **[omridevk/ng-keyboard-shortcuts](https://github.com/omridevk/ng-keyboard-shortcuts)** to support new angular versions and fix known bugs.
 - Recommending to update to version **7.0.0 and above** and use the new component API which has better memory management than previous version.
+- The minimum `rxjs` version is `^6.3.0` anymore with `v13.x`.
 
 
 This documentation is for Angular version **v7-13**. For older versions (**2.0.0/6.0.0**) please [click here](https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0)
