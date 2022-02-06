@@ -58,7 +58,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts</code>
+    <code>projects/ng-keyboard-shortcuts/src/lib/components/keyboard-shortcuts/keyboard-shortcuts.component.ts</code>
 </p>
 
 
@@ -197,7 +197,7 @@ will remove registered shortcuts when element is removed from DOM.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/components/keyboard-shortcuts/keyboard-shortcuts.component.ts:43</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -229,7 +229,7 @@ will remove registered shortcuts when element is removed from DOM.</p>
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/components/keyboard-shortcuts/keyboard-shortcuts.component.ts:26</a></div>
                             </td>
                         </tr>
                 <tr>
@@ -272,7 +272,7 @@ will remove registered shortcuts when element is removed from DOM.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="72"
-                            class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts:72</a></div>
+                            class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/components/keyboard-shortcuts/keyboard-shortcuts.component.ts:72</a></div>
                 </td>
             </tr>
 
@@ -345,7 +345,7 @@ will remove registered shortcuts when element is removed from DOM.</p>
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.component.ts:43</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/components/keyboard-shortcuts/keyboard-shortcuts.component.ts:43</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -395,108 +395,108 @@ will remove registered shortcuts when element is removed from DOM.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    AfterViewInit,
-    Component,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
 } from &quot;@angular/core&quot;;
-import { KeyboardShortcutsService } from &quot;./ng-keyboard-shortcuts.service&quot;;
-import { ShortcutInput, ShortcutEventOutput } from &quot;./ng-keyboard-shortcuts.interfaces&quot;;
+import { KeyboardShortcutsService } from &quot;./../../shared/services/shortcut.service&quot;;
+import { ShortcutInput, ShortcutEventOutput } from &quot;./../../shared/models/shortcut&quot;;
 import { Observable } from &quot;rxjs&quot;;
 
 /**
- * A component to bind global shortcuts, can be used multiple times across the app
- * will remove registered shortcuts when element is removed from DOM.
- */
+* A component to bind global shortcuts, can be used multiple times across the app
+* will remove registered shortcuts when element is removed from DOM.
+*/
 @Component({
-    selector: &quot;ng-keyboard-shortcuts&quot;,
-    template: &quot;&quot;
+  selector: &quot;ng-keyboard-shortcuts&quot;,
+  template: &quot;&quot;
 })
 export class KeyboardShortcutsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
-    /**
-     * A list of shortcuts.
-     */
-    @Input() shortcuts: ShortcutInput[] | ShortcutInput &#x3D; [];
+  /**
+   * A list of shortcuts.
+   */
+  @Input() shortcuts: ShortcutInput[] | ShortcutInput &#x3D; [];
 
-    /**
-     * @ignore
-     * list of registered keyboard shortcuts
-     * used for clean up on NgDestroy.
-     */
-    private clearIds: string[] &#x3D; [];
+  /**
+   * @ignore
+   * list of registered keyboard shortcuts
+   * used for clean up on NgDestroy.
+   */
+  private clearIds: string[] &#x3D; [];
 
-    /**
-     * @ignore
-     */
-    private _disabled &#x3D; false;
-    
-    /**
-     * Disable all shortcuts for this component.
-     */
-    @Input() set disabled(value: boolean) {
-        this._disabled &#x3D; value;
+  /**
+   * @ignore
+   */
+  private _disabled &#x3D; false;
+  
+  /**
+   * Disable all shortcuts for this component.
+   */
+  @Input() set disabled(value: boolean) {
+      this._disabled &#x3D; value;
 
-        if (this.clearIds) {
-            this.keyboard.remove(this.clearIds);
-            this.clearIds &#x3D; [];
-        }
+      if (this.clearIds) {
+          this.keyboard.remove(this.clearIds);
+          this.clearIds &#x3D; [];
+      }
 
-        if (value) {
-            return;
-        }
+      if (value) {
+          return;
+      }
 
-        this.clearIds &#x3D; this.keyboard.add(this.shortcuts);
-    }
+      this.clearIds &#x3D; this.keyboard.add(this.shortcuts);
+  }
 
-    /**
-     * @ignore
-     * @param {KeyboardShortcutsService} keyboard
-     */
-    constructor(private keyboard: KeyboardShortcutsService) {}
+  /**
+   * @ignore
+   * @param {KeyboardShortcutsService} keyboard
+   */
+  constructor(private keyboard: KeyboardShortcutsService) {}
 
-    /**
-     * @ignore
-     */
-    ngOnInit() {}
+  /**
+   * @ignore
+   */
+  ngOnInit() {}
 
-    /**
-     * Select a key to listen to, will emit when the selected key is pressed.
-     */
-    public select(key: string): Observable&lt;ShortcutEventOutput&gt; {
-        return this.keyboard.select(key);
-    }
+  /**
+   * Select a key to listen to, will emit when the selected key is pressed.
+   */
+  public select(key: string): Observable&lt;ShortcutEventOutput&gt; {
+      return this.keyboard.select(key);
+  }
 
-    /**
-     * @ignore
-     */
-    ngAfterViewInit(): void {}
+  /**
+   * @ignore
+   */
+  ngAfterViewInit(): void {}
 
-    /**
-     * @ignore
-     */
-    ngOnChanges(changes: SimpleChanges): void {
-        if (!changes.shortcuts || !changes.shortcuts.currentValue) {
-            return;
-        }
+  /**
+   * @ignore
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+      if (!changes.shortcuts || !changes.shortcuts.currentValue) {
+          return;
+      }
 
-        if (this.clearIds) {
-            this.keyboard.remove(this.clearIds);
-        }
+      if (this.clearIds) {
+          this.keyboard.remove(this.clearIds);
+      }
 
-        if (!this._disabled) {
-            setTimeout(() &#x3D;&gt; (this.clearIds &#x3D; this.keyboard.add(changes.shortcuts.currentValue)));
-        }
-    }
+      if (!this._disabled) {
+          setTimeout(() &#x3D;&gt; (this.clearIds &#x3D; this.keyboard.add(changes.shortcuts.currentValue)));
+      }
+  }
 
-    /**
-     * @ignore
-     */
-    ngOnDestroy(): void {
-        this.keyboard.remove(this.clearIds);
-    }
+  /**
+   * @ignore
+   */
+  ngOnDestroy(): void {
+      this.keyboard.remove(this.clearIds);
+  }
 }
 </code></pre>
     </div>

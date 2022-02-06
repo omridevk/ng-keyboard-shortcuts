@@ -54,13 +54,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/KeyboardShortcutsModule.html" data-type="entity-link" >KeyboardShortcutsModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' : 'data-target="#xs-components-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' }>
+                                            'data-target="#components-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' : 'data-target="#xs-components-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' :
-                                            'id="xs-components-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' :
+                                            'id="xs-components-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' }>
                                             <li class="link">
                                                 <a href="components/KeyboardShortcutsComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >KeyboardShortcutsComponent</a>
                                             </li>
@@ -71,13 +71,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' : 'data-target="#xs-directives-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' }>
+                                        'data-target="#directives-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' : 'data-target="#xs-directives-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' :
-                                        'id="xs-directives-links-module-KeyboardShortcutsModule-8aca5fc102112c71ef9216a8a598cdc42938dd1a3fa3f3bbb0fd66335a55b85d752e368a8bf003e9e9b3511412b80a3cdc861d74a6cd5c03818f13330207568a"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' :
+                                        'id="xs-directives-links-module-KeyboardShortcutsModule-d45de074ca9ad09d2fad4da7c6538750d39637db6075d13969cb278e38dc8913607335b578256b1e0cf4c1435f5374be10308eeb8e313294a96025a96ed81287"' }>
                                         <li class="link">
                                             <a href="directives/KeyboardShortcutsDirective.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >KeyboardShortcutsDirective</a>
                                         </li>
@@ -99,6 +99,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/KeyboardShortcutsSelectService.html" data-type="entity-link" >KeyboardShortcutsSelectService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/KeyboardShortcutsService.html" data-type="entity-link" >KeyboardShortcutsService</a>
                                 </li>
                             </ul>
                         </li>
@@ -131,6 +134,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <ul class="links collapse " ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
                             <li class="link">
                                 <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                            </li>
+                            <li class="link">
+                                <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                            </li>
+                            <li class="link">
+                                <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
                             </li>
                         </ul>
                     </li>

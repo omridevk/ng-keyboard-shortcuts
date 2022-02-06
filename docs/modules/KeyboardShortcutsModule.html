@@ -241,8 +241,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.module.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">projects/ng-keyboard-shortcuts/src/lib/ng-keyboard-shortcuts.module.ts:28</a></div>
                 </td>
             </tr>
 
@@ -264,14 +264,16 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ModuleWithProviders, NgModule } from &quot;@angular/core&quot;;
-import { KeyboardShortcutsComponent } from &quot;./ng-keyboard-shortcuts.component&quot;;
-import { KeyboardShortcutsService } from &quot;./ng-keyboard-shortcuts.service&quot;;
-import { KeyboardShortcutsHelpService } from &quot;./ng-keyboard-shortcuts-help.service&quot;;
-import { KeyboardShortcutsSelectService } from &quot;./ng-keyboard-shortcuts-select.service&quot;;
-import { KeyboardShortcutsDirective } from &quot;./ng-keyboard-shortcuts.directive&quot;;
-import { KeyboardShortcutsHelpComponent } from &quot;./ng-keyboard-shortcuts-help.component&quot;;
-import { KeyboardShortcutsHelpItemComponent } from &quot;./ng-keyboard-shortcuts-help-item.component&quot;;
 import { CommonModule } from &quot;@angular/common&quot;;
+
+import { KeyboardShortcutsService } from &quot;./shared/services/shortcut.service&quot;;
+import { KeyboardShortcutsHelpService } from &quot;./shared/services/shortcut-help.service&quot;;
+import { KeyboardShortcutsSelectService } from &quot;./shared/services/shortcut-select.service&quot;;
+import { KeyboardShortcutsDirective } from &quot;./shared/directives/keyboard-shortcuts.directive&quot;;
+
+import { KeyboardShortcutsComponent } from &quot;./components/keyboard-shortcuts/keyboard-shortcuts.component&quot;;
+import { KeyboardShortcutsHelpComponent } from &#x27;./components/help/help.component&#x27;;
+import { KeyboardShortcutsHelpItemComponent } from &quot;./components/help/item/item.component&quot;;
 
 @NgModule({
     imports: [CommonModule],
