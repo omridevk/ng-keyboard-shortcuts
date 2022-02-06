@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from "./material-module";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { MaterialModule } from "./material-module";
         BrowserAnimationsModule,
         MaterialModule,
         AppRoutingModule,
+        MatIconModule
     ],
     declarations: [AppComponent, GettingStartedComponent, HomeComponent],
     bootstrap: [AppComponent]

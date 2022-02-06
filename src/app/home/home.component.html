@@ -6,23 +6,32 @@
       <mat-card-subtitle>
       </mat-card-subtitle>
     </mat-card-header>
+
     <mat-card-content>
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Only on focus" #input>
       </mat-form-field>
-      <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
+
+      <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled" />
       <button (click)="handleClick($event)">disable directive</button>
       <button (click)="toggleSecondShortcuts()">Toggle Second shortcuts</button>
       <button (click)="justForFun()">Just for Fun to make sure clicks works</button>
+
       <div *ngIf="showSecondShortcuts">
         <ng-keyboard-shortcuts [shortcuts]="secondShortcuts"></ng-keyboard-shortcuts>
       </div>
     </mat-card-content>
+
     <mat-card-actions>
       <button (click)="testClick($event)">Testing clicking bug</button>
     </mat-card-actions>
+
     <textarea></textarea>
+
+    <hr>
+
+    <div>
+      Press f2 for help
+    </div>
   </mat-card>
 </div>
-
-
