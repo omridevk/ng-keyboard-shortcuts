@@ -3,7 +3,7 @@
  */
 
 export { KeyboardShortcutsModule } from "./lib/ng-keyboard-shortcuts.module";
-import "./lib/polyfills";
+import "./polyfills";
 export {
     ShortcutInput,
     ShortcutEventOutput,
