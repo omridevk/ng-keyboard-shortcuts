@@ -94,9 +94,9 @@ First, install `@egoistdeveloper/ng-keyboard-shortcuts` package then replace imp
 #### Angular 10, 11, 12, 13
 ```npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save```
 #### Angular 8/9
-```npm i @egoistdeveloper/ng-keyboard-shortcuts@^9.0.0 --save```
+```npm i ng-keyboard-shortcuts@^9.0.0 --save```
 #### Angular 7
-```npm i @egoistdeveloper/ng-keyboard-shortcuts@^7.0.0 --save```
+```npm i ng-keyboard-shortcuts@^7.0.0 --save```
 
 ## Yarn
 
