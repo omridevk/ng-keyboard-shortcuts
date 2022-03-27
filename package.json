@@ -15,8 +15,12 @@
   },
   "license": "MIT",
   "author": "EgoistDeveloper",
+  "contributors": [
+    "Omri Katz <omrikatz12@gmail.com> (https://github.com/omridevk)",
+    "EgoistDeveloper <epsilonelittr@gmail.com> (https://github.com/EgoistDeveloper)"
+  ],
   "homepage": "https://EgoistDeveloper.github.io/ng-keyboard-shortcuts/",
-  "repository": "github.com/EgoistDeveloper/ng-keyboard-shortcuts",
+  "repository": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts",
   "bugs": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts/issues",
   "scripts": {
     "ng": "ng",
