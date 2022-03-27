@@ -183,8 +183,40 @@ Component that can be used across the app to bind to various shortcuts
 
 | Name  | Input | Return  | Description |
 |----------|:------|:------:|:-------------:|
-| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
+| select | `string` - key to listen to events (example: `'ctrl + x'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
 
+`app.component.html`
+
+```html
+<h1>ng-keyboard-shortcuts Demo</h1>
+
+<hr />
+
+<p>>> Press F2 for the help menu (F1 might be reserved by the browser)</p>
+
+<p>>> {{ shortcutLog ? shortcutLog : 'No Action' }}</p>
+
+<hr />
+
+<hr />
+
+<h1>Test Inputs</h1>
+
+<input #input placeholder="Ctrl + X, Ctrl + C, Ctrl + V" />
+
+<!-- Shortcuts -->
+<ng-keyboard-shortcuts [shortcuts]="keyboardShortcuts"></ng-keyboard-shortcuts>
+
+<!-- Shortcut Help Menu -->
+<ng-keyboard-shortcuts-help
+  [key]="'f2'"
+  [closeKey]="'escape'"
+  [title]="'Help Me!'"
+></ng-keyboard-shortcuts-help>
+
+```
+
+`app.component.ts`
 ```typescript
 import {
   AfterViewInit,
