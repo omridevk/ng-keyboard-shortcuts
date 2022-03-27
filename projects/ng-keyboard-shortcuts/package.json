@@ -1,6 +1,6 @@
 {
   "name": "@egoistdeveloper/ng-keyboard-shortcuts",
-  "version": "13.1.22",
+  "version": "13.1.23",
   "description": "Dead Simple Keyboard Shortcuts Management for Angular 2+",
   "keywords": [
     "angular",
@@ -12,6 +12,10 @@
   ],
   "license": "MIT",
   "author": "EgoistDeveloper",
+  "contributors": [
+    "Omri Katz <omrikatz12@gmail.com> (https://github.com/omridevk)",
+    "EgoistDeveloper <epsilonelittr@gmail.com> (https://github.com/EgoistDeveloper)"
+  ],
   "homepage": "https://EgoistDeveloper.github.io/ng-keyboard-shortcuts",
   "repository": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts",
   "bugs": "https://github.com/EgoistDeveloper/ng-keyboard-shortcuts/issues",
