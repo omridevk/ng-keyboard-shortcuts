@@ -69,7 +69,8 @@ An Angular module that provides a declarative API using components/directive to 
 
 | Angular | Package |
 | ------- | ------- |
-| v10/11/12/13 |`npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save` |
+| v13 |`npm i @egoistdeveloper/ng-keyboard-shortcuts@latest --save` |
+| v10/11/12 |`npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save` |
 | v8/9 | `npm i ng-keyboard-shortcuts@^9.0.0 --save` |
 | v7 | `npm i ng-keyboard-shortcuts@^7.0.0 --save` |
 
