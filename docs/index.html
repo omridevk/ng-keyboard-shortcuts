@@ -32,68 +32,29 @@
                    <div class="content-data">
 
 <h1 id="ng-keyboard-shortcuts">ng-keyboard-shortcuts</h1>
-<p>
-      <a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="npm version" target="_blank">
-        <img src="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts.svg" />
-      </a>
-      <a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="npm downloads per month" target="_blank">
-        <img src="https://img.shields.io/npm/dw/@egoistdeveloper%2Fng-keyboard-shortcuts" />
-      </a>
-      <a href="https://bundlephobia.com/result?p=@egoistdeveloper%2Fng-keyboard-shortcuts" alt="Bundle size" target="_blank" >
-        <img src="https://img.shields.io/bundlephobia/minzip/@egoistdeveloper%2Fng-keyboard-shortcuts" />
-      </a>
-      <a href="https://gitter.im/ng-keyboard-shortcuts/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge" alt="Join the chat at our community" target="_blank">
-        <img src="https://badges.gitter.im/ng-keyboard-shortcuts/community.svg" />
-      </a>
-       <a href="https://img.shields.io/npm/l/ng-keyboard-shortcuts" target="_blank" alt="MIT License">
-        <img src="https://img.shields.io/npm/l/ng-keyboard-shortcuts" />
-      </a>
-</p>
-  
+<p><a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts"><img src="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts.svg" alt="NPM" class="img-responsive"></a>
+<a href="https://badge.fury.io/js/@egoistdeveloper%2Fng-keyboard-shortcuts"><img src="https://img.shields.io/npm/dw/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="downlaods" class="img-responsive"></a>
+<a href="https://bundlephobia.com/result?p=@egoistdeveloper%2Fng-keyboard-shortcuts"><img src="https://img.shields.io/bundlephobia/minzip/@egoistdeveloper%2Fng-keyboard-shortcuts" alt="bundlephobia" class="img-responsive"></a>
+<a href="https://img.shields.io/npm/l/ng-keyboard-shortcuts"><img src="https://img.shields.io/npm/l/ng-keyboard-shortcuts" alt="license" class="img-responsive"></a></p>
 <p>An Angular module that provides a declarative API using components/directive to manage Keyboard shortcuts in scalable way.</p>
-<h2 id="demo"><a href="https://codesandbox.io/s/yvyovny43v">Demo</a></h2>
-<h2 id="important-notes">Important notes</h2>
-<ul>
-<li>This project forked from <strong><a href="https://github.com/omridevk/ng-keyboard-shortcuts">omridevk/ng-keyboard-shortcuts</a></strong> to support new angular versions and fix known bugs.</li>
-<li>Recommending to update to version <strong>7.0.0 and above</strong> and use the new component API which has better memory management than previous version.</li>
-<li>The minimum <code>rxjs</code> version is <code>^6.3.0</code> anymore with <code>v13.x</code>.</li>
-</ul>
-<p>This documentation is for Angular version <strong>v7-13</strong>. For older versions (<strong>2.0.0/6.0.0</strong>) please <a href="https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0">click here</a></p>
-<h2 id="migrating-from-ng-keyboard-shortcuts">Migrating from <code>ng-keyboard-shortcuts</code>.</h2>
-<p>First, install <code>@egoistdeveloper/ng-keyboard-shortcuts</code> package then replace importing namespaces with again <code>@egoistdeveloper/ng-keyboard-shortcuts</code>.</p>
+<p><strong><a href="https://ng-keyboard-shortcuts-example.stackblitz.io">Live Demo</a></strong> &amp; <strong><a href="https://stackblitz.com/edit/ng-keyboard-shortcuts-example?file=src%2Fapp%2Fapp.component.html">Edit on Stackblitz</a></strong></p>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
 <li><a href="#ng-keyboard-shortcuts">ng-keyboard-shortcuts</a><ul>
-<li><a href="#demo">Demo</a></li>
-<li><a href="#important-notes">Important notes</a></li>
-<li><a href="#migrating-from-ng-keyboard-shortcuts">Migrating from <code>ng-keyboard-shortcuts</code>.</a></li>
 <li><a href="#table-of-contents">Table of contents</a></li>
-<li><a href="#install">Install:</a><ul>
-<li><a href="#npm">NPM</a><ul>
-<li><a href="#angular-latest">Angular latest</a></li>
-<li><a href="#angular-10-11-12-13">Angular 10, 11, 12, 13</a></li>
-<li><a href="#angular-89">Angular 8/9</a></li>
-<li><a href="#angular-7">Angular 7</a></li>
+<li><a href="#developer-notes">Developer Notes</a></li>
+<li><a href="#migrating-from-ng-keyboard-shortcuts">Migrating from <code>ng-keyboard-shortcuts</code>.</a></li>
+<li><a href="#install">Install</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#yarn">Yarn</a><ul>
-<li><a href="#angular-latest-1">Angular latest</a></li>
-<li><a href="#angular-89-1">Angular 8/9</a></li>
-<li><a href="#angular-7-1">Angular 7</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#setup">Setup</a></li>
+<li><a href="#start">Start</a></li>
 <li><a href="#usage">Usage</a><ul>
 <li><a href="#combinations">Combinations</a><ul>
 <li><a href="#examples">Examples</a></li>
 </ul>
 </li>
 <li><a href="#sequences">Sequences</a><ul>
-<li><a href="#important-note"><strong>Important note</strong></a></li>
+<li><a href="#important-notes">Important Notes</a></li>
 <li><a href="#examples-1">Examples</a></li>
 </ul>
 </li>
@@ -134,30 +95,55 @@
 <li><a href="#duplicated-items-in-help-menu">Duplicated items in help menu</a></li>
 </ul>
 </li>
-<li><a href="#building">Building</a></li>
+<li><a href="#building--publishing">Building &amp; Publishing</a><ul>
 <li><a href="#publishing-on-npm">Publishing on NPM</a></li>
 <li><a href="#loading-as-dependency-on-localhost">Loading as dependency on localhost</a></li>
+</ul>
+</li>
 <li><a href="#license">License</a></li>
 </ul>
-<h2 id="install">Install:</h2>
-<h3 id="npm">NPM</h3>
-<h4 id="angular-latest">Angular latest</h4>
-<p><code>npm i @egoistdeveloper/ng-keyboard-shortcuts@latest --save</code></p>
-<h4 id="angular-10-11-12-13">Angular 10, 11, 12, 13</h4>
-<p><code>npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save</code></p>
-<h4 id="angular-89">Angular 8/9</h4>
-<p><code>npm i ng-keyboard-shortcuts@^9.0.0 --save</code></p>
-<h4 id="angular-7">Angular 7</h4>
-<p><code>npm i ng-keyboard-shortcuts@^7.0.0 --save</code></p>
-<h2 id="yarn">Yarn</h2>
-<p><em>(current version is still not published on yarn)</em></p>
-<h4 id="angular-latest-1">Angular latest</h4>
-<p><code>yarn add ng-keyboard-shortcuts@^10.0.0</code></p>
-<h4 id="angular-89-1">Angular 8/9</h4>
-<p><code>npm add ng-keyboard-shortcuts@^9.0.0</code></p>
-<h4 id="angular-7-1">Angular 7</h4>
-<p><code>yarn add ng-keyboard-shortcuts@^7.0.0</code></p>
-<h1 id="setup">Setup</h1>
+<h2 id="developer-notes">Developer Notes</h2>
+<ul>
+<li>This project forked from <strong><a href="https://github.com/omridevk/ng-keyboard-shortcuts">omridevk/ng-keyboard-shortcuts</a></strong> to support new angular versions and fix known bugs.</li>
+<li>Recommending to update to version <strong>7.0.0 and above</strong> and use the new component API which has better memory management than previous version.</li>
+<li>The minimum <code>rxjs</code> version is <code>^6.3.0</code> anymore with <code>v13.x</code>.</li>
+<li>This documentation is for Angular version <strong>v7-13</strong>. For older versions (<strong>2.0.0/6.0.0</strong>) please <a href="https://github.com/omridevk/ng-keyboard-shortcuts/tree/2.0.0">click here</a></li>
+</ul>
+<h2 id="migrating-from-ng-keyboard-shortcuts">Migrating from <code>ng-keyboard-shortcuts</code>.</h2>
+<ol>
+<li>Remove <code>ng-keyboard-shortcuts</code> from your project</li>
+<li>Install <code>@egoistdeveloper/ng-keyboard-shortcuts</code></li>
+<li>Replace importings <code>ng-keyboard-shortcuts</code> with <code>@egoistdeveloper/ng-keyboard-shortcuts</code>.</li>
+</ol>
+<h2 id="install">Install</h2>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Angular</th>
+<th>Package</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v13</td>
+<td><code>npm i @egoistdeveloper/ng-keyboard-shortcuts@latest --save</code></td>
+</tr>
+<tr>
+<td>v10/11/12/13</td>
+<td><code>npm i @egoistdeveloper/ng-keyboard-shortcuts@^13.0.0 --save</code></td>
+</tr>
+<tr>
+<td>v8/9</td>
+<td><code>npm i ng-keyboard-shortcuts@^9.0.0 --save</code></td>
+</tr>
+<tr>
+<td>v7</td>
+<td><code>npm i ng-keyboard-shortcuts@^7.0.0 --save</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="start">Start</h1>
+<p>Add <code>KeyboardShortcutsModule</code> module to your <code>AppModule</code> or child module.</p>
 <div><pre class="line-numbers"><code class="language-typescript">import { KeyboardShortcutsModule } from &quot;&#64;egoistdeveloper/ng-keyboard-shortcuts&quot;;
 
 &#64;NgModule({
@@ -173,47 +159,51 @@ export class AppModule {
     // ...
 }</code></pre></div><h1 id="usage">Usage</h1>
 <h2 id="combinations">Combinations</h2>
-<p>key combinations are used with meta keys like control, shift, command, etc... and are defined using plus(+) sign as a separator.
-there can be multiple combinations for the same command, so either of the key combination will trigger the callback.
-Since combinations uses the plus sign as a seperator, if you want to bind to the actual + charachater,
-you will need to use &quot;plus&quot; instead.</p>
+<p>Key combinations are used with meta keys like <code>control</code>, <code>shift</code>, <code>command</code>, etc... and are defined using plus(+) sign as a separator. There can be multiple combinations for the same command, so either of the key combination will trigger the callback.</p>
+<p>Since combinations uses the plus sign as a seperator, if you want to bind to the actual + charachater,
+you will need to use <strong>&quot;plus&quot;</strong> instead.</p>
 <h3 id="examples">Examples</h3>
-<div><pre class="line-numbers"><code class="language-typescript">   [
-       {
-            key: [&quot;cmd + a&quot;],
-            command: (output: ShortcutEventOutput) =&gt; console.log(&quot;command + a&quot;, output),
-        },
-        {
-            key: &quot;ctrl + a&quot;,
-            preventDefault: true,
-            command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + a&quot;, output),
-        },
-        {
-            key: &quot;ctrl + plus&quot;,
-            preventDefault: true,
-            command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + plus key&quot;, output),
-        }
-    ]</code></pre></div><h2 id="sequences">Sequences</h2>
+<div><pre class="line-numbers"><code class="language-typescript">[
+  {
+    key: [&quot;cmd + a&quot;],
+    command: (output: ShortcutEventOutput) =&gt; console.log(&quot;command + a&quot;, output),
+  },
+  {
+    key: &quot;ctrl + a&quot;,
+    preventDefault: true,
+    command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + a&quot;, output),
+  },
+  {
+    key: &quot;ctrl + plus&quot;,
+    preventDefault: true,
+    command: (output: ShortcutEventOutput) =&gt; console.log(&quot;control + plus key&quot;, output),
+  }
+]</code></pre></div><h2 id="sequences">Sequences</h2>
 <p>Sequences can be used to support gmail like actions where you click &quot;g&quot; then &quot;a&quot;, or &quot;g&quot; then &quot;o&quot; to perform certain actions.</p>
-<h3 id="important-note"><strong>Important note</strong></h3>
-<p>The library can get very confused if you have a single key handler that uses the same key that a sequence starts with. 
-This is because it can&#39;t tell if you are starting the sequence or if you are pressing that key on its own.</p>
-<p>To counter this, there is a <strong>500ms</strong> delay(<strong>only</strong> when single key is used in the beginning of another sequence, so it won&#39;t affect performance)
-. This gives the library time to wait for a more complete sequence, otherwise the single sequence will be triggered.</p>
-<p>for example: binding both &quot;? a&quot; and &quot;?&quot;, then clicking &quot;?&quot; will trigger the &quot;?&quot; callback, but only after 500ms delay.
-However, in all other cases there&#39;s no delay in execution of the callback (unless debounceTime is provided)</p>
+<h3 id="important-notes">Important Notes</h3>
+<p>The library can get very confused if you have a single key handler that uses the same key that a sequence starts with. This is because it can&#39;t tell if you are starting the sequence or if you are pressing that key on its own.</p>
+<p>To counter this, there is a <strong>500ms</strong> delay(<strong>only</strong> when single key is used in the beginning of another sequence, so it won&#39;t affect performance). This gives the library time to wait for a more complete sequence, otherwise the single sequence will be triggered.</p>
+<p>For example: binding both &quot;? a&quot; and &quot;?&quot;, then clicking &quot;?&quot; will trigger the &quot;?&quot; callback, but only after 500ms delay. However, in all other cases there&#39;s no delay in execution of the callback (unless debounceTime is provided)</p>
 <h3 id="examples-1">Examples</h3>
 <p>This library supports gmail style sequences:</p>
-<div><pre class="line-numbers"><code class="language-typescript">   [{
-        key: [&quot;g a&quot;],
-        command: (output: ShortcutEventOutput) =&gt; console.log(&quot;? a&quot;, output),
-    }]</code></pre></div><p>konami code:</p>
-<div><pre class="line-numbers"><code class="language-typescript">    [{
-         key: [&quot;up up down down left right left right b a enter&quot;],
-         label: &quot;Sequences&quot;,
-         description: &quot;Konami code!&quot;,
-         command: (output: ShortcutEventOutput) =&gt; console.log(&quot;Konami code!!!&quot;, output),
-    }]</code></pre></div><p>Sequences can be used inside components or directives and are declared <strong>without</strong> the plus(+) sign, for example: <code>key: [&quot;a b c&quot;]</code> will require clicking, a, then b, then c.</p>
+<div><pre class="line-numbers"><code class="language-typescript">[
+  {
+    key: [&quot;g a&quot;],
+    command: (output: ShortcutEventOutput) =&gt; console.log(&quot;? a&quot;, output),
+  }
+]</code></pre></div><p>konami code:</p>
+<div><pre class="line-numbers"><code class="language-typescript">[
+  {
+    key: [&quot;up up down down left right left right b a enter&quot;],
+    label: &quot;Sequences&quot;,
+    description: &quot;Konami code!&quot;,
+    command: (output: ShortcutEventOutput) =&gt; console.log(&quot;Konami code!!!&quot;, output),
+  }
+]</code></pre></div><p><strong>⚠️ Warning:</strong> </p>
+<ul>
+<li>The help menu only shows labels and descriptions of sequences. In the above example, the first one is will not be listed in the help menu but still works.</li>
+<li>Sequences can be used inside components or directives and are declared <strong>without</strong> the plus(+) sign, for example: <code>key: [&quot;a b c&quot;]</code> will require clicking, a, then b, then c.</li>
+</ul>
 <h2 id="components">Components</h2>
 <h3 id="ng-keyboard-shortcuts-1">ng-keyboard-shortcuts</h3>
 <p>Component that can be used across the app to bind to various shortcuts</p>
@@ -255,76 +245,162 @@ However, in all other cases there&#39;s no delay in execution of the callback (u
 <tbody>
 <tr>
 <td>select</td>
-<td align="left"><code>string</code> - key to listen to events (example: <code>&#39;cmd + e&#39;</code>)</td>
+<td align="left"><code>string</code> - key to listen to events (example: <code>&#39;ctrl + x&#39;</code>)</td>
 <td align="center"><code>Observable&lt;ShortcutEventOutput&gt;</code></td>
 <td align="center">Listen to specific key events (<strong>will only work for registered keys</strong>)</td>
 </tr>
 </tbody>
 </table>
-<div><pre class="line-numbers"><code class="language-typescript">  
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from &quot;&#64;angular/core&quot;;
-import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from &quot;&#64;egoistdeveloper/ng-keyboard-shortcuts&quot;;
+<p><code>app.component.html</code></p>
+<div><pre class="line-numbers"><code class="language-html">&lt;h1&gt;ng-keyboard-shortcuts Demo&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&gt;&gt; Press F2 for the help menu (F1 might be reserved by the browser)&lt;/p&gt;
+
+&lt;p&gt;&gt;&gt; {{ shortcutLog ? shortcutLog : &#39;No Action&#39; }}&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;h1&gt;Test Inputs&lt;/h1&gt;
+
+&lt;input #input placeholder=&quot;Ctrl + X, Ctrl + C, Ctrl + V&quot; /&gt;
+
+&lt;!-- Shortcuts --&gt;
+&lt;ng-keyboard-shortcuts [shortcuts]=&quot;keyboardShortcuts&quot;&gt;&lt;/ng-keyboard-shortcuts&gt;
+
+&lt;!-- Shortcut Help Menu --&gt;
+&lt;ng-keyboard-shortcuts-help
+  [key]=&quot;&#39;f2&#39;&quot;
+  [closeKey]=&quot;&#39;escape&#39;&quot;
+  [title]=&quot;&#39;Help Me!&#39;&quot;
+&gt;&lt;/ng-keyboard-shortcuts-help&gt;
+</code></pre></div><p><code>app.component.ts</code></p>
+<div><pre class="line-numbers"><code class="language-typescript">import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from &#39;&#64;angular/core&#39;;
+import {
+  ShortcutInput,
+  ShortcutEventOutput,
+  KeyboardShortcutsComponent,
+  AllowIn,
+} from &#39;&#64;egoistdeveloper/ng-keyboard-shortcuts&#39;;
 
 &#64;Component({
-    selector: &#39;demo-component&#39;,
-    template: &quot;&lt;ng-keyboard-shortcuts [shortcuts]=&quot;shortcuts&quot;&gt;&lt;/ng-keyboard-shortcuts&gt;&quot;
+  selector: &#39;my-app&#39;,
+  templateUrl: &#39;./app.component.html&#39;,
+  styleUrls: [&#39;./app.component.css&#39;],
 })
-export class DemoComponent implements AfterViewInit {
+export class AppComponent {
+  &#64;ViewChild(&#39;input&#39;) input: ElementRef;
+  &#64;ViewChild(KeyboardShortcutsComponent) keyboard!: KeyboardShortcutsComponent;
 
-    shortcuts: ShortcutInput[] = [];
-    &#64;ViewChild(&#39;input&#39;) input: ElementRef;
+  public keyboardShortcuts: ShortcutInput[] = [];
+  public shortcutLog: string;
 
-    ngAfterViewInit(): void {
-        this.shortcuts.push(
-            {
-                key: &quot;ctrl + t&quot;,
-                preventDefault: true,
-                allowIn: [AllowIn.Textarea, AllowIn.Input],
-                command: e =&gt; console.log(&quot;clicked &quot; , e.key)
-            },
-           {
-                key: [&quot;? a&quot;],
-                label: &quot;Sequences&quot;,
-                description: &quot;Sequence ? and a&quot;,
-                command: (output: ShortcutEventOutput) =&gt; console.log(&quot;? a&quot;, output),
-                preventDefault: true
-            },
-            {
-                key: [&quot;up up down down left right left right b a enter&quot;],
-                label: &quot;Sequences&quot;,
-                description: &quot;Konami code!&quot;,
-                command: (output: ShortcutEventOutput) =&gt; console.log(&quot;Konami code!!!&quot;, output),
-            },
-            {
-                key: &quot;cmd + shift + f&quot;,
-                command: (output: ShortcutEventOutput) =&gt; console.log(output),
-                preventDefault: true,
-                throttleTime: 250,
-                target: this.input.nativeElement
-            },
-            {
-                key: [&quot;cmd + =&quot;, &quot;cmd + z&quot;],
-                command: (output: ShortcutEventOutput) =&gt; console.log(output),
-                preventDefault: true
-            },
-            { 
-                key: &quot;cmd + f&quot;,
-                command: (output: ShortcutEventOutput) =&gt; console.log(output),
-                preventDefault: true
-            }
-        );
+  ngAfterViewInit(): void {
+    this.installKeyBindings();
+  }
 
-        this.keyboard.select(&quot;cmd + f&quot;).subscribe(e =&gt; console.log(e));
-    }
+  private installKeyBindings(): void {
+    this.keyboardShortcuts.push(
+      {
+        key: &#39;ctrl + x&#39;,
+        preventDefault: true,
+        allowIn: [AllowIn.Textarea, AllowIn.Input],
+        label: &#39;Input&#39;,
+        description: &#39;Cut&#39;,
+        command: (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
 
-    &#64;ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
-}</code></pre></div><h3 id="ng-keyboard-shortcuts-help">ng-keyboard-shortcuts-help</h3>
+          console.log(this.shortcutLog);
+        },
+      },
+      {
+        key: &#39;ctrl + c&#39;,
+        preventDefault: true,
+        allowIn: [AllowIn.Textarea, AllowIn.Input],
+        label: &#39;Input&#39;,
+        description: &#39;Copy&#39;,
+        command: (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+      },
+      {
+        key: &#39;ctrl + v&#39;,
+        preventDefault: true,
+        allowIn: [AllowIn.Textarea, AllowIn.Input],
+        label: &#39;Input&#39;,
+        description: &#39;Paste&#39;,
+        command: (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+      },
+      {
+        key: &#39;ctrl + f&#39;,
+        preventDefault: true,
+        allowIn: [AllowIn.Textarea, AllowIn.Input],
+        label: &#39;Input&#39;,
+        description: &#39;Find&#39;,
+        command: (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+      },
+      {
+        key: &#39;f7&#39;,
+        preventDefault: true,
+        label: &#39;F Button&#39;,
+        description: &#39;Anything&#39;,
+        command: (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+      },
+      {
+        key: [&#39;? a&#39;],
+        label: &#39;Sequences&#39;,
+        description: &#39;Sequence ? and a&#39;,
+        command: (output: ShortcutEventOutput) =&gt; (e) =&gt; {
+          this.shortcutLog = `Action: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+        preventDefault: true,
+      },
+      {
+        key: [&#39;up up down down left right left right b a enter&#39;],
+        label: &#39;Sequences&#39;,
+        description: &#39;Konami code!&#39;,
+        command: (output: ShortcutEventOutput) =&gt; (e) =&gt; {
+          this.shortcutLog = `Konami Code: ${e.key}`;
+
+          console.log(this.shortcutLog);
+        },
+      }
+    );
+
+    this.keyboard.select(&#39;ctrl + f&#39;).subscribe((e) =&gt; console.log(e));
+  }
+}
+</code></pre></div><h3 id="ng-keyboard-shortcuts-help">ng-keyboard-shortcuts-help</h3>
 <ol>
 <li><strong>Make sure to install <code>@angular/animations</code> ( <code>npm install --save @angular/animations</code> or <code>yarn add @angular/animations</code></strong>  </li>
 <li><strong>Add BrowserAnimationsModule to your app.module imports</strong></li>
 </ol>
-<p>Can be used to show an help screen ( will be attached to body and be shown as a modal)</p>
-<p>Should be placed in the root of your app, preferably in app.component.html</p>
+<p>Can be used to show a help screen (will be attached to the body and be shown as a modal). Should be placed in the root of your app, preferably in <code>app.component.html</code></p>
 <h3 id="inputs-1">Inputs</h3>
 <table class="table table-bordered compodoc-table">
 <thead>
@@ -575,53 +651,51 @@ export class DemoComponent implements AfterViewInit {
 }</code></pre></div><h3 id="shortcut">Shortcut</h3>
 <p>Used for Directive input</p>
 <div><pre class="line-numbers"><code class="language-typescript">export interface Shortcut {
+  key: string | string[];
 
-    key: string | string[];
+  /**
+   * callback to be called when shortcut is pressed.
+   * &#64;param event - the event out
+   */
+  command(event: ShortcutEventOutput): any;
 
-    /**
-     * callback to be called when shortcut is pressed.
-     * &#64;param event - the event out
-     */
-    command(event: ShortcutEventOutput): any;
+  /**
+   * Description for the command can be used for rendering help menu.
+   */
+  description?: string;
 
-    /**
-     * Description for the command can be used for rendering help menu.
-     */
-    description?: string;
+  /**
+   * How much time to throttle in ms.
+   */
+  throttleTime?: number;
 
-    /**
-     * How much time to throttle in ms.
-     */
-    throttleTime?: number;
+  /**
+   * Label, can be used for grouping commands.
+   */
+  label?: string;
 
-    /**
-     * Label, can be used for grouping commands.
-     */
-    label?: string;
-
-    /**
-     * Prevent browser default, default: false
-     */
-    preventDefault?: boolean;
+  /**
+   * Prevent browser default, default: false
+   */
+  preventDefault?: boolean;
 }</code></pre></div><h3 id="shortcutinput">ShortcutInput</h3>
 <p>Used for the component as input.</p>
 <div><pre class="line-numbers"><code class="language-typescript">export interface ShortcutInput extends Shortcut {
-    /**
-     * textarea, select and input are ignored by default, this is used to override
-     * this behavior.
-     * allow in node names, accepts: [&quot;TEXTAREA&quot;, &quot;SELECT&quot;, &quot;INPUT]
-     */
-    allowIn?: AllowIn[];
-    /**
-     * Only trigger the command when the target is in focus.
-     */
-    target?: HTMLElement;
+  /**
+   * textarea, select and input are ignored by default, this is used to override
+   * this behavior.
+   * allow in node names, accepts: [&quot;TEXTAREA&quot;, &quot;SELECT&quot;, &quot;INPUT]
+   */
+  allowIn?: AllowIn[];
+  /**
+   * Only trigger the command when the target is in focus.
+   */
+  target?: HTMLElement;
 }</code></pre></div><h3 id="shortcuteventoutput">ShortcutEventOutput</h3>
 <div><pre class="line-numbers"><code class="language-typescript">type = ShortcutEventOutput {
-    event: KeyboardEvent;
-    key: string | string[];
-}
-</code></pre></div><h2 id="duplicated-items-in-help-menu">Duplicated items in help menu</h2>
+  event: KeyboardEvent;
+  key: string | string[];
+}</code></pre></div><h2 id="duplicated-items-in-help-menu">Duplicated items in help menu</h2>
 <p>Sometimes shortcuts can be loaded twice and these shortcuts show twice in the help menu. This is probably about your logic or app lifecycles.</p>
 <p>To prevent that use <code>time()</code> method with <code>rxjs</code> or use <code>setTimeout</code>.</p>
 <div><pre class="line-numbers"><code class="language-typescript">timer().subscribe(() =&gt; {
@@ -632,15 +706,15 @@ export class DemoComponent implements AfterViewInit {
 
 setTimeout(() =&gt; {
   // bind your shortcuts
-}, 100);</code></pre></div><h1 id="building">Building</h1>
+}, 100);</code></pre></div><h1 id="building--publishing">Building &amp; Publishing</h1>
 <p><code>ng build</code> or <code>npm run build</code> or <code>npm run build:prod</code></p>
-<h1 id="publishing-on-npm">Publishing on NPM</h1>
+<h2 id="publishing-on-npm">Publishing on NPM</h2>
 <p>If you want to publish as own package change package name etc in <code>projects/ng-keyboard-shortcuts/package.json</code></p>
 <ol>
 <li><code>npm run build:prod</code></li>
 <li><code>npm publish dist/ng-keyboard-shortcuts</code> (<em>you need login before publish</em>)</li>
 </ol>
-<h1 id="loading-as-dependency-on-localhost">Loading as dependency on localhost</h1>
+<h2 id="loading-as-dependency-on-localhost">Loading as dependency on localhost</h2>
 <ol>
 <li><code>npm run package</code></li>
 <li>Copy <code>x-ng-keyboard-shortcuts-{version}.tgz</code> file in dist folder</li>
