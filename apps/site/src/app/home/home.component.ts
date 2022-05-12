@@ -239,7 +239,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
         );
         this.secondShortcuts.push({
-            key: ["c + a "],
+            key: ["c + a"],
             label: "Sequences",
             description: "Sequence c + a",
             allowIn: [AllowIn.Input],
