@@ -1,0 +1,51 @@
+.help-modal__container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 500;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-modal {
+  z-index: 2000;
+  min-width: 420px;
+  max-height: calc(100% - 100px);
+  overflow: auto;
+  padding: 20px;
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  background: #fff;
+}
+
+.item-group-label {
+  text-transform: capitalize;
+}
+
+.title {
+  padding: 20px 0;
+}
+
+.title__text {
+  margin: 0;
+  padding: 0;
+}
+
+.help-modal__list {
+  padding: 0;
+}
+
+.help-modal__backdrop {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.27);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 1;
+}

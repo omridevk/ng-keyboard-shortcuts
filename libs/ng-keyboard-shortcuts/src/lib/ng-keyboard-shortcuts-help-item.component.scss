@@ -1,0 +1,34 @@
+.key {
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  padding: 5px 12px;
+  margin-right: 5px;
+  background-color: #F5F5F5;
+}
+
+.key__container {
+  display: inline-block;
+}
+
+.separator {
+  margin-right: 5px;
+}
+
+.keys {
+  float: right;
+}
+
+.item {
+  background-color: #EBEBEB;
+  padding: 12px;
+}
+
+.description {
+  min-width: 168px;
+  display: inline-block;
+  color: #333333;
+}
+
+.item--odd {
+  background-color: #FFFFFF;
+}

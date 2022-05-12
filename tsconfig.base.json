@@ -1,31 +1,30 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "downlevelIteration": true,
-    "module": "es2020",
-    "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "module": "esnext",
     "lib": [
       "es2017",
-      "esnext",
       "dom"
     ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
     "paths": {
-      "ng-keyboard-shortcuts": [
-        "dist/ng-keyboard-shortcuts"
-      ],
-      "ng-keyboard-shortcuts/*": [
-        "dist/ng-keyboard-shortcuts/*"
+      "@ng-keyboard-shortcuts/ng-keyboard-shortcuts": [
+        "libs/ng-keyboard-shortcuts/src/index.ts"
       ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
