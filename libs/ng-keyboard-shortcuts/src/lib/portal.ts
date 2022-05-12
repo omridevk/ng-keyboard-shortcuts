@@ -13,7 +13,7 @@ import {
  * Interface that can be used to generically type a class.
  */
 export interface ComponentType<T> {
-    new (...args: any[]): T;
+    new(...args: any[]): T;
 }
 
 /**
@@ -28,16 +28,16 @@ export abstract class Portal<T> {
     attach(host: PortalOutlet): T {
         if (host == null) {
             // TODO: add error
-            console.error("null portal error");
+            console.error('null portal error');
         }
 
         if (host.hasAttached()) {
-            console.error("portal already attached");
+            console.error('portal already attached');
             // throwPortalAlreadyAttachedError();
         }
 
         this._attachedHost = host;
-        return <T> host.attach(this);
+        return <T>host.attach(this);
     }
 
     /** Detach this portal from its host */
@@ -45,7 +45,7 @@ export abstract class Portal<T> {
         const host = this._attachedHost;
 
         if (host == null) {
-            console.error("no portal attached!");
+            console.error('no portal attached!');
             // throwNoPortalAttachedError();
         } else {
             this._attachedHost = null;

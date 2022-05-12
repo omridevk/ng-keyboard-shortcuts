@@ -5,7 +5,7 @@ import {
     ShortcutDirectiveInput,
     ShortcutEventOutput,
     ShortcutInput
-} from "ng-keyboard-shortcuts";
+} from "@ng-keyboard-shortcuts/ng-keyboard-shortcuts";
 
 @Component({
     selector: "app-home",

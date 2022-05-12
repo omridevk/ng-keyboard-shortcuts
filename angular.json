@@ -2,8 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "ng-keyboard-shortcut": "libs/ng-keyboard-shortcut",
     "site": "apps/site",
-    "site-e2e": "apps/site-e2e"
+    "site-e2e": "apps/site-e2e",
+    "ng-keyboard-shortcuts": "libs/ng-keyboard-shortcuts"
   }
 }

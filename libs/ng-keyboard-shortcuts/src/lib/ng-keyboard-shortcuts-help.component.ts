@@ -10,16 +10,16 @@ import {
     TemplateRef,
     ViewChild,
     ViewContainerRef
-} from "@angular/core";
-import { DomPortalOutlet } from "./dom-portal-outlet";
-import { TemplatePortal } from "./portal";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.service";
-import { animate, style, transition, trigger } from "@angular/animations";
-import { distinctUntilChanged, map } from "rxjs/operators";
-import { groupBy } from './utils';
-import { SubscriptionLike } from "rxjs";
-import { Shortcut } from './ng-keyboard-shortcuts.interfaces';
+} from '@angular/core';
+import {DomPortalOutlet} from './dom-portal-outlet';
+import {TemplatePortal} from './portal';
+import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
+import {KeyboardShortcutsHelpService} from './ng-keyboard-shortcuts-help.service';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {distinctUntilChanged, map} from 'rxjs/operators';
+import {groupBy} from './utils';
+import {SubscriptionLike} from 'rxjs';
+import {Shortcut} from './ng-keyboard-shortcuts.interfaces';
 
 
 /**
@@ -40,7 +40,9 @@ const preventDefault = (ignore: string) => e => {
         return;
     }
     e = e || window.event;
-    if (e.preventDefault) e.preventDefault();
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
     e.returnValue = false;
 };
 /**
@@ -57,9 +59,9 @@ const preventDefaultForScrollKeys = e => {
  * @ignore
  */
 let scrollEvents = [
-    { name: "wheel", callback: null },
-    { name: "touchmove", callback: null },
-    { name: "DOMMouseScroll", callback: null }
+    {name: 'wheel', callback: null},
+    {name: 'touchmove', callback: null},
+    {name: 'DOMMouseScroll', callback: null}
 ];
 
 /**
@@ -68,13 +70,13 @@ let scrollEvents = [
 const disableScroll = (ignore: string) => {
     scrollEvents = scrollEvents.map(event => {
         const callback = preventDefault(ignore);
-        window.addEventListener(event.name, callback, { passive: false });
+        window.addEventListener(event.name, callback, {passive: false});
         return {
             ...event,
             callback
         };
     });
-    window.addEventListener("keydown", preventDefaultForScrollKeys);
+    window.addEventListener('keydown', preventDefaultForScrollKeys);
 };
 /**
  * @ignore
@@ -87,7 +89,7 @@ const enableScroll = () => {
             callback: null
         };
     });
-    window.removeEventListener("keydown", preventDefaultForScrollKeys);
+    window.removeEventListener('keydown', preventDefaultForScrollKeys);
 };
 
 /**
@@ -95,34 +97,34 @@ const enableScroll = () => {
  * it is shown as a modal
  */
 @Component({
-    selector: "ng-keyboard-shortcuts-help",
-    templateUrl: "./ng-keyboard-shortcuts-help.component.html",
-    styleUrls: ["./ng-keyboard-shortcuts-help.component.scss"],
+    selector: 'ng-keyboard-shortcuts-help',
+    templateUrl: './ng-keyboard-shortcuts-help.component.html',
+    styleUrls: ['./ng-keyboard-shortcuts-help.component.scss'],
     animations: [
-        trigger("enterAnimation", [
-            transition(":enter", [
-                style({ transform: "translateX(-100%)", opacity: 0 }),
+        trigger('enterAnimation', [
+            transition(':enter', [
+                style({transform: 'translateX(-100%)', opacity: 0}),
                 animate(
-                    "0.33s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(0)", opacity: 1 })
+                    '0.33s cubic-bezier(0,0,0.3,1)',
+                    style({transform: 'translateX(0)', opacity: 1})
                 )
             ]),
-            transition(":leave", [
-                style({ transform: "translateX(0)", opacity: 1 }),
+            transition(':leave', [
+                style({transform: 'translateX(0)', opacity: 1}),
                 animate(
-                    "0.23s cubic-bezier(0,0,0.3,1)",
-                    style({ transform: "translateX(-100%)", opacity: 0 })
+                    '0.23s cubic-bezier(0,0,0.3,1)',
+                    style({transform: 'translateX(-100%)', opacity: 0})
                 )
             ])
         ]),
-        trigger("overlayAnimation", [
-            transition(":enter", [
-                style({ opacity: 0 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 1 }))
+        trigger('overlayAnimation', [
+            transition(':enter', [
+                style({opacity: 0}),
+                animate('1s cubic-bezier(0,0,0.3,1)', style({opacity: 1}))
             ]),
-            transition(":leave", [
-                style({ opacity: 1 }),
-                animate("1s cubic-bezier(0,0,0.3,1)", style({ opacity: 0 }))
+            transition(':leave', [
+                style({opacity: 1}),
+                animate('1s cubic-bezier(0,0,0.3,1)', style({opacity: 0}))
             ])
         ])
     ]
@@ -137,7 +139,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      */
     private _key: string;
 
-    public className = "help-modal";
+    public className = 'help-modal';
 
     /**
      * A description that will be shown in the help menu.
@@ -191,6 +193,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     private addShortcut(shortcut: Shortcut) {
         return this.keyboard.add(shortcut);
     }
+
     private _closeKey;
     @Input()
     set closeKey(value: string) {
@@ -207,19 +210,19 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
             command: () => this.hide(),
             description: this.closeKeyDescription,
             label: this.closeKeyDescription
-        })
+        });
     }
 
     /**
      * The title of the help screen
      * @default: "Keyboard shortcuts"
      */
-    @Input() title = "Keyboard shortcuts";
+    @Input() title = 'Keyboard shortcuts';
     /**
      * What message to show when no shortcuts are available on the page.
      * @default "No shortcuts available"
      */
-    @Input() emptyMessage = "No shortcuts available";
+    @Input() emptyMessage = 'No shortcuts available';
     /**
      * @ignore
      */
@@ -227,7 +230,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     /**
      * @ignore
      */
-    shortcuts:  Record<"label", {key: string[], label: string, description: string}[]>;
+    shortcuts: Record<'label', { key: string[], label: string, description: string }[]>;
     /**
      * @ignore
      */
@@ -240,6 +243,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private bodyPortalHost: DomPortalOutlet;
+
     /**
      * @ignore
      */
@@ -281,6 +285,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
     visible(): boolean {
         return this.bodyPortalHost.hasAttached();
     }
+
     /**
      * Hide the help screen manually.
      */
@@ -340,6 +345,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
      * @ignore
      */
     private timeoutId;
+
     /**
      * @ignore
      */
@@ -347,7 +353,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy {
         this.subscription = this.keyboardHelp.shortcuts$
             .pipe(
                 distinctUntilChanged(),
-                map(shortcuts => groupBy(shortcuts, "label"))
+                map(shortcuts => groupBy(shortcuts, 'label'))
             )
             .subscribe(shortcuts => {
                 this.shortcuts = shortcuts;

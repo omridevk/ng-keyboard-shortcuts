@@ -10,13 +10,21 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "ng-keyboard-shortcuts": ["libs/ng-keyboard-shortcut/src/index.ts"]
+      "@ng-keyboard-shortcuts/ng-keyboard-shortcuts": [
+        "libs/ng-keyboard-shortcuts/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

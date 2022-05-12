@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
-import { KeyboardShortcutsHelpService, KeyboardShortcutsSelectService } from "ng-keyboard-shortcuts";
+import { KeyboardShortcutsHelpService, KeyboardShortcutsSelectService } from "@ng-keyboard-shortcuts/ng-keyboard-shortcuts";
 @Component({
     selector: "ng-keyboard-shortcuts-demo-app",
     templateUrl: "./app.component.html",

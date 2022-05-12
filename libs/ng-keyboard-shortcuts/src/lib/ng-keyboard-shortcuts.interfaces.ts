@@ -54,7 +54,7 @@ export interface ShortcutInput extends Shortcut {
 export enum AllowIn {
     Textarea = 'TEXTAREA',
     Input = 'INPUT',
-    Select = "SELECT"
+    Select = 'SELECT'
 }
 
 /**

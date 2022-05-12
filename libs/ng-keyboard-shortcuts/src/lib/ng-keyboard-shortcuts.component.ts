@@ -6,18 +6,18 @@ import {
     OnDestroy,
     OnInit,
     SimpleChanges
-} from "@angular/core";
-import { KeyboardShortcutsService } from "./ng-keyboard-shortcuts.service";
-import { ShortcutInput, ShortcutEventOutput } from "./ng-keyboard-shortcuts.interfaces";
-import { Observable } from "rxjs";
+} from '@angular/core';
+import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
+import {ShortcutInput, ShortcutEventOutput} from './ng-keyboard-shortcuts.interfaces';
+import {Observable} from 'rxjs';
 
 /**
  * A component to bind global shortcuts, can be used multiple times across the app
  * will remove registered shortcuts when element is removed from DOM.
  */
 @Component({
-    selector: "ng-keyboard-shortcuts",
-    template: ""
+    selector: 'ng-keyboard-shortcuts',
+    template: ''
 })
 export class KeyboardShortcutsComponent implements OnChanges, OnDestroy {
     /**
@@ -55,7 +55,8 @@ export class KeyboardShortcutsComponent implements OnChanges, OnDestroy {
      * @ignore
      * @param {KeyboardShortcutsService} keyboard
      */
-    constructor(private keyboard: KeyboardShortcutsService) {}
+    constructor(private keyboard: KeyboardShortcutsService) {
+    }
 
     /**
      * Select a key to listen to, will emit when the selected key is pressed.
@@ -68,14 +69,14 @@ export class KeyboardShortcutsComponent implements OnChanges, OnDestroy {
      * @ignore
      */
     ngOnChanges(changes: SimpleChanges): void {
-        if (!changes["shortcuts"] || !changes["shortcuts"].currentValue) {
+        if (!changes['shortcuts'] || !changes['shortcuts'].currentValue) {
             return;
         }
         if (this.clearIds) {
             this.keyboard.remove(this.clearIds);
         }
         if (!this._disabled) {
-            setTimeout(() => (this.clearIds = this.keyboard.add(changes["shortcuts"].currentValue)));
+            setTimeout(() => (this.clearIds = this.keyboard.add(changes['shortcuts'].currentValue)));
         }
     }
 
