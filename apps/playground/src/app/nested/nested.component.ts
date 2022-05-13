@@ -20,13 +20,6 @@ export class NestedComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.shortcuts.push(
             {
-                key: ["cmd + g"],
-                label: "Help",
-                description: "Command + G",
-                command: (e) => console.log(e),
-                preventDefault: true
-            },
-            {
                 key: ["up"],
                 command: (e) => {
                     console.log("up");

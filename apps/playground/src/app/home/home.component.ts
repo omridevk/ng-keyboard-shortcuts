@@ -139,14 +139,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 command: ({ key, event }) => console.log(`${key} clicked`, event)
             },
             {
-                key: "?",
-                label: "help",
-                description: "Question mark",
-                preventDefault: true,
-                command: ({ key, event }) =>
-                    console.log(`${key} allow in all fields clicked`, event)
-            },
-            {
                 key: "ctrl + ?",
                 label: "help",
                 description: "Shift + Question mark",
