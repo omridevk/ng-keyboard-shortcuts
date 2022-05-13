@@ -9,13 +9,18 @@ import {
 } from "./keys";
 import {
     BehaviorSubject,
+    combineLatest,
+    concatMap,
     fromEvent,
+    mergeMap,
     Observable,
     of,
+    shareReplay,
     Subject,
     Subscription,
     throwError,
-    timer
+    timer,
+    zip
 } from "rxjs";
 import {
     AllowIn,
@@ -81,7 +86,6 @@ export class KeyboardShortcutsService implements OnDestroy {
 
     private _shortcutsSub = new BehaviorSubject<ParsedShortcut[]>([]);
     public shortcuts$ = this._shortcutsSub
-        .asObservable()
         .pipe(filter((shortcuts) => !!shortcuts.length));
 
     private _ignored = [AllowIn.Input, AllowIn.Textarea, AllowIn.Select, AllowIn.ContentEditable];
@@ -137,7 +141,7 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private readonly subscriptions: Subscription[] = [];
 
-    private keydown$ = fromEvent(this.document, "keydown");
+    private keydown$: Observable<KeyboardEvent> = fromEvent(this.document, "keydown");
     /**
      * fixes for firefox prevent default
      * on click event on button focus:
@@ -203,23 +207,11 @@ export class KeyboardShortcutsService implements OnDestroy {
         .asObservable()
         .pipe(switchMap(() => timer(KeyboardShortcutsService.TIMEOUT_SEQUENCE)));
 
-    /**
-     * @ignore
-     */
-    // eslint-disable-next-line @typescript-eslint/member-ordering
-    private keydownSequence$ = this.shortcuts$.pipe(
-        map((shortcuts) => shortcuts.filter((shortcut) => shortcut.isSequence)),
-        switchMap((sequences) =>
-            this.keydown$.pipe(
-                map((event) => {
-                    return {
-                        event,
-                        sequences
-                    };
-                }),
-                tap((event) => this.timer$.next(event))
-            )
-        ),
+    private keydownSequence$ = this.keydown$.pipe(
+        map((event) => ({
+            event,
+            sequences: this._sequences
+        })),
         scan(
             (acc: { events: any[]; command?: any; sequences: any[] }, arg: any) => {
                 const { event } = arg;

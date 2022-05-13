@@ -7,6 +7,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { GettingStartedComponent } from "./getting-started/getting-started.component";
 import { HomeComponent } from "./home/home.component";
 import { MaterialModule } from "./material-module";
+import { NestedComponent } from "./nested/nested.component";
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import { MaterialModule } from "./material-module";
         MaterialModule,
         AppRoutingModule
     ],
-    declarations: [AppComponent, GettingStartedComponent, HomeComponent],
+    declarations: [AppComponent, GettingStartedComponent, HomeComponent, NestedComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

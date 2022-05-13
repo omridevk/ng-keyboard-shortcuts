@@ -1,0 +1,15 @@
+<ng-keyboard-shortcuts
+        [shortcuts]="shortcuts"
+        [disabled]="disabledShortcuts"
+></ng-keyboard-shortcuts>
+<table>
+    <tr
+            *ngFor="let person of persons; let i = index"
+            [ngClass]="{ 'selected': i == selectedIndex }"
+    >
+        <td>{{ i }}</td>
+        <td>{{ person.name }}</td>
+    </tr>
+</table>
+<button (click)="disable()">Enable/Disable Shortcuts</button>
+<p>Disabled : {{ disabledShortcuts }}</p>

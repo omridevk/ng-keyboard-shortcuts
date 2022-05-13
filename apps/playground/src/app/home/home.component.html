@@ -14,6 +14,8 @@
         Content Editable div
       <div contenteditable="true" class="content-editable"></div>
       </div>
+      <ng-keyboard-shortcuts-nested></ng-keyboard-shortcuts-nested>
+      <button (click)="disableAllShortcuts()">Disable shortcuts</button>
       <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
       <button (click)="handleClick($event)">disable directive</button>
       <button (click)="toggleSecondShortcuts()">Toggle Second shortcuts</button>

@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     secondShortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[] = [];
     showSecondShortcuts = false;
+    disableShortcuts = false;
     public directiveDisabled = false;
     handleClick(e) {
         console.log("button clicked", { e });
@@ -27,6 +28,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
     testClick(event: any) {
         console.log("clicked me");
+    }
+    disableAllShortcuts() {
+        this.disableShortcuts = !this.disableShortcuts;
     }
 
     justForFun() {
@@ -51,14 +55,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
             //     preventDefault: true,
             //     command: e => console.log("clicked BIG N" , e.key)
             // },
-            {
-                key: "left",
-                label: "label",
-                description: "up clicked",
-                preventDefault: true,
-                target: this.input.nativeElement,
-                command: ({ key }) => console.log(`${key} clicked`)
-            },
             {
                 key: "e",
                 label: "Global shortcuts",
