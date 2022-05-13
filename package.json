@@ -8,6 +8,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "docs": "cd ./docs && npm run start",
     "publish": "nx build ng-keyboard-shortcuts && npm publish dist/libs/ng-keyboard-shortcuts"
   },
   "private": true,

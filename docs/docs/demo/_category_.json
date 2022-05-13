@@ -1,0 +1,8 @@
+{
+  "label": "Demo",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "See a live demo in codesandbox"
+  }
+}

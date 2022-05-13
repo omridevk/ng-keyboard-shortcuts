@@ -1,0 +1,80 @@
+---
+id: ng-keyboard-shortcuts
+title: ng-keyboard-shortcuts
+sidebar_position: 1
+---
+Component that can be used across the app to bind to various shortcuts
+
+### Inputs:
+| Name   |      Type      |  Default         | Description |
+|----------|:-------------:|-----------------:  |:-------------:|
+| shortcuts |  ```ShortcutInput``` / ```ShortcutInput[]``` | [] | List of shortcut inputs types see [types](#ShortcutInput) |
+| disabled |    `boolean`  |   `false`   | disable the shortcuts for the component |
+
+### Methods:
+| Name  | Input | Return  | Description |
+|----------|:------|:------:|:-------------:|
+| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
+
+
+```typescript
+
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ShortcutInput, ShortcutEventOutput, KeyboardShortcutsComponent } from "ng-keyboard-shortcuts";
+
+@Component({
+    selector: 'demo-component',
+    template: "<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>"
+})
+export class DemoComponent implements AfterViewInit {
+
+    shortcuts: ShortcutInput[] = [];
+    @ViewChild('input') input: ElementRef;
+
+    ngAfterViewInit(): void {
+        this.shortcuts.push(
+            {
+                key: "ctrl + t",
+                preventDefault: true,
+                allowIn: [AllowIn.Textarea, AllowIn.Input],
+                command: e => console.log("clicked " , e.key)
+            },
+           {
+                key: ["? a"],
+                label: "Sequences",
+                description: "Sequence ? and a",
+                command: (output: ShortcutEventOutput) => console.log("? a", output),
+                preventDefault: true
+            },
+            {
+                key: ["up up down down left right left right b a enter"],
+                label: "Sequences",
+                description: "Konami code!",
+                command: (output: ShortcutEventOutput) => console.log("Konami code!!!", output),
+            },
+            {
+                key: "cmd + shift + f",
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true,
+                throttleTime: 250,
+                target: this.input.nativeElement
+            },
+            {
+                key: ["cmd + =", "cmd + z"],
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true
+            },
+            {
+                key: "cmd + f",
+                command: (output: ShortcutEventOutput) => console.log(output),
+                preventDefault: true
+            }
+        );
+
+        this.keyboard.select("cmd + f").subscribe(e => console.log(e));
+    }
+
+    @ViewChild(KeyboardShortcutsComponent) private keyboard: KeyboardShortcutsComponent;
+
+}
+```

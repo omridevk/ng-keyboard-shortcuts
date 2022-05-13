@@ -1,0 +1,64 @@
+---
+id: ng-keyboard-shortcuts-help
+title: ng-keyboard-shortcuts-help
+sidebar_position: 3
+---
+:::info
+1. **Make sure to install `@angular/animations` ( `npm install --save @angular/animations` or `yarn add @angular/animations`**
+2. **Add BrowserAnimationsModule to your app.module imports**
+:::
+
+Can be used to show an help screen ( will be attached to body and be shown as a modal)
+
+Should be placed in the root of your app, preferably in app.component.html
+
+#### Inputs
+| Name   |      Type      |  default         | description |
+|----------|:-------------:|-----------------:  |:-------------:|
+| key |  ```string``` | none | The key to show/hide the help modal
+| keyDescription |  ```string``` | none | Description to show in the menu shortcut list for the toggle shortcut
+| keyLabel |  ```string``` | none | Label that can be used to group shortcuts together in the help menu
+| closeKey |  ```string``` | none | Close key to be used to close the modal
+| closeKeyDescription |  ```string``` | none | Description to show in the menu shortcut list for closing the modal shortcut
+| closeKeyLabel |  ```string``` | none | Label that can be used to group shortcuts together in the help menu
+| title |  ```string``` | "Keyboard shortcuts" | The title of the help screen
+| emptyMessage |  ```string``` | "No shortcuts available" | What message to show when no commands are registered when help modal is opened.
+| disableScrolling |  ```boolean``` | true | Whether to disable body scrolling when modal help screen is opened.
+
+#### Methods:
+| Name  | Input | Return  | Description |
+|----------|:------|:------:|:-------------:|
+| hide | void| ```KeyboardShortcutsHelpComponent``` | Programmatically hide the modal |
+| reveal | void| ```KeyboardShortcutsHelpComponent``` | Programmatically hide the modal |
+| visible | void| ```boolean``` | Check whether the modal is visible or not. |
+| toggle | void| ```KeyboardShortcutsHelpComponent``` | Programmatically toggle the modal visibility |
+
+#### Methods:
+| Name  | Input | Return  | Description |
+|----------|:------|:------:|:-------------:|
+| select | `string` - key to listen to events (example: `'cmd + e'`) | `Observable<ShortcutEventOutput>` |Listen to specific key events (**will only work for registered keys**) |
+
+`app.component.ts`
+```typescript
+import { Component } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  template: "./app.component.html",
+  styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+  title = "Hello";
+}
+
+```
+`app.component.html`
+```html
+<div style="text-align:center">
+   <h1>
+      Welcome to {{ title }}!
+   </h1>
+   <ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="'Help'"></ng-keyboard-shortcuts-help>
+</div>
+
+```
