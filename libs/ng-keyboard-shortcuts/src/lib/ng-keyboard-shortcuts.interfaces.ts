@@ -42,7 +42,7 @@ export interface ShortcutInput extends Shortcut {
     /**
      * textarea, select and input are ignored by default, this is used to override
      * this behavior.
-     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT]
+     * allow in node names, accepts: ["TEXTAREA", "SELECT", "INPUT", "CONTENTEDITABLE"]
      */
     allowIn?: AllowIn[];
     /**
@@ -54,7 +54,8 @@ export interface ShortcutInput extends Shortcut {
 export enum AllowIn {
     Textarea = 'TEXTAREA',
     Input = 'INPUT',
-    Select = 'SELECT'
+    Select = 'SELECT',
+    ContentEditable = "CONTENT-EDITABLE"
 }
 
 /**

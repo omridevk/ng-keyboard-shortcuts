@@ -10,6 +10,10 @@
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Only on focus" #input>
       </mat-form-field>
+      <div>
+        Content Editable div
+      <div contenteditable="true" class="content-editable"></div>
+      </div>
       <input [ngKeyboardShortcuts]="directiveShortcuts" [disabled]="directiveDisabled"/>
       <button (click)="handleClick($event)">disable directive</button>
       <button (click)="toggleSecondShortcuts()">Toggle Second shortcuts</button>

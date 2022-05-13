@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {
     AllowIn,
     KeyboardShortcutsComponent,
     ShortcutDirectiveInput,
     ShortcutEventOutput,
     ShortcutInput
-} from "@ng-keyboard-shortcuts/ng-keyboard-shortcuts";
+} from '@ng-keyboard-shortcuts/ng-keyboard-shortcuts';
 
 @Component({
     selector: "app-home",

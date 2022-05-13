@@ -11,13 +11,14 @@ import {
     BehaviorSubject,
     fromEvent,
     Observable,
+    of,
     Subject,
     Subscription,
     throwError,
-    timer,
-    of
+    timer
 } from "rxjs";
 import {
+    AllowIn,
     ParsedShortcut,
     ShortcutEventOutput,
     ShortcutInput
@@ -83,7 +84,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         .asObservable()
         .pipe(filter((shortcuts) => !!shortcuts.length));
 
-    private _ignored = ["INPUT", "TEXTAREA", "SELECT"];
+    private _ignored = [AllowIn.Input, AllowIn.Textarea, AllowIn.Select, AllowIn.ContentEditable];
 
     /**
      * @ignore
@@ -91,13 +92,21 @@ export class KeyboardShortcutsService implements OnDestroy {
      */
     private isAllowed = (shortcut: ParsedShortcut) => {
         const target = shortcut.event.target as HTMLElement;
+        const isContentEditable = !!target.getAttribute("contenteditable");
+        const nodeName = isContentEditable ? AllowIn.ContentEditable : target.nodeName;
         if (target === shortcut.target) {
             return true;
         }
+        // if (shortcut.allowIn.includes(AllowIn.ContentEditable)) {
+        //     return !!target.getAttribute("contenteditable");
+        // }
         if (shortcut.allowIn.length) {
-            return !difference(this._ignored, shortcut.allowIn).includes(target.nodeName);
+            return !difference(this._ignored, shortcut.allowIn).includes(nodeName);
         }
-        return !this._ignored.includes(target.nodeName);
+        if (isContentEditable) {
+            return false;
+        }
+        return !this._ignored.includes(target.nodeName as AllowIn);
     };
 
     /**
@@ -167,7 +176,7 @@ export class KeyboardShortcutsService implements OnDestroy {
                 !shortcut.target || shortcut.event.target === shortcut.target
         ),
         filter((shortcut: ParsedShortcut) => isFunction(shortcut.command)),
-        filter(this.isAllowed),
+        filter((shortcut) => this.isAllowed(shortcut)),
         tap((shortcut) => {
             if (!shortcut.preventDefault) {
                 return;
