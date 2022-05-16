@@ -1,0 +1,21 @@
+---
+id: host-listener
+title: HostListener to bind events
+sidebar_position: 3
+---
+
+Keyboard shortcuts can also be bind using HostListener in a component
+This is a quick way to add shortcut to your application
+
+Events are defined using the __shortcut__ prefix and then the shortcut
+You can use sequences and combinations.
+
+## Usage
+```typescript
+    import {HostListener} from '@angular/core';
+
+    @HostListener("shortcut.k + t")
+    onShortcut() {
+        console.log("shortcut clicked!!")
+    }
+```

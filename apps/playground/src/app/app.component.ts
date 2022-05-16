@@ -3,7 +3,7 @@ import { MediaMatcher } from "@angular/cdk/layout";
 import {
     KeyboardShortcutsHelpService,
     KeyboardShortcutsSelectService
-} from "@ng-keyboard-shortcuts/ng-keyboard-shortcuts";
+} from "ng-keyboard-shortcuts";
 @Component({
     selector: "ng-keyboard-shortcuts-demo-app",
     templateUrl: "./app.component.html",

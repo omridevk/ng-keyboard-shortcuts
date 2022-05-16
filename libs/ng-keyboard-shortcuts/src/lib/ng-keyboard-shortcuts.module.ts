@@ -7,6 +7,7 @@ import {KeyboardShortcutsDirective} from './ng-keyboard-shortcuts.directive';
 import {KeyboardShortcutsHelpComponent} from './ng-keyboard-shortcuts-help.component';
 import {KeyboardShortcutsHelpItemComponent} from './ng-keyboard-shortcuts-help-item.component';
 import {CommonModule} from '@angular/common';
+import {KeyboardShortcutsPluginProvider} from './ng-keyboard-shortcuts.plugin';
 
 @NgModule({
     imports: [CommonModule],
@@ -30,7 +31,8 @@ export class KeyboardShortcutsModule {
             providers: [
                 KeyboardShortcutsService,
                 KeyboardShortcutsHelpService,
-                KeyboardShortcutsSelectService
+                KeyboardShortcutsSelectService,
+                KeyboardShortcutsPluginProvider
             ]
         };
     }

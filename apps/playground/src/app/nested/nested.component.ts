@@ -1,5 +1,5 @@
-import {Component, OnInit, ChangeDetectionStrategy, AfterViewInit} from '@angular/core';
-import {ShortcutInput} from '@ng-keyboard-shortcuts/ng-keyboard-shortcuts';
+import {Component, OnInit, AfterViewInit, HostListener} from '@angular/core';
+import {ShortcutInput} from 'ng-keyboard-shortcuts';
 
 @Component({
     selector: "ng-keyboard-shortcuts-nested",
@@ -16,6 +16,16 @@ export class NestedComponent implements OnInit, AfterViewInit {
     persons = [{ name: "test" }, { name: "test" }, { name: "test" }, { name: "test" }];
     selectedIndex = 0;
     disabledShortcuts = false;
+
+    @HostListener("shortcut.t k", ['$event'])
+    onShortcut(event) {
+        console.log(event);
+    }
+
+    @HostListener("shortcut.shift + y.prevent")
+    onShift() {
+        console.log("ty")
+    }
 
     ngAfterViewInit() {
         this.shortcuts.push(
