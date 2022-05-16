@@ -18,7 +18,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ng-keyboard-shortcuts/ng-keyboard-shortcuts": [
+      "ng-keyboard-shortcuts": [
         "libs/ng-keyboard-shortcuts/src/index.ts"
       ]
     }
