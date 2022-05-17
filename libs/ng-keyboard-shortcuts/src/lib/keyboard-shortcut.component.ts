@@ -23,7 +23,7 @@ export class KeyboardShortcutComponent implements AfterViewInit, OnDestroy, OnCh
     private clearId;
 
     @Input() description: string;
-    @Input() encapsulate = true;
+    // @Input() encapsulate = true;
     @Input() label: string;
     @Input() preventDefault: boolean;
     @Input() allowIn: AllowIn[];
