@@ -2,6 +2,7 @@
         [shortcuts]="shortcuts"
         [disabled]="disabledShortcuts"
 ></ng-keyboard-shortcuts>
+<ng-keyboard-shortcut [key]="'shift + k'" (fire)="onShiftPlusKClicked($event)"></ng-keyboard-shortcut>
 <table>
     <tr
             *ngFor="let person of persons; let i = index"
