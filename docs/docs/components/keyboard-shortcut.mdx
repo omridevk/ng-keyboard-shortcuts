@@ -1,0 +1,30 @@
+---
+id: ng-keyboard-shortcut
+title: ng-keyboard-shortcut
+sidebar_position: 2
+---
+
+```<ng-keyboard-shortcut>``` component can help you create a single shortcut, in a more declarative way.
+Each component added can be bound to one shortcut, and will emit using (fire) Output binding when the shortcut is clicked.
+Can be useful to create multiple shortcut, each shortcut will be added to the Help menu automatically as long as you provide a description and a label.
+
+
+
+## Example
+
+```html
+
+    <ng-keyboard-shortcut *ngIf="enableShortcut" [key]="'shift + k'" (fire)="onShiftPlusKClicked($event)"></ng-keyboard-shortcut>
+```
+
+
+## Inputs:
+| Name   |      Type      |  Default         | Description |
+|----------|:-------------:|-----------------:  |:-------------:|
+| key |  ```string / string[] ```| none |List or single key (sequencese or combinations) to bind to. |
+| description |    `string`  |   `""`   | the description to show in the help menu |
+| label |    `string`  |   `""`   | the label to group the key in the help menu |
+| preventDefault |    `boolean`  |   `false`   | whether to prevent default of the original key fired |
+| target |    `HTMLElement`  |   `undefined`   | Limit the event to a specific target |
+| allowIn |    `AllowIn`  |   `[]`   | Keys are disable for Input, Select, ContentEditable and Textarea, this can be used to allow the shortcut to work in those elements |
+| throttleTime |    `number`  |   `0`   | Throttle the key event |

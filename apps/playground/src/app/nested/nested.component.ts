@@ -17,6 +17,10 @@ export class NestedComponent implements OnInit, AfterViewInit {
     selectedIndex = 0;
     disabledShortcuts = false;
 
+    onShiftPlusKClicked(event) {
+        console.log(event);
+    }
+
     @HostListener("shortcut.t k", ['$event'])
     onShortcut(event) {
         console.log(event);
