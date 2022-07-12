@@ -16,7 +16,9 @@
   "repository": "github.com/omridevk/ng-keyboard-shortcuts",
   "bugs": "https://github.com/omridevk/ng-keyboard-shortcuts/issues",
   "peerDependencies": {
+    "@angular/animations": ">=9.0.0",
     "@angular/common": ">=9.0.0",
+    "@angular/compiler": ">=9.0.0",
     "@angular/core": ">=9.0.0",
     "@angular/platform-browser": ">=9.0.0",
     "rxjs": ">=6.0.0"
