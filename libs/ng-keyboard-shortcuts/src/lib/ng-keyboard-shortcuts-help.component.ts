@@ -20,7 +20,7 @@ import { KeyboardShortcutsHelpService } from "./ng-keyboard-shortcuts-help.servi
 import { animate, style, transition, trigger } from "@angular/animations";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { groupBy } from "./utils";
-import { SubscriptionLike } from "rxjs";
+import { BehaviorSubject, SubscriptionLike } from "rxjs";
 import { Shortcut } from "./ng-keyboard-shortcuts.interfaces";
 
 /**
@@ -219,7 +219,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
     /**
      * @ignore
      */
-    showing = false;
+    showing$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     /**
      * @ignore
      */
@@ -259,7 +259,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
         }
         const portal = new TemplatePortal(this.template, this.viewContainer);
         this.bodyPortalHost.attach(portal);
-        this.showing = true;
+        this.showing$.next(true);
         return this;
     }
 
@@ -282,7 +282,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
             return this;
         }
         this.bodyPortalHost.detach();
-        this.showing = false;
+        this.showing$.next(false);
         return this;
     }
 
