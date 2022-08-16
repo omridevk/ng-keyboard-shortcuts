@@ -1,4 +1,4 @@
-import {Injectable, InjectionToken, NgZone} from "@angular/core";
+import {Injectable, NgZone} from "@angular/core";
 import {EVENT_MANAGER_PLUGINS, EventManager} from "@angular/platform-browser";
 import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
 import {ShortcutEventOutput} from './ng-keyboard-shortcuts.interfaces';
@@ -42,4 +42,3 @@ export class KeyboardShortcutsPlugin {
         };
     }
 }
-
