@@ -1,6 +1,6 @@
 <ng-template>
     <div class="help-modal__container" [attr.aria-labelledby]="'modal-' + title" role="dialog">
-        <div class="{{className}}" [@enterAnimation] *ngIf="showing">
+        <div class="{{className}}" [@enterAnimation] *ngIf="showing$ | async">
             <div class="title">
                 <h3 id="modal-{{title}}" class="title__text">{{title}}</h3>
             </div>
@@ -20,6 +20,6 @@
                 </div>
             </div>
         </div>
-        <div class="help-modal__backdrop" [@overlayAnimation] (mousedown)="hide()" *ngIf="showing"></div>
+        <div class="help-modal__backdrop" [@overlayAnimation] (mousedown)="hide()" *ngIf="showing$ | async"></div>
     </div>
 </ng-template>
