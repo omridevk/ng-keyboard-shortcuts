@@ -219,7 +219,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
     /**
      * @ignore
      */
-    showing$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    showing$ = new BehaviorSubject(false);
     /**
      * @ignore
      */
