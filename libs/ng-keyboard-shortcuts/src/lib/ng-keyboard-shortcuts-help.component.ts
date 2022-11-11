@@ -358,7 +358,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
             preventDefault: true,
             command: () => this.hide(),
             description: this.closeKeyDescription,
-            label: this.closeKeyDescription
+            label: this.closeKeyLabel
         });
     }
 }
