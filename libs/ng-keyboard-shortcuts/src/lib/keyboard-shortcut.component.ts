@@ -1,11 +1,8 @@
 import {
     Component,
-    OnInit,
     ChangeDetectionStrategy,
     Input,
     OnDestroy,
-    OnChanges,
-    SimpleChanges,
     AfterViewInit,
     Output,
     EventEmitter
@@ -18,7 +15,7 @@ import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
     template: "<ng-content ></ng-content>",
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class KeyboardShortcutComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class KeyboardShortcutComponent implements AfterViewInit, OnDestroy {
     constructor(private keyboard: KeyboardShortcutsService) {}
     private clearId;
 
@@ -36,10 +33,6 @@ export class KeyboardShortcutComponent implements AfterViewInit, OnDestroy, OnCh
 
     ngOnDestroy(): void {
         this.keyboard.remove(this.clearId);
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-
     }
 
     ngAfterViewInit(): void {

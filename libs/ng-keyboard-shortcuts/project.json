@@ -1,4 +1,5 @@
 {
+  "name": "ng-keyboard-shortcuts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ng-keyboard-shortcuts/src",
@@ -7,7 +8,7 @@
     "build": {
       "executor": "@nrwl/angular:package",
       "outputs": [
-        "dist/libs/ng-keyboard-shortcuts"
+        "{workspaceRoot}/dist/libs/ng-keyboard-shortcuts"
       ],
       "options": {
         "project": "libs/ng-keyboard-shortcuts/ng-package.json"
@@ -25,7 +26,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/libs/ng-keyboard-shortcuts"
+        "{workspaceRoot}/coverage/libs/ng-keyboard-shortcuts"
       ],
       "options": {
         "jestConfig": "libs/ng-keyboard-shortcuts/jest.config.ts",

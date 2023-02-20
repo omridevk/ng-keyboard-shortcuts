@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { KeyboardShortcutsModule } from "ng-keyboard-shortcuts";
 
 import { NestedComponent } from "./nested.component";
 
@@ -8,7 +9,10 @@ describe("NestedComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NestedComponent]
+            declarations: [NestedComponent],
+            imports: [
+                KeyboardShortcutsModule.forRoot()
+            ]
         }).compileComponents();
     });
 

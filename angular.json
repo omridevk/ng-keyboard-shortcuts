@@ -1,9 +1,0 @@
-{
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
-  "version": 2,
-  "projects": {
-    "ng-keyboard-shortcuts": "libs/ng-keyboard-shortcuts",
-    "playground": "apps/playground",
-    "playground-e2e": "apps/playground-e2e"
-  }
-}

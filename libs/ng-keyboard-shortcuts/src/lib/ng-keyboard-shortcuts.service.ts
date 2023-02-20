@@ -9,18 +9,13 @@ import {
 } from "./keys";
 import {
     BehaviorSubject,
-    combineLatest,
-    concatMap,
     fromEvent,
-    mergeMap,
     Observable,
     of,
-    shareReplay,
     Subject,
     Subscription,
     throwError,
-    timer,
-    zip
+    timer
 } from "rxjs";
 import {
     AllowIn,
@@ -193,7 +188,7 @@ export class KeyboardShortcutsService implements OnDestroy {
         tap((shortcut) => this._pressed.next({ event: shortcut.event, key: shortcut.key })),
         takeUntil(this.keyup$),
         repeat(),
-        catchError((error) => throwError(error))
+        catchError((error) => throwError(() => error))
     );
 
     /**

@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, HostListener} from '@angular/core';
+import {Component, AfterViewInit, HostListener} from '@angular/core';
 import {ShortcutInput} from 'ng-keyboard-shortcuts';
 
 @Component({
@@ -6,10 +6,7 @@ import {ShortcutInput} from 'ng-keyboard-shortcuts';
     templateUrl: "./nested.component.html",
     styleUrls: ["./nested.component.scss"]
 })
-export class NestedComponent implements OnInit, AfterViewInit {
-    constructor() {}
-
-    ngOnInit(): void {}
+export class NestedComponent implements AfterViewInit {
     title = "Angular Router Demo";
     shortcuts: ShortcutInput[] = [];
 

@@ -1,7 +1,6 @@
 import {
     ApplicationRef,
     Component,
-    ComponentFactoryResolver,
     ElementRef,
     Injector,
     Input,
@@ -233,7 +232,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
      * @ignore
      */
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
+        private viewContainerRef: ViewContainerRef,
         private appRef: ApplicationRef,
         private keyboard: KeyboardShortcutsService,
         private element: ElementRef,
@@ -243,7 +242,7 @@ export class KeyboardShortcutsHelpComponent implements OnInit, OnDestroy, OnChan
     ) {
         this.bodyPortalHost = new DomPortalOutlet(
             document.body,
-            this.componentFactoryResolver,
+            this.viewContainerRef,
             this.appRef,
             this.injector
         );
