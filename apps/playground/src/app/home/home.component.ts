@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {
     AllowIn,
     KeyboardShortcutsComponent,
@@ -12,7 +12,7 @@ import {
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements AfterViewInit {
     shortcuts: ShortcutInput[] = [];
     secondShortcuts: ShortcutInput[] = [];
     directiveShortcuts: ShortcutDirectiveInput[] = [];
@@ -250,8 +250,4 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     @ViewChild(KeyboardShortcutsComponent)
     private keyboard: KeyboardShortcutsComponent;
-
-    constructor() {}
-
-    ngOnInit(): void {}
 }
