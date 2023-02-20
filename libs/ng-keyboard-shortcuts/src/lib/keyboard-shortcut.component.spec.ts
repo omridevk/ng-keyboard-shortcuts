@@ -15,6 +15,7 @@ describe("NgKeyboardShortcutComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(KeyboardShortcutComponent);
         component = fixture.componentInstance;
+        component.key = 'shift + k';
         fixture.detectChanges();
     });
 
