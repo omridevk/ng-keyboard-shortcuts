@@ -17,14 +17,15 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
         "cacheableOperations": [
           "build",
           "lint",
           "test",
           "e2e"
-        ]
+        ],
+        "accessToken": "ODhmYTZhMDMtYjEwMS00MTEwLWJmMjItMDJmMmY1MmE5OGI4fHJlYWQtd3JpdGU="
       }
     }
   },
