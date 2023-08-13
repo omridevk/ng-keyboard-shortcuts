@@ -1,16 +1,18 @@
 {
+  "name": "ng-keyboard-shortcuts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/ng-keyboard-shortcuts/src",
   "prefix": "ng-keyboard-shortcuts",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "outputs": [
-        "dist/libs/ng-keyboard-shortcuts"
+        "{workspaceRoot}/dist/libs/ng-keyboard-shortcuts"
       ],
       "options": {
-        "project": "libs/ng-keyboard-shortcuts/ng-package.json"
+        "project": "libs/ng-keyboard-shortcuts/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
       },
       "configurations": {
         "production": {
@@ -23,9 +25,9 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": [
-        "coverage/libs/ng-keyboard-shortcuts"
+        "{workspaceRoot}/coverage/libs/ng-keyboard-shortcuts"
       ],
       "options": {
         "jestConfig": "libs/ng-keyboard-shortcuts/jest.config.ts",
@@ -33,7 +35,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "libs/ng-keyboard-shortcuts/**/*.ts",

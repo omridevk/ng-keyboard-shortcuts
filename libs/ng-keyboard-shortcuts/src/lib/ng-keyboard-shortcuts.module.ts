@@ -13,7 +13,7 @@ import {EVENT_MANAGER_PLUGINS} from "@angular/platform-browser";
 
 @NgModule({
     imports: [CommonModule],
-    entryComponents: [KeyboardShortcutsHelpComponent],
+    // entryComponents: [KeyboardShortcutsHelpComponent],
     declarations: [
         KeyboardShortcutsComponent,
         KeyboardShortcutsDirective,
