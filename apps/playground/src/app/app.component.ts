@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
 import {
     KeyboardShortcutsHelpService,
@@ -33,5 +33,5 @@ export class AppComponent implements AfterViewInit {
     }
 
     public showHelp = false;
-    ngAfterViewInit(): void {}
+    ngAfterViewInit(): void { }
 }

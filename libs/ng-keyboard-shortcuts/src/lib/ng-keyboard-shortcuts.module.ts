@@ -1,4 +1,4 @@
-import {Inject, ModuleWithProviders, NgModule} from "@angular/core";
+import {ModuleWithProviders, NgModule} from "@angular/core";
 import {KeyboardShortcutsComponent} from "./ng-keyboard-shortcuts.component";
 import {KeyboardShortcutsService} from "./ng-keyboard-shortcuts.service";
 import {KeyboardShortcutsHelpService} from "./ng-keyboard-shortcuts-help.service";
@@ -13,7 +13,6 @@ import {EVENT_MANAGER_PLUGINS} from "@angular/platform-browser";
 
 @NgModule({
     imports: [CommonModule],
-    // entryComponents: [KeyboardShortcutsHelpComponent],
     declarations: [
         KeyboardShortcutsComponent,
         KeyboardShortcutsDirective,
