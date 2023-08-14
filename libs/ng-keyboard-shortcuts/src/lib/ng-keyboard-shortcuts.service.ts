@@ -9,13 +9,9 @@ import {
 } from "./keys";
 import {
     BehaviorSubject,
-    combineLatest,
-    concatMap,
     fromEvent,
-    mergeMap,
     Observable,
     of,
-    shareReplay,
     Subject,
     Subscription,
     throwError,
@@ -530,11 +526,11 @@ export class KeyboardShortcutsService implements OnDestroy {
             const isSequence = this.isSequence(keys);
             const sequence = isSequence
                 ? keys.map((key) =>
-                      key
-                          .split(" ")
-                          .filter(identity)
-                          .map((key) => key.trim())
-                  )
+                    key
+                        .split(" ")
+                        .filter(identity)
+                        .map((key) => key.trim())
+                )
                 : [];
             return {
                 ...command,

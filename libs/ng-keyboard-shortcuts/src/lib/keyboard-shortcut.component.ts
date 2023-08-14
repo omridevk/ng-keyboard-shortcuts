@@ -9,8 +9,8 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import {AllowIn, ShortcutEventOutput} from './ng-keyboard-shortcuts.interfaces';
-import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
+import { AllowIn, ShortcutEventOutput } from './ng-keyboard-shortcuts.interfaces';
+import { KeyboardShortcutsService } from './ng-keyboard-shortcuts.service';
 
 @Component({
     selector: "ng-keyboard-shortcut",
@@ -18,7 +18,8 @@ import {KeyboardShortcutsService} from './ng-keyboard-shortcuts.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KeyboardShortcutComponent implements AfterViewInit, OnDestroy, OnChanges {
-    constructor(private keyboard: KeyboardShortcutsService) {}
+
+    constructor(private keyboard: KeyboardShortcutsService) { }
     private clearId;
 
     @Input() description: string;
